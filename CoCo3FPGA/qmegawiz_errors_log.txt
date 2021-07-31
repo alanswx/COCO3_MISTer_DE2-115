@@ -1,0 +1,24 @@
+
+
+E:/Dropbox/Altera/CoCo3FPGA_FDD/Video_DAC.v
+
+May 25 10PM:02:22>: File E:/Dropbox/Altera/CoCo3FPGA_FDD/Video_DAC.v does not exist.
+Do you want to create the file?
+
+X:/COCO3_Mister/CoCO3FPGA_Common/UART_CLK.v
+
+Jul 24 07PM:43:29>: Error in CNX file format.
+
+Error messages are listed in file
+X:/COCO3_Mister/CoCO3FPGA_Common/UART_CLK.cnxerr.
+
+Can't create the custom megafunction variation file(s)
+
+X:/COCO3_Mister/CoCO3FPGA_Common/UART_CLK.v
+
+Jul 24 07PM:49:13>: Error in CNX file format.
+
+Error messages are listed in file
+X:/COCO3_Mister/CoCO3FPGA_Common/UART_CLK.cnxerr.
+
+Can't create the custom megafunction variation file(s)

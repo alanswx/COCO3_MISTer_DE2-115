@@ -1,0 +1,187 @@
+Archive Project report for coco3fpga_dw
+Mon Jun 27 21:23:41 2016
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Archive Project Summary
+  3. Archive Project Messages
+  4. Files Archived
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++----------------------------------------------------------------+
+; Archive Project Summary                                        ;
++------------------------+---------------------------------------+
+; Archive Project Status ; Successful - Mon Jun 27 21:23:41 2016 ;
+; Revision Name          ; coco3fpga_dw                          ;
+; Top-level Entity Name  ; coco3fpga_dw                          ;
+; Family                 ; Cyclone II                            ;
++------------------------+---------------------------------------+
+
+
++--------------------------+
+; Archive Project Messages ;
++--------------------------+
+Info: File Set 'Source control' contains:
+    Info: Project source and settings files
+    Info: Automatically detected source files
+Info: ----------------------------------------------------------
+Info: ----------------------------------------------------------
+Info: Generated archive 'E:/Dropbox/Altera/CoCo3FPGA_test/coco3fpga_dw_062716.qar'
+Info: ----------------------------------------------------------
+Info: ----------------------------------------------------------
+Info: Generated report 'coco3fpga_dw.archive.rpt'
+Info (23030): Evaluation of Tcl script c:/altera/13.0sp1/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus II 64-Bit Shell was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 334 megabytes
+    Info: Processing ended: Mon Jun 27 21:23:41 2016
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:02
+
+
++---------------------------------------------------------+
+; Files Archived                                          ;
++---------------------------------------------------------+
+; File Name                                               ;
++---------------------------------------------------------+
+; ../../CPU09/cpu09l_128.vhd                              ;
+; ../../PS2_Key/ps2_keyboard.v                            ;
+; ../../SDRAM_CONTROLLER/common.vhd                       ;
+; ../../SDRAM_CONTROLLER/SDRAM.v                          ;
+; ../../SDRAM_CONTROLLER/sdramcntl.vhd                    ;
+; ../../SPI/SDCard.v                                      ;
+; ../../T65/T65.vhd                                       ;
+; ../../T65/T65_ALU.vhd                                   ;
+; ../../T65/T65_MCode.vhd                                 ;
+; ../../T65/T65_Pack.vhd                                  ;
+; ../../UART_6551/6551rx.v                                ;
+; ../../UART_6551/6551tx.v                                ;
+; ../../UART_6551/uart_6551.v                             ;
+; ../../UART_6551/uart_6551x.v                            ;
+; ../../UART_6850/6850RX.v                                ;
+; ../../UART_6850/6850TX.v                                ;
+; ../../UART_6850/uart_6850.v                             ;
+; buffer_dp.mif                                           ;
+; buffer_dp.qip                                           ;
+; buffer_dp.v                                             ;
+; buffer_dp_bb.v                                          ;
+; buffer_dp_inst.v                                        ;
+; CoCo3FPGA.sdc                                           ;
+; coco3fpga_dw.qpf                                        ;
+; coco3fpga_dw.qsf                                        ;
+; coco3fpga_dw.sdc                                        ;
+; coco3fpga_dw.v                                          ;
+; coco3fpga_dw.vwf                                        ;
+; coco3fpga_dw_assignment_defaults.qdf                    ;
+; coco3gen.mif                                            ;
+; coco3gen.qip                                            ;
+; COCO3GEN.v                                              ;
+; COCO3GEN_bb.v                                           ;
+; COCO3GEN_inst.v                                         ;
+; CoCo3IO.v                                               ;
+; coco3vid.v                                              ;
+; cocokey.v                                               ;
+; db/coco3fpga_dw.sim.cvwf                                ;
+; disk02.qip                                              ;
+; disk02.v                                                ;
+; disk02_1.qip                                            ;
+; disk02_1.v                                              ;
+; disk02_1_bb.v                                           ;
+; disk02_1_inst.v                                         ;
+; disk02_bb.v                                             ;
+; disk02_inst.v                                           ;
+; DISK_02.mif                                             ;
+; Disk_02.mif                                             ;
+; disk_02.mif                                             ;
+; disk_c0.mif                                             ;
+; disk_c0.qip                                             ;
+; disk_c0.v                                               ;
+; disk_c0_bb.v                                            ;
+; disk_c0_inst.v                                          ;
+; disk_c8.qip                                             ;
+; disk_c8.v                                               ;
+; disk_c8_bb.v                                            ;
+; disk_c8_inst.v                                          ;
+; disk_d0.qip                                             ;
+; disk_d0.v                                               ;
+; disk_d0_bb.v                                            ;
+; disk_d0_inst.v                                          ;
+; disk_d8.qip                                             ;
+; disk_d8.v                                               ;
+; disk_d8_bb.v                                            ;
+; disk_d8_inst.v                                          ;
+; E:/Dropbox/CPU09/cpu09l_128.vhd                         ;
+; E:/Dropbox/PS2_Key/ps2_keyboard.v                       ;
+; E:/Dropbox/SDRAM_CONTROLLER/common.vhd                  ;
+; E:/Dropbox/SDRAM_CONTROLLER/SDRAM.v                     ;
+; E:/Dropbox/SDRAM_CONTROLLER/sdramcntl.vhd               ;
+; E:/Dropbox/SPI/SDCard.v                                 ;
+; E:/Dropbox/T65/T65.vhd                                  ;
+; E:/Dropbox/T65/T65_ALU.vhd                              ;
+; E:/Dropbox/T65/T65_MCode.vhd                            ;
+; E:/Dropbox/T65/T65_Pack.vhd                             ;
+; E:/Dropbox/UART_6551/6551rx.v                           ;
+; E:/Dropbox/UART_6551/6551tx.v                           ;
+; E:/Dropbox/UART_6551/uart_6551.v                        ;
+; E:/Dropbox/UART_6551/uart_6551x.v                       ;
+; E:/Dropbox/UART_6850/6850RX.v                           ;
+; E:/Dropbox/UART_6850/6850TX.v                           ;
+; E:/Dropbox/UART_6850/uart_6850.v                        ;
+; FFF0.mif                                                ;
+; FFF0.v                                                  ;
+; FIFO_1024.qip                                           ;
+; FIFO_1024.v                                             ;
+; FIFO_1024_bb.v                                          ;
+; FIFO_1024_inst.v                                        ;
+; FIFO_READ.qip                                           ;
+; FIFO_READ.v                                             ;
+; FIFO_READ_bb.v                                          ;
+; FIFO_READ_inst.v                                        ;
+; FIFO_WRITE.qip                                          ;
+; FIFO_WRITE.v                                            ;
+; FIFO_WRITE_bb.v                                         ;
+; FIFO_WRITE_inst.v                                       ;
+; i2c.v                                                   ;
+; incremental_db/compiled_partitions/coco3fpga_dw.db_info ;
+; paddles.v                                               ;
+; PH2_CLK.qip                                             ;
+; PH2_CLK.v                                               ;
+; PH2_CLK_bb.v                                            ;
+; PH2_CLK_inst.v                                          ;
+; sound.v                                                 ;
+; uartclk.ppf                                             ;
+; uartclk.qip                                             ;
+; uartclk.v                                               ;
+; uartclk_bb.v                                            ;
+; uartclk_inst.v                                          ;
+; VDAC.mif                                                ;
+; VDAC.qip                                                ;
+; VDAC.v                                                  ;
+; VDAC_bb.v                                               ;
+; VDAC_inst.v                                             ;
++---------------------------------------------------------+
+
+

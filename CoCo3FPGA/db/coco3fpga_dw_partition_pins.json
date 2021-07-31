@@ -1,0 +1,813 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "RAM0_ADDRESS[0]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[1]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[2]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[3]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[4]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[5]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[6]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[7]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[8]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[9]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[10]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[11]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[12]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[13]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[14]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[15]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[16]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[17]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[18]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_ADDRESS[19]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_RW_N",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_BE0_N",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_BE1_N",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[4]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[5]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[6]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[7]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[8]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[9]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[10]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_ADDRESS[11]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_BANK[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_BANK[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_LDQM",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_UDQM",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_RAS_N",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_CAS_N",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_CKE",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_CLK",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_RW_N",
+					"strict" : false
+				},
+				{
+					"name" : "RED7",
+					"strict" : false
+				},
+				{
+					"name" : "GREEN7",
+					"strict" : false
+				},
+				{
+					"name" : "BLUE7",
+					"strict" : false
+				},
+				{
+					"name" : "RED6",
+					"strict" : false
+				},
+				{
+					"name" : "GREEN6",
+					"strict" : false
+				},
+				{
+					"name" : "BLUE6",
+					"strict" : false
+				},
+				{
+					"name" : "RED5",
+					"strict" : false
+				},
+				{
+					"name" : "GREEN5",
+					"strict" : false
+				},
+				{
+					"name" : "BLUE5",
+					"strict" : false
+				},
+				{
+					"name" : "RED4",
+					"strict" : false
+				},
+				{
+					"name" : "GREEN4",
+					"strict" : false
+				},
+				{
+					"name" : "BLUE4",
+					"strict" : false
+				},
+				{
+					"name" : "H_SYNC",
+					"strict" : false
+				},
+				{
+					"name" : "V_SYNC",
+					"strict" : false
+				},
+				{
+					"name" : "VGA_CLK",
+					"strict" : false
+				},
+				{
+					"name" : "DE1TXD",
+					"strict" : false
+				},
+				{
+					"name" : "OPTTXD",
+					"strict" : false
+				},
+				{
+					"name" : "I2C_SCL",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_XCK",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_DACDAT",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT4_N[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT4_N[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT4_N[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT4_N[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT4_N[4]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT4_N[5]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT4_N[6]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT5_N[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT5_N[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT5_N[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT5_N[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT5_N[4]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT5_N[5]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT5_N[6]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT6_N[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT6_N[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT6_N[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT6_N[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT6_N[4]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT6_N[5]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT6_N[6]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT7_N[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT7_N[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT7_N[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT7_N[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT7_N[4]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT7_N[5]",
+					"strict" : false
+				},
+				{
+					"name" : "SEGMENT7_N[6]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDG[0]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDG[3]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDG[4]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDG[5]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDG[6]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDG[7]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[0]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[1]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[2]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[3]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[4]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[5]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[6]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDR[7]",
+					"strict" : false
+				},
+				{
+					"name" : "PADDLE_MCLK",
+					"strict" : false
+				},
+				{
+					"name" : "MOSI",
+					"strict" : false
+				},
+				{
+					"name" : "SPI_CLK",
+					"strict" : false
+				},
+				{
+					"name" : "SPI_SS_N",
+					"strict" : false
+				},
+				{
+					"name" : "WF_TXD",
+					"strict" : false
+				},
+				{
+					"name" : "RST",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[0]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[1]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[2]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[3]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[4]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[5]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[6]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[7]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[8]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[9]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[10]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[11]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[12]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[13]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[14]",
+					"strict" : false
+				},
+				{
+					"name" : "RAM0_DATA[15]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[4]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[5]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[6]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[7]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[8]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[9]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[10]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[11]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[12]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[13]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[14]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[15]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[16]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[17]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[18]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[19]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[20]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[21]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[22]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[23]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[24]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[25]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[26]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[27]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[28]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[29]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[30]",
+					"strict" : false
+				},
+				{
+					"name" : "SDRAM_DATA[31]",
+					"strict" : false
+				},
+				{
+					"name" : "I2C_DAT",
+					"strict" : false
+				},
+				{
+					"name" : "CK_CLK",
+					"strict" : false
+				},
+				{
+					"name" : "CK_DAT",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO[0]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO[1]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO[2]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO[3]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO[4]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO[5]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO[6]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO[7]",
+					"strict" : false
+				},
+				{
+					"name" : "CLK50MHZ",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[9]",
+					"strict" : false
+				},
+				{
+					"name" : "DE1RXD",
+					"strict" : false
+				},
+				{
+					"name" : "OPTRXD",
+					"strict" : false
+				},
+				{
+					"name" : "SD_WP_N",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[6]",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[3]",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_BCLK",
+					"strict" : false
+				},
+				{
+					"name" : "P_SWITCH[3]",
+					"strict" : false
+				},
+				{
+					"name" : "P_SWITCH[0]",
+					"strict" : false
+				},
+				{
+					"name" : "P_SWITCH[2]",
+					"strict" : false
+				},
+				{
+					"name" : "P_SWITCH[1]",
+					"strict" : false
+				},
+				{
+					"name" : "BUTTON_N[0]",
+					"strict" : false
+				},
+				{
+					"name" : "BUTTON_N[3]",
+					"strict" : false
+				},
+				{
+					"name" : "AUD_DACLRCK",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[2]",
+					"strict" : false
+				},
+				{
+					"name" : "PADDLE_CLK[0]",
+					"strict" : false
+				},
+				{
+					"name" : "PADDLE_CLK[1]",
+					"strict" : false
+				},
+				{
+					"name" : "PADDLE_CLK[2]",
+					"strict" : false
+				},
+				{
+					"name" : "PADDLE_CLK[3]",
+					"strict" : false
+				},
+				{
+					"name" : "MISO",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[7]",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[8]",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[5]",
+					"strict" : false
+				},
+				{
+					"name" : "ps2_clk",
+					"strict" : false
+				},
+				{
+					"name" : "ps2_data",
+					"strict" : false
+				},
+				{
+					"name" : "SWITCH[4]",
+					"strict" : false
+				},
+				{
+					"name" : "WF_RXD",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,176 @@
+Restore Archived Project report for coco3fpga_dw
+Sun Feb 22 15:48:46 2015
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Restore Archived Project Summary
+  3. Restore Archived Project Messages
+  4. Files Restored
+  5. Files Not Restored
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++-------------------------------------------------------------------------+
+; Restore Archived Project Summary                                        ;
++---------------------------------+---------------------------------------+
+; Restore Archived Project Status ; Successful - Sun Feb 22 15:48:46 2015 ;
+; Revision Name                   ; coco3fpga_dw                          ;
+; Top-level Entity Name           ; coco3fpga_dw                          ;
+; Family                          ; Cyclone II                            ;
++---------------------------------+---------------------------------------+
+
+
++-----------------------------------+
+; Restore Archived Project Messages ;
++-----------------------------------+
+Info: Successfully restored 'E:/Dropbox/Altera/CoCo3FPGA_FDD/coco3fpga_dw_081714.qar' into the 'E:/Dropbox/Altera/CoCo3FPGA_FDD/' directory
+Info: Generated report 'coco3fpga_dw.restore.rpt'
+Info (23030): Evaluation of Tcl script c:/altera/13.0sp1/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus II 64-Bit Shell was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 274 megabytes
+    Info: Processing ended: Sun Feb 22 15:48:46 2015
+    Info: Elapsed time: 00:00:01
+    Info: Total CPU time (on all processors): 00:00:01
+
+
++---------------------------------------------------------+
+; Files Restored                                          ;
++---------------------------------------------------------+
+; File Name                                               ;
++---------------------------------------------------------+
+; SDCard/SDCard.v                                         ;
+; CART_C0.V                                               ;
+; CC3_80.v                                                ;
+; CC3_88.v                                                ;
+; CC3_90.v                                                ;
+; CC3_98.v                                                ;
+; CC3_A0.v                                                ;
+; CC3_A8.v                                                ;
+; CC3_B0.v                                                ;
+; CC3_B8.v                                                ;
+; CC3_C0.v                                                ;
+; CC3_C8.v                                                ;
+; CC3_D0.v                                                ;
+; CC3_D8.v                                                ;
+; CC3_E0.v                                                ;
+; CC3_E8.v                                                ;
+; CC3_F0.v                                                ;
+; CC3_F8.v                                                ;
+; COCO3GEN.v                                              ;
+; COCO3GEN_bb.v                                           ;
+; COCO3GEN_inst.v                                         ;
+; CoCo3IO.v                                               ;
+; DISK_02.mif                                             ;
+; DISK_02_1.mif                                           ;
+; DSK_C0.V                                                ;
+; DSK_C8.V                                                ;
+; DSK_D0.V                                                ;
+; DSK_D8.V                                                ;
+; FFF0.mif                                                ;
+; FFF0.qip                                                ;
+; FFF0.v                                                  ;
+; FFF0_bb.v                                               ;
+; FFF0_inst.v                                             ;
+; FIFO_READ.qip                                           ;
+; FIFO_READ.v                                             ;
+; FIFO_READ_bb.v                                          ;
+; FIFO_READ_inst.v                                        ;
+; FIFO_WRITE.qip                                          ;
+; FIFO_WRITE.v                                            ;
+; FIFO_WRITE_bb.v                                         ;
+; FIFO_WRITE_inst.v                                       ;
+; RS232_C0.V                                              ;
+; RS232_C8.V                                              ;
+; T65.vhd                                                 ;
+; T65_ALU.vhd                                             ;
+; T65_MCode.vhd                                           ;
+; T65_Pack.vhd                                            ;
+; buffer_dp.mif                                           ;
+; buffer_dp.qip                                           ;
+; buffer_dp.v                                             ;
+; buffer_dp_bb.v                                          ;
+; buffer_dp_inst.v                                        ;
+; coco3fpga_dw.qpf                                        ;
+; coco3fpga_dw.qsf                                        ;
+; coco3fpga_dw.v                                          ;
+; coco3fpga_dw.vwf                                        ;
+; coco3fpga_dw_assignment_defaults.qdf                    ;
+; coco3fpga_keyboard.v                                    ;
+; coco3gen.mif                                            ;
+; coco3gen.qip                                            ;
+; coco3vid.v                                              ;
+; cocokey.v                                               ;
+; cpu09.vhd                                               ;
+; db/coco3fpga_dw.sim.cvwf                                ;
+; disk02.qip                                              ;
+; disk02.v                                                ;
+; disk02_1.qip                                            ;
+; disk02_1.v                                              ;
+; disk02_1_bb.v                                           ;
+; disk02_1_inst.v                                         ;
+; disk02_bb.v                                             ;
+; disk02_inst.v                                           ;
+; disk_c0.mif                                             ;
+; disk_c0.qip                                             ;
+; disk_c0.v                                               ;
+; disk_c0_bb.v                                            ;
+; disk_c0_inst.v                                          ;
+; disk_c8.mif                                             ;
+; disk_c8.qip                                             ;
+; disk_c8.v                                               ;
+; disk_c8_bb.v                                            ;
+; disk_c8_inst.v                                          ;
+; disk_d0.mif                                             ;
+; disk_d0.qip                                             ;
+; disk_d0.v                                               ;
+; disk_d0_bb.v                                            ;
+; disk_d0_inst.v                                          ;
+; disk_d8.mif                                             ;
+; disk_d8.qip                                             ;
+; disk_d8.v                                               ;
+; disk_d8_bb.v                                            ;
+; disk_d8_inst.v                                          ;
+; i2c.v                                                   ;
+; incremental_db/compiled_partitions/coco3fpga_dw.db_info ;
+; PS2_Key/ps2_keyboard.v                                  ;
+; UART_6551/6551rx.v                                      ;
+; UART_6551/6551tx.v                                      ;
+; UART_6551/uart_6551.v                                   ;
+; UART_6850/6850RX.v                                      ;
+; UART_6850/6850TX.v                                      ;
+; UART_6850/uart_6850.v                                   ;
++---------------------------------------------------------+
+
+
++--------------------+
+; Files Not Restored ;
++--------------------+
+; File Name          ;
++--------------------+
+; disk_02.mif        ;
++--------------------+
+
+

@@ -1,0 +1,117 @@
+;Codewright Project File (do not remove or modify this line)
+[ProjInit]
+ConfigSetExtMode=2
+ProjSetConfigFlags=0x04110940
+
+[State]
+SysSetCwd='X:\COCO3_Mister'
+SrchSetFlags=0x0410680a
+SrchSetAgainFlags=0x04100003,0
+SrchSetAgainFlags=0x06100003,1
+FileSortMode=0x0
+_StateHistory=EDITFILE,'X:\COCO3_Mister\COCO3_MISTer'
+
+[Editor]
+_RestoreSysFlags=0x43097fc8, 0xfffffffc, 0
+VCSProject=''
+VCSProjectPath=''
+VCSProjectLocalPath=''
+ScrapSetCount=1
+ClipboardSetCount=1
+ClipboardEnableSepStr=1
+ClipboardSetSepStr='\r\n',0
+ClipboardEnableTermStr=1
+ClipboardSetTermStr='\r\n',0
+
+[Tools]
+ToolDeleteList 
+ToolAddCmd='$_custom_tool_$_1','API Database Editor',1342177312,'cwtedit.exe'
+ToolAddCmd='$_custom_tool_$_2','Paint',1342177312,'pbrush.exe'
+
+[Compiler]
+TagSetCmd='"${HOME}${WTAGS}" -oc -d -t"${TAGFILE}.tag" -p"${TAGFILE}.ptg"',0x8000060
+BrowseSetFile='C:\Users\Stan.HODGEHOUSE\Desktop\CodeWright\tagfile.ptg'
+TagSetFile='C:\Users\Stan.HODGEHOUSE\Desktop\CodeWright\tagfile.tag'
+CompilerAddCmdEx='$_cw_proj_hash_$','',1073741904,'',80,'${FTEE} nmake',176,'${FTEE} nmake',176,'${FTEE} nmake',176,'${FTEE} nmake',176,'',0,'',0,'_ErrorInfoDefault','','','proj.err','%x'
+CompilerAddResponse='$_cw_proj_hash_$',
+CompilerNewExt=.v
+CompilerNewExt=.htm
+CompilerNewExt=.bas
+CompilerNewExt=.awk
+CompilerNewExt=.jsp
+CompilerNewExt=.cfml
+CompilerNewExt=.adb
+CompilerNewExt=.vhd
+CompilerNewExt=.pl
+CompilerNewExt=.pas
+CompilerNewExt=.tk
+CompilerNewExt=.rul
+CompilerNewExt=.asp
+CompilerNewExt=.js
+CompilerNewExt=.cob
+CompilerNewExt=.tcl
+CompilerNewExt=.rc
+CompilerNewExt=.php
+CompilerNewExt=.ini
+CompilerNewExt=.html
+CompilerNewExt=.bat
+CompilerNewExt=.cs
+CompilerNewExt=.txt
+CompilerNewExt=.nrx
+CompilerNewExt=.xml
+CompilerNewExt=.sqlj
+CompilerNewExt=.java
+
+[VersionControl:PVCS]
+VCSSetCmd=VCS_CHECKIN_ID,'put -n -T@"%Q" -M@"%Q" "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKINLOCK_ID,'put -n -T@"%Q" -M@"%Q" -l "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKOUT_ID,'get -y "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKOUTLOCK_ID,'get -y -l "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKLOCK_ID,'vcs -y -l "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKUNLOCK_ID,'vcs -y -u "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKLABEL_ID,'vcs -y -v"${VCSLABEL}" "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKLOG_ID,'vlog "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKPROP_ID,'vlog -b "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKDIFF_ID,'vdiff -r "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKMENU_ID,'pvcsvmwn',0x8000000
+VCSSetCmd=VCS_ADD_ID,'vcs -i -t@"%Q" "%b%e"',0x8000040
+VCSSetCmd=VCS_REMOVE_ID,'del /f "%b%{??v|___}e"',0x8000040
+
+[Project]
+ConfigSetLinkDBFilename='C:\Users\Stan\Desktop\CodeWright\cwright.ldb'
+ConfigSetMarkDBFilename='C:\Users\Stan\Desktop\CodeWright\cwright.mrk'
+ConfigSetSymbolDBFilename='X:\COCO3_Mister\COCO3_MISTer.sbl'
+EditSetPath=''
+
+[Files]
+.\CoCo3FPGA\coco3fpga_dw.v
+.\CoCO3FPGA_Common\coco3fpga_top.v
+.\CoCO3FPGA_Common\VDAC.v
+.\CoCO3FPGA_Common\buffer_dp.v
+.\CoCO3FPGA_Common\COCO3GEN.v
+.\CoCO3FPGA_Common\COCO3GEN_bb.v
+.\CoCO3FPGA_Common\COCO3GEN_inst.v
+.\CoCO3FPGA_Common\CoCo3IO.v
+.\CoCO3FPGA_Common\coco3vid.v
+.\CoCO3FPGA_Common\cocokey.v
+.\CoCO3FPGA_Common\disk02.v
+.\CoCO3FPGA_Common\disk02_02.v
+.\CoCO3FPGA_Common\disk02_02_bb.v
+.\CoCO3FPGA_Common\disk02_02_inst.v
+.\CoCO3FPGA_Common\disk02_bb.v
+.\CoCO3FPGA_Common\disk02_inst.v
+.\CoCO3FPGA_Common\FIFO_1024.v
+.\CoCO3FPGA_Common\FIFO_READ.v
+.\CoCO3FPGA_Common\FIFO_WRITE.v
+.\CoCO3FPGA_Common\i2c.v
+.\CoCO3FPGA_Common\paddles.v
+.\CoCO3FPGA_Common\PH2_CLK.v
+.\CoCO3FPGA_Common\sound.v
+.\CoCO3FPGA_Common\UART_CLK.v
+.\CoCO3FPGA_Common\UART_CLK_bb.v
+.\CoCO3FPGA_Common\UART_CLK_inst.v
+.\CoCO3FPGA_Common\SDRAM_CONTROLLER\SDRAM.v
+.\CoCO3FPGA_Common\SDRAM_CONTROLLER\sdramcntl.vhd
+.\CoCO3FPGA_Common\SDRAM_CONTROLLER\common.vhd
+.\CoCO3FPGA_Common\SPI\SDCard.v
+.\CoCO3FPGA_Common\PS2_Key\ps2_keyboard.v
