@@ -9,19 +9,28 @@ SrchSetFlags=0x0410680a
 SrchSetAgainFlags=0x00006002,0
 SrchSetAgainFlags=0x06100003,1
 FileSortMode=0x0
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v',0,0,1400,524,0,724,932,81,906,1,1,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v',182,182,1295,524,-1,-1,196,81,184,1,3,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v',102,128,1295,524,-1,-1,1,44,1,1,2,'',0x0010004c,0,80,0,0,''
-_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v',0x0c001c8e,932,81,25,'5 9','',0x0,'',1,72,0,0
-_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v',0x0c001c8e,196,81,25,'5 9','',0x0,'',1,72,0,0
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v',0,0,1400,524,0,724,2272,13,2270,1,4,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.map.rpt',156,156,1295,524,-1,-1,49,78,28,1,3,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v',182,182,1295,524,-1,-1,64,81,64,1,2,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v',182,182,1295,524,-1,-1,49,43,1,1,1,'',0x0010005c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v',102,128,1295,524,-1,-1,1,44,1,1,5,'',0x0010004c,0,80,0,0,''
+_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v',0x04001c8e,2272,13,25,'5 9','',0x0,'',1,72,0,0
+_StateBuffer='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.map.rpt',0x0400048e,49,78,25,'5 9','',0x0,'',1,72,0,0
+_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v',0x0c001c8e,64,81,25,'5 9','',0x0,'',1,72,0,0
+_StateBuffer='X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v',0x0c001c8e,49,43,25,'5 9','',0x0,'',1,72,0,0
 _StateBuffer='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v',0x04001c8e,1,44,25,'5 9','',0x0,'',1,72,0,0
-_StateHistory=FILELIST,'X:\COCO3_Mister\CoCO3FPGA_Common\UART_6850\6850RX.v','X:\COCO3_Mister\CoCO3FPGA_Common\UART_6850\6850TX.v','X:\COCO3_Mister\CoCO3FPGA_Common\UART_6850\uart_6850.v','C:\Users\stan.HODGEHOUSE\AppData\Local\Temp\Rar$DRa5796.42139\CoCo3FPGA_412\coco3fpga_top.v','X:\COCO3_Mister\CoCO3FPGA_Common\buffer_dp.v','X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v','C:\Users\stan.HODGEHOUSE\Desktop\UART_CLK.v','X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v','X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK_bb.v'
-_StateHistory=SEARCH,'ENA_DSK','UART50_RXD'
-_StateHistory=EDITFILE,'X:\COCO3_Mister\COCO3_MISTer'
-_StateHistory=DOCUMENTVISIT,'332         30          X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v','94          128         X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v','210         1           X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v','30          1           X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK_bb.v','196         81          X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v','261         87          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','1137        15          X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v','117         83          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','1           81          X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v','1           44          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v'
+_StateHistory=FILELIST,'X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.fit.rpt','X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.mif_update.rpt','X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.flow.rpt','X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.map.rpt','X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v','X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK_bb.v','X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK_inst.v','X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.ppf','X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.qip'
+_StateHistory=SEARCH,'ENA_DSK','UART50_RXD','RAM0_BE1_N','RAM0_DATA'
+_StateHistory=EDITFILE,'X:\COCO3_Mister\COCO3_MISTer','X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK_bb.v'
+_StateHistory=DOCUMENTVISIT,'2272        13          X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v','49          78          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.map.rpt','64          81          X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v','49          105         X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v','187         1           X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK_bb.v','1           1           X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK_inst.v','49          105         X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v','1           1           X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.ppf','27          95          X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.qip','1           1           X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.ppf'
 _StateDocumentVisit=10
 
 [Editor]
+FilterProjDeleteList 
+FilterProjAdd='Source Files','*.c;*.cs;*.cpp;*.cxx;*.hxx;*.prg;*.pas;*.asm;*.bas;*.sc;*.jav*;*.htm*;*.shtm*',-1
+FilterProjAdd='Header Files','*.h;*.hpp;*.inc',-1
+FilterProjAdd='Resources','*.rc;*.bmp;*.ico;*.cur;*.dlg',-1
+FilterProjAdd='Other Files','*.*',-1
 _RestoreSysFlags=0x43097fc8, 0xfffffffc, 0
 VCSProject=''
 VCSProjectPath=''
@@ -88,8 +97,8 @@ VCSSetCmd=VCS_ADD_ID,'vcs -i -t@"%Q" "%b%e"',0x8000040
 VCSSetCmd=VCS_REMOVE_ID,'del /f "%b%{??v|___}e"',0x8000040
 
 [Project]
-ConfigSetLinkDBFilename='C:\Users\Stan\Desktop\CodeWright\cwright.ldb'
-ConfigSetMarkDBFilename='C:\Users\Stan\Desktop\CodeWright\cwright.mrk'
+ConfigSetLinkDBFilename='C:\Users\stan.HODGEHOUSE\Desktop\CodeWright\cwright.ldb'
+ConfigSetMarkDBFilename='C:\Users\stan.HODGEHOUSE\Desktop\CodeWright\cwright.mrk'
 ConfigSetSymbolDBFilename='X:\COCO3_Mister\COCO3_MISTer.sbl'
 EditSetPath=''
 
@@ -126,4 +135,5 @@ EditSetPath=''
 .\CoCO3FPGA_Common\SPI\SDCard.v
 .\CoCO3FPGA_Common\PS2_Key\ps2_keyboard.v
 .\CoCO3FPGA_Common\rom\coco_rom.vhd
+.\CoCO3FPGA_Common\sram\coco_ram.vhd
 

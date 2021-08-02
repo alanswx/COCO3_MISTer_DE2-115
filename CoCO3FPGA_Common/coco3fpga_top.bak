@@ -72,20 +72,21 @@
 // DE2-115 Conversion by Stan Hodge
 // shodgefamily@yahoo.com
 ////////////////////////////////////////////////////////////////////////////////
+// MISTer conversion work by Stan Hodge and Alan Steremberg
+////////////////////////////////////////////////////////////////////////////////
+
 //Version 4 bits Major and 4 bits Minor
-parameter Version_Hi = 8'h41;
+parameter Version_Hi = 8'h40;
 
 // High bit of lower nibble is Riser Type 0=Gary (or none) 1=Ed
-// Next three bits is Memory size 001=One Meg or 512K or 2M (DE2-115) 101=5 Meg
+// Next three bits is Memory size 000=128K, 001=One Meg or 512K or 2M (DE2-115) 101=5 Meg
 
 `ifdef DE2_115
 //	SRH	MISTer
 	`ifdef MISTer
-		parameter Version_Lo = 8'hC2;
-		// High nibble = MISTer = '1100'
+		parameter Version_Lo = 8'h22;
 	`else
-		parameter Version_Lo = 8'h82;
-		// High nibble = DE2-115 = '1000'
+		parameter Version_Lo = 8'h12;
 	`endif
 `else
 parameter Version_Lo = 8'h12;
@@ -120,6 +121,9 @@ input				CLK27MHZ_2;
 // DE1 RAM Common
 //output [17:0]	RAM0_ADDRESS;	// 512kb SRAM
 //reg	 [17:0]	RAM0_ADDRESS;
+
+//	SRH	MISTer
+`ifndef MISTer
 output [19:0]	RAM0_ADDRESS;		// 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
 reg	 [19:0]	RAM0_ADDRESS;
 output			RAM0_RW_N;
@@ -134,6 +138,29 @@ reg					RAM0_BE0_N;
 output				RAM0_BE1_N;
 reg					RAM0_BE1_N;
 output				RAM0_OE_N;
+
+`else
+//	SRH	MISTer
+// Use 128KB Internal SRAM
+wire [19:0]	RAM0_ADDRESS;		// 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
+reg	 [19:0]	RAM0_ADDRESS;
+wire			RAM0_RW_N;
+reg				RAM0_RW_N;
+
+// SRAM	paths to be delt with later in code  - convert to RAM0_DATA_I and RAM0_DATA_O
+//inout		[15:0]	RAM0_DATA;
+//reg		[15:0]	RAM0_DATA;
+
+wire				RAM0_CS_N;
+wire				RAM_CS;						// DATA_IN Mux select
+wire				RAM0_BE0_N;
+reg					RAM0_BE0_N;
+wire				RAM0_BE1_N;
+reg					RAM0_BE1_N;
+wire				RAM0_OE_N;
+
+`endif
+
 wire					RAM0_BE0;
 wire					RAM0_BE1;
 
@@ -363,19 +390,19 @@ input				SD_WP_N; // HWP = 0
 
 //	SRH	MISTer
 //	Static switches
-//`ifndef MISTer
+`ifndef MISTer
 input		[9:0]		SWITCH;			
-//`else
-//wire		[9:0]		SWITCH;			
-//`endif
+`else
+wire		[9:0]		SWITCH;			
+`endif
 
 //	SRH	MISTer
 //	Static Buttons
-//`ifndef MISTer
+`ifndef MISTer
 input [3:0]			BUTTON_N;
-//`else
-//wire [3:0]			BUTTON_N;
-//`endif		
+`else
+wire [3:0]			BUTTON_N;
+`endif		
 											//  3 RESET
 											//  2 SD Card Inserted (0=Inserted) wired to switche on the SD card
 											//  1 SD Write Protect (1=Protected) wired to switche on the SD card
@@ -940,12 +967,14 @@ wire					SLAVE_WR;
 											//		On  - 25 MHz
 
 
-//`ifdef MISTer
-//assign SWITCH[9:0] = 10'b0000010000;
+`ifdef MISTer
+assign SWITCH[9:0] = 10'b0000010000; // This is ECB
+//assign SWITCH[9:0] = 10'b0000010110; // This is EDB
+//assign SWITCH[9:0] = 10'b0000010000; // This is Orch 80 in ROM
 
-//assign BUTTON_N[3:0] = 4'b1111;
+assign BUTTON_N[3:0] = 4'b1111;
 
-//`endif
+`endif
 
 //assign LEDG = TRACE;														// Floppy Trace
 

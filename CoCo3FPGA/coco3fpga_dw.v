@@ -269,12 +269,12 @@ CK_DAT,
 //	SRH	MISTer
 //	Removel of switches and buttons
 
-//`ifndef MISTer
+`ifndef MISTer
 
 SWITCH,
 BUTTON_N,
 
-//`endif
+`endif
 
 GPIO
 );
