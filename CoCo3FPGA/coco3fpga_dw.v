@@ -272,7 +272,8 @@ CK_DAT,
 
 //	SRH	MISTer
 //	Removel of switches and buttons
-
+HBLANK,
+VBLANK,
 `ifndef MISTer
 
 SWITCH,
