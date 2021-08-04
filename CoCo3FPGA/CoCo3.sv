@@ -247,7 +247,8 @@ assign CLK_VIDEO = clk_sys;
 
 hps_io #(.CONF_STR(CONF_STR)) hps_io
 (
-        .clk_sys(clk_sys),
+//        .clk_sys(clk_sys),
+		  .clk_sys(CLK_50M),
         .HPS_BUS(HPS_BUS),
 
 
@@ -266,6 +267,7 @@ hps_io #(.CONF_STR(CONF_STR)) hps_io
 
         .joystick_0(joy1a),
         .joystick_1(joy2a),
+		  
         .ps2_key(ps2_key),
 
 
@@ -369,7 +371,7 @@ coco3fpga_dw coco3 (
 .ps2_clk(ps2_kbd_clk),
 .ps2_data(ps2_kbd_data),
 
-
+.ps2_key(ps2_key)
 );
 /*
 coco3fpga_dw coco3 (

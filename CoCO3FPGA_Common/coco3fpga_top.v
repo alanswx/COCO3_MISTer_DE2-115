@@ -346,6 +346,8 @@ wire					VBLANK;
 input 				ps2_clk;
 input					ps2_data;
 
+input   [10:0]    ps2_key;
+
 // Serial Ports
 output				DE1TXD;
 input					DE1RXD;
@@ -4687,6 +4689,7 @@ COCOKEY coco_keyboard(
 		.SLO_CLK(V_SYNC_N),
 		.PS2_CLK(ps2_clk),
 		.PS2_DATA(ps2_data),
+		.PS2_KEY(ps2_key),
 		.KEY(KEY),
 		.SHIFT(SHIFT),
 		.SHIFT_OVERRIDE(SHIFT_OVERRIDE),

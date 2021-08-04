@@ -212,6 +212,7 @@ VGA_CLK,
 // PS/2
 ps2_clk,
 ps2_data,
+ps2_key,
 //ms_clk,
 //ms_data,
 //Serial Ports
