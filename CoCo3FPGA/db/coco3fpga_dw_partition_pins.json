@@ -4,98 +4,6 @@
 			"name" : "Top",
 			"pins" : [
 				{
-					"name" : "RAM0_ADDRESS[0]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[1]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[2]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[3]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[4]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[5]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[6]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[7]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[8]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[9]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[10]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[11]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[12]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[13]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[14]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[15]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[16]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[17]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[18]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_ADDRESS[19]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_RW_N",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_BE0_N",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_BE1_N",
-					"strict" : false
-				},
-				{
 					"name" : "SDRAM_ADDRESS[0]",
 					"strict" : false
 				},
@@ -416,10 +324,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[5]",
-					"strict" : false
-				},
-				{
 					"name" : "LEDR[6]",
 					"strict" : false
 				},
@@ -452,67 +356,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "RAM0_DATA[0]",
+					"name" : "HBLANK",
 					"strict" : false
 				},
 				{
-					"name" : "RAM0_DATA[1]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[2]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[3]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[4]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[5]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[6]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[7]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[8]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[9]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[10]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[11]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[12]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[13]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[14]",
-					"strict" : false
-				},
-				{
-					"name" : "RAM0_DATA[15]",
+					"name" : "VBLANK",
 					"strict" : false
 				},
 				{
@@ -692,27 +540,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "SWITCH[9]",
-					"strict" : false
-				},
-				{
 					"name" : "DE1RXD",
 					"strict" : false
 				},
 				{
-					"name" : "OPTRXD",
-					"strict" : false
-				},
-				{
 					"name" : "SD_WP_N",
-					"strict" : false
-				},
-				{
-					"name" : "SWITCH[6]",
-					"strict" : false
-				},
-				{
-					"name" : "SWITCH[3]",
 					"strict" : false
 				},
 				{
@@ -736,23 +568,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "BUTTON_N[0]",
-					"strict" : false
-				},
-				{
-					"name" : "BUTTON_N[3]",
-					"strict" : false
-				},
-				{
 					"name" : "AUD_DACLRCK",
-					"strict" : false
-				},
-				{
-					"name" : "SWITCH[1]",
-					"strict" : false
-				},
-				{
-					"name" : "SWITCH[2]",
 					"strict" : false
 				},
 				{
@@ -776,19 +592,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "SWITCH[0]",
-					"strict" : false
-				},
-				{
-					"name" : "SWITCH[7]",
-					"strict" : false
-				},
-				{
-					"name" : "SWITCH[8]",
-					"strict" : false
-				},
-				{
-					"name" : "SWITCH[5]",
+					"name" : "OPTRXD",
 					"strict" : false
 				},
 				{
@@ -797,10 +601,6 @@
 				},
 				{
 					"name" : "ps2_data",
-					"strict" : false
-				},
-				{
-					"name" : "SWITCH[4]",
 					"strict" : false
 				},
 				{

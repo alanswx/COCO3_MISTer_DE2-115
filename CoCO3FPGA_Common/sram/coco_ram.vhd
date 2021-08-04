@@ -82,6 +82,7 @@ library ieee;
 
 entity COCO_SRAM is
   port (
+	CLK				: in	std_logic;
     ADDR        	: in    std_logic_vector(15 downto 0);
 	R_W				: in	std_logic;
 	DATA_I			: in	std_logic_vector(7 downto 0);
@@ -91,18 +92,20 @@ end;
 
 architecture RTL of COCO_SRAM is
 
-  type RAM_ARRAY is array(0 to 65535) of std_logic_vector(7 downto 0);
+  type SRAM_ARRAY is array(0 to 65535) of std_logic_vector(7 downto 0);
   signal SRAM : SRAM_ARRAY;
 
 begin
 
   P_SRAM : process(ADDR,R_W,DATA_I)
   begin
-	if R_W = '0' then
-    	SRAM(to_integer(unsigned(ADDR))) <= DATA_I;
+	if CLK'event and CLK='1' then
+		if R_W = '0' then
+    		SRAM(to_integer(unsigned(ADDR))) <= DATA_I;
+		end if;
+		DATA_O <= SRAM(to_integer(unsigned(ADDR)));
 	end if;
   end process;
 
-DATA_O <= SRAM(to_integer(unsigned(ADDR)));
 
 end RTL;

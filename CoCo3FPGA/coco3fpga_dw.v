@@ -83,6 +83,9 @@
 `define MISTer
 
 `ifdef MISTer
+
+	`define INT_RAM
+
 	`ifndef DE2_115
 		`define DE2_115
 	`endif
@@ -104,6 +107,7 @@ CLK27MHZ_2,
 CLK3_57MHZ,
 `endif
 // RAM and ROM
+`ifndef INT_RAM
 RAM0_DATA,				// 16 bit data bus to RAM 0
 RAM0_ADDRESS,
 RAM0_RW_N,
@@ -111,7 +115,7 @@ RAM0_CS_N,				// Chip Select for RAM 0
 RAM0_BE0_N,				// Byte Enable for RAM 0
 RAM0_BE1_N,				// Byte Enable for RAM 0
 RAM0_OE_N,
-
+`endif
 // SRH remove RAM1 in DE2-115 implementation
 `ifndef DE2_115
 RAM1_ADDRESS,
@@ -273,6 +277,9 @@ CK_DAT,
 
 SWITCH,
 BUTTON_N,
+`else
+HBLANK,
+VBLANK,
 
 `endif
 

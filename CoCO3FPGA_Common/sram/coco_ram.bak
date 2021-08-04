@@ -1,6 +1,6 @@
 --//////////////////////////////////////////////////////////////////////////////
 -- Project Name:	CoCo3FPGA Version 4.0
--- File Name:		coco3fpga_top.v
+-- File Name:		coco_ram.vhd
 --
 -- CoCo3 in an FPGA
 --
@@ -91,7 +91,7 @@ end;
 
 architecture RTL of COCO_SRAM is
 
-  type RAM_ARRAY is array(0 to 65535) of std_logic_vector(7 downto 0);
+  type SRAM_ARRAY is array(0 to 65535) of std_logic_vector(7 downto 0);
   signal SRAM : SRAM_ARRAY;
 
 begin

@@ -123,9 +123,10 @@ input				CLK27MHZ_2;
 //reg	 [17:0]	RAM0_ADDRESS;
 
 //	SRH	MISTer
-`ifndef MISTer
+`ifndef INT_RAM
 output [19:0]	RAM0_ADDRESS;		// 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
 reg	 [19:0]	RAM0_ADDRESS;
+
 output			RAM0_RW_N;
 reg				RAM0_RW_N;
 // DE1 RAM bank 0
@@ -142,27 +143,27 @@ output				RAM0_OE_N;
 `else
 //	SRH	MISTer
 // Use 128KB Internal SRAM
-wire [19:0]	RAM0_ADDRESS;		// OUT 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
-reg	 [19:0]	RAM0_ADDRESS;
-wire			RAM0_RW_N;		// OUT
-reg				RAM0_RW_N;
+reg [19:0]	RAM0_ADDRESS;		// OUT 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
+//reg	 [19:0]	RAM0_ADDRESS;
+reg			RAM0_RW_N;		// OUT
+//reg				RAM0_RW_N;
 
 // SRAM	paths to be delt with later in code  - convert to RAM0_DATA_I and RAM0_DATA_O
 //inout		[15:0]	RAM0_DATA;	//OUT
 //reg		[15:0]	RAM0_DATA;
 
-wire		[15:0]	RAM0_DATA_O;
-reg			[15:0]	RAM0_DATA_O;
+reg		[15:0]	RAM0_DATA_O;
+//reg			[15:0]	RAM0_DATA_O;
 
-wire		[15:0]	RAM0_DATA_I;
+reg		[15:0]	RAM0_DATA_I;
 
-wire				RAM0_CS_N;	// OUT defined later as static '0'
-wire				RAM_CS;						// DATA_IN Mux select
-wire				RAM0_BE0_N;	// OUT
-reg					RAM0_BE0_N;
-wire				RAM0_BE1_N;	// OUT
-reg					RAM0_BE1_N;
-wire				RAM0_OE_N;	// OUT	defined later as static '0'
+wire			RAM0_CS_N;	// OUT defined later as static '0'
+wire			RAM_CS;						// DATA_IN Mux select
+reg				RAM0_BE0_N;	// OUT
+//reg					RAM0_BE0_N;
+reg				RAM0_BE1_N;	// OUT
+//reg					RAM0_BE1_N;
+wire			RAM0_OE_N;	// OUT	defined later as static '0'
 
 `endif
 
@@ -324,8 +325,22 @@ output				H_SYNC;
 reg					H_SYNC;
 output				V_SYNC;
 reg					V_SYNC;
-wire				HBLANK;
-wire				VBLANK;
+
+`ifdef MISTer
+
+output				HBLANK;
+//reg					HBLANK;
+
+output				VBLANK;
+//reg					VBLANK;
+
+`else
+
+wire					HBLANK;
+wire					VBLANK;
+
+`endif
+
 
 // PS/2
 input 				ps2_clk;
@@ -1353,25 +1368,47 @@ assign	FLASH_RESET_N = RESET_N;
 // ROM and 128KB sram
 
 `ifdef MISTer
-
 COCO_ROM CC3_ROM(
 .ADDR(FLASH_ADDRESS[15:0]),
 .DATA(FLASH_DATA)
 );
+`endif
+
+`ifdef INT_RAM
 
 COCO_SRAM CC3_SRAM0(
+.CLK(CLK50MHZ),
 .ADDR(RAM0_ADDRESS[15:0]),
-.R_W(RAM0_RW_N & RAM0_BE0_N),
+.R_W(RAM0_RW_N | RAM0_BE0_N),
 .DATA_I(RAM0_DATA_I[7:0]),
 .DATA_O(RAM0_DATA_O[7:0])
 );
 
 COCO_SRAM CC3_SRAM1(
+.CLK(CLK50MHZ),
 .ADDR(RAM0_ADDRESS[15:0]),
-.R_W(RAM0_RW_N & RAM0_BE1_N),
+.R_W(RAM0_RW_N | RAM0_BE1_N),
 .DATA_I(RAM0_DATA_I[15:8]),
 .DATA_O(RAM0_DATA_O[15:8])
 );
+
+//reg r_w_d1;
+//reg ram_write;
+
+//always @ (posedge CLK50MHZ or negedge RESET_N)
+//begin
+//	if(!RESET_N)
+//	begin
+//		r_w_d1 <= 1'b1;
+//		ram_write <= 1'b1;
+//	end
+//	else
+//	begin
+//		r_w_d1 <= RAM0_RW_N;
+//		ram_write <= !(!RAM0_RW_N & r_w_d1);
+//	end
+//end
+
 
 `endif
 
@@ -1491,7 +1528,7 @@ assign	ROM_RW = !(W_PROT[1] | RW_N);
 
 assign	DATA_IN =
 // SRH MISTer
-`ifdef MISTer
+`ifdef INT_RAM
 														RAM0_BE0		?	RAM0_DATA_O[7:0]:
 														RAM0_BE1		?	RAM0_DATA_O[15:8]:
 `else
@@ -2083,7 +2120,7 @@ begin
 		RAM1_RW1_N <= 1'b1;
 // SRH MISTer
 
-`ifndef MISTer
+`ifndef INT_RAM
 		RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 		RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `endif
@@ -2111,7 +2148,7 @@ begin
 `ifdef M1Meg
 // SRH MISTer
 
-`ifdef MISTer
+`ifdef INT_RAM
 				VIDEO_BUFFER <= RAM0_DATA_O;
 `else
 				VIDEO_BUFFER <= RAM0_DATA;
@@ -2153,7 +2190,7 @@ begin
 				begin
 // SRH MISTer
 
-`ifdef MISTer
+`ifdef INT_RAM
 					RAM0_DATA_I[15:0] <= {DATA_OUT, DATA_OUT};
 `else
 					RAM0_DATA[15:0] <= {DATA_OUT, DATA_OUT};
@@ -2164,7 +2201,7 @@ begin
 				begin
 // SRH MISTer
 
-`ifndef MISTer
+`ifndef INT_RAM
 					RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `endif
 					RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
@@ -2185,7 +2222,7 @@ begin
 						RAM1_ADDRESS10_1 <= GART_WRITE[11];
 // SRH MISTer
 
-`ifdef MISTer
+`ifdef INT_RAM
 						RAM0_DATA_I[15:0] <= {GART_BUF, GART_BUF};
 `else
 						RAM0_DATA[15:0] <= {GART_BUF, GART_BUF};
@@ -2203,7 +2240,7 @@ begin
 						RAM1_ADDRESS10_1 <= GART_READ[11];
 // SRH MISTer
 
-`ifndef MISTer
+`ifndef INT_RAM
 						RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `endif
 						RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
@@ -2222,7 +2259,7 @@ begin
 					begin
 // SRH MISTer
 
-`ifdef MISTer
+`ifdef INT_RAM
 						RAM0_DATA_I[15:0] <= {DATA_OUT, DATA_OUT};
 `else
 						RAM0_DATA[15:0] <= {DATA_OUT, DATA_OUT};
@@ -2233,7 +2270,7 @@ begin
 					begin
 // SRH MISTer
 
-`ifndef MISTer
+`ifndef INT_RAM
 						RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `endif
 						RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
@@ -2279,7 +2316,7 @@ begin
 
 // SRH MISTer
 
-`ifndef MISTer
+`ifndef INT_RAM
 			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `endif
 			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
@@ -2325,7 +2362,7 @@ begin
 `endif
 // SRH MISTer
 
-`ifndef MISTer
+`ifndef INT_RAM
 			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `endif
 			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
@@ -2338,7 +2375,7 @@ begin
 `ifdef M1Meg
 // SRH MISTer
 
-`ifdef MISTer
+`ifdef INT_RAM
 				VIDEO_BUFFER <= RAM0_DATA_O;
 `else
 				VIDEO_BUFFER <= RAM0_DATA;
@@ -2384,7 +2421,7 @@ begin
 `endif
 // SRH MISTer
 
-`ifndef MISTer
+`ifndef INT_RAM
 			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `endif
 			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
@@ -2397,7 +2434,7 @@ begin
 `ifdef M1Meg
 // SRH MISTer
 
-`ifdef MISTer
+`ifdef INT_RAM
 				VIDEO_BUFFER <= RAM0_DATA_O;
 `else
 				VIDEO_BUFFER <= RAM0_DATA;
@@ -2445,7 +2482,7 @@ begin
 `endif
 // SRH MISTer
 
-`ifndef MISTer
+`ifndef INT_RAM
 			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `endif
 			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
@@ -2458,7 +2495,7 @@ begin
 `ifdef M1Meg
  // SRH MISTer
 
-`ifdef MISTer
+`ifdef INT_RAM
 				VIDEO_BUFFER <= RAM0_DATA_O;
 `else
 				VIDEO_BUFFER <= RAM0_DATA;

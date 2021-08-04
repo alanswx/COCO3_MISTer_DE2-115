@@ -26,7 +26,7 @@
 --
 -- Redistributions of source code must retain the above copyright notice,
 -- this list of conditions and the following disclaimer.
---
+--																		   
 -- Redistributions in synthesized form must reproduce the above copyright
 -- notice, this list of conditions and the following disclaimer in the
 -- documentation and/or other materials provided with the distribution.
@@ -75,6 +75,7 @@
 -- MISTer conversion work by Stan Hodge and Alan Steremberg
 
 -- generated with romgen v3.0 by MikeJ
+
 library ieee;
   use ieee.std_logic_1164.all;
   use ieee.std_logic_unsigned.all;

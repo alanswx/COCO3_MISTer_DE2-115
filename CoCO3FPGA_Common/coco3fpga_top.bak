@@ -123,9 +123,10 @@ input				CLK27MHZ_2;
 //reg	 [17:0]	RAM0_ADDRESS;
 
 //	SRH	MISTer
-`ifndef MISTer
+`ifndef INT_RAM
 output [19:0]	RAM0_ADDRESS;		// 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
 reg	 [19:0]	RAM0_ADDRESS;
+
 output			RAM0_RW_N;
 reg				RAM0_RW_N;
 // DE1 RAM bank 0
@@ -142,22 +143,27 @@ output				RAM0_OE_N;
 `else
 //	SRH	MISTer
 // Use 128KB Internal SRAM
-wire [19:0]	RAM0_ADDRESS;		// 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
-reg	 [19:0]	RAM0_ADDRESS;
-wire			RAM0_RW_N;
-reg				RAM0_RW_N;
+reg [19:0]	RAM0_ADDRESS;		// OUT 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
+//reg	 [19:0]	RAM0_ADDRESS;
+reg			RAM0_RW_N;		// OUT
+//reg				RAM0_RW_N;
 
 // SRAM	paths to be delt with later in code  - convert to RAM0_DATA_I and RAM0_DATA_O
-//inout		[15:0]	RAM0_DATA;
+//inout		[15:0]	RAM0_DATA;	//OUT
 //reg		[15:0]	RAM0_DATA;
 
-wire				RAM0_CS_N;
-wire				RAM_CS;						// DATA_IN Mux select
-wire				RAM0_BE0_N;
-reg					RAM0_BE0_N;
-wire				RAM0_BE1_N;
-reg					RAM0_BE1_N;
-wire				RAM0_OE_N;
+reg		[15:0]	RAM0_DATA_O;
+//reg			[15:0]	RAM0_DATA_O;
+
+reg		[15:0]	RAM0_DATA_I;
+
+wire			RAM0_CS_N;	// OUT defined later as static '0'
+wire			RAM_CS;						// DATA_IN Mux select
+reg				RAM0_BE0_N;	// OUT
+//reg					RAM0_BE0_N;
+reg				RAM0_BE1_N;	// OUT
+//reg					RAM0_BE1_N;
+wire			RAM0_OE_N;	// OUT	defined later as static '0'
 
 `endif
 
@@ -319,8 +325,22 @@ output				H_SYNC;
 reg					H_SYNC;
 output				V_SYNC;
 reg					V_SYNC;
-wire				HBLANK;
-wire				VBLANK;
+
+`ifdef MISTer
+
+output				HBLANK;
+//reg					HBLANK;
+
+output				VBLANK;
+//reg					VBLANK;
+
+`else
+
+wire					HBLANK;
+wire					VBLANK;
+
+`endif
+
 
 // PS/2
 input 				ps2_clk;
@@ -1345,14 +1365,51 @@ assign FLASH_DATA = (!FLASH_WE_N)	?	DATA_OUT:
 assign	FLASH_RESET_N = RESET_N;
 
 // SRH MISTer
+// ROM and 128KB sram
 
 `ifdef MISTer
-
 COCO_ROM CC3_ROM(
 .ADDR(FLASH_ADDRESS[15:0]),
 .DATA(FLASH_DATA)
-
 );
+`endif
+
+`ifdef INT_RAM
+
+COCO_SRAM CC3_SRAM0(
+.CLK(!CLK50MHZ),
+.ADDR(RAM0_ADDRESS[15:0]),
+.R_W(RAM0_RW_N | RAM0_BE0_N),
+.DATA_I(RAM0_DATA_I[7:0]),
+.DATA_O(RAM0_DATA_O[7:0])
+);
+
+COCO_SRAM CC3_SRAM1(
+.CLK(!CLK50MHZ),
+.ADDR(RAM0_ADDRESS[15:0]),
+.R_W(RAM0_RW_N | RAM0_BE1_N),
+.DATA_I(RAM0_DATA_I[15:8]),
+.DATA_O(RAM0_DATA_O[15:8])
+);
+
+//reg r_w_d1;
+//reg ram_write;
+
+//always @ (posedge CLK50MHZ or negedge RESET_N)
+//begin
+//	if(!RESET_N)
+//	begin
+//		r_w_d1 <= 1'b1;
+//		ram_write <= 1'b1;
+//	end
+//	else
+//	begin
+//		r_w_d1 <= RAM0_RW_N;
+//		ram_write <= !(!RAM0_RW_N & r_w_d1);
+//	end
+//end
+
+
 `endif
 
 
@@ -1468,8 +1525,16 @@ in any banks in any order, by simply writing the proper data into these latches.
 // If W_PROT[1] = 1 then ROM_RW is 0, else ROM_RW = !RW_N
 assign	ROM_RW = !(W_PROT[1] | RW_N);
 
-assign	DATA_IN =								RAM0_BE0		?	RAM0_DATA[7:0]:
+
+assign	DATA_IN =
+// SRH MISTer
+`ifdef INT_RAM
+														RAM0_BE0		?	RAM0_DATA_O[7:0]:
+														RAM0_BE1		?	RAM0_DATA_O[15:8]:
+`else
+														RAM0_BE0		?	RAM0_DATA[7:0]:
 														RAM0_BE1		?	RAM0_DATA[15:8]:
+`endif
 														RAM1_BE0		?	RAM1_DATA[7:0]:
 														RAM1_BE1		?	RAM1_DATA[15:8]:
 														RAM1_BE2		?	RAM1_DATA[7:0]:
@@ -2053,8 +2118,12 @@ begin
 		RAM0_RW_N <= 1'b1;
 		RAM1_RW0_N <= 1'b1;
 		RAM1_RW1_N <= 1'b1;
+// SRH MISTer
+
+`ifndef INT_RAM
 		RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 		RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
+`endif
 		RAM0_BE0_N <=  1'b1;
 		RAM0_BE1_N <= 1'b1;
 		RAM1_BE0_N <=  1'b1;
@@ -2077,7 +2146,13 @@ begin
 				VIDEO_BUFFER <= RAM1_DATA;
 `endif
 `ifdef M1Meg
+// SRH MISTer
+
+`ifdef INT_RAM
+				VIDEO_BUFFER <= RAM0_DATA_O;
+`else
 				VIDEO_BUFFER <= RAM0_DATA;
+`endif
 `endif
 `ifdef M4Meg
 				VIDEO_BUFFER <= RAM1_DATA;
@@ -2113,12 +2188,22 @@ begin
 				end
 				if (!RW_N)
 				begin
+// SRH MISTer
+
+`ifdef INT_RAM
+					RAM0_DATA_I[15:0] <= {DATA_OUT, DATA_OUT};
+`else
 					RAM0_DATA[15:0] <= {DATA_OUT, DATA_OUT};
+`endif
 					RAM1_DATA[15:0] <= {DATA_OUT, DATA_OUT};
 				end
 				else
 				begin
+// SRH MISTer
+
+`ifndef INT_RAM
 					RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
+`endif
 					RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 				end
 			end
@@ -2135,7 +2220,13 @@ begin
 						RAM1_ADDRESS <= GART_WRITE[20:1];
 						RAM1_ADDRESS9_1 <= GART_WRITE[10];
 						RAM1_ADDRESS10_1 <= GART_WRITE[11];
+// SRH MISTer
+
+`ifdef INT_RAM
+						RAM0_DATA_I[15:0] <= {GART_BUF, GART_BUF};
+`else
 						RAM0_DATA[15:0] <= {GART_BUF, GART_BUF};
+`endif
 						RAM1_DATA[15:0] <= {GART_BUF, GART_BUF};
 					end
 					else
@@ -2147,7 +2238,11 @@ begin
 						RAM1_ADDRESS <= GART_READ[20:1];
 						RAM1_ADDRESS9_1 <= GART_READ[10];
 						RAM1_ADDRESS10_1 <= GART_READ[11];
+// SRH MISTer
+
+`ifndef INT_RAM
 						RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
+`endif
 						RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 					end
 				end
@@ -2162,12 +2257,22 @@ begin
 					RAM1_ADDRESS10_1 <= ADDRESS[11];
 					if (!RW_N)
 					begin
+// SRH MISTer
+
+`ifdef INT_RAM
+						RAM0_DATA_I[15:0] <= {DATA_OUT, DATA_OUT};
+`else
 						RAM0_DATA[15:0] <= {DATA_OUT, DATA_OUT};
+`endif
 						RAM1_DATA[15:0] <= {DATA_OUT, DATA_OUT};
 					end
 					else
 					begin
+// SRH MISTer
+
+`ifndef INT_RAM
 						RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
+`endif
 						RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 					end
 				end
@@ -2209,7 +2314,11 @@ begin
 			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
 `endif
 
+// SRH MISTer
+
+`ifndef INT_RAM
 			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
+`endif
 			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 			RAM0_RW_N <= 1'b1;
 			RAM1_RW0_N <= 1'b1;
@@ -2251,7 +2360,11 @@ begin
 			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
 			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
 `endif
+// SRH MISTer
+
+`ifndef INT_RAM
 			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
+`endif
 			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `ifdef M5Meg
 			if(VIDEO_ADDRESS[21])
@@ -2260,7 +2373,13 @@ begin
 				VIDEO_BUFFER <= RAM1_DATA;
 `endif
 `ifdef M1Meg
+// SRH MISTer
+
+`ifdef INT_RAM
+				VIDEO_BUFFER <= RAM0_DATA_O;
+`else
 				VIDEO_BUFFER <= RAM0_DATA;
+`endif
 `endif
 `ifdef M4Meg
 				VIDEO_BUFFER <= RAM1_DATA;
@@ -2300,7 +2419,11 @@ begin
 			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
 			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
 `endif
+// SRH MISTer
+
+`ifndef INT_RAM
 			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
+`endif
 			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `ifdef M5Meg
 			if(VIDEO_ADDRESS[21])
@@ -2309,7 +2432,13 @@ begin
 				VIDEO_BUFFER <= RAM1_DATA;
 `endif
 `ifdef M1Meg
+// SRH MISTer
+
+`ifdef INT_RAM
+				VIDEO_BUFFER <= RAM0_DATA_O;
+`else
 				VIDEO_BUFFER <= RAM0_DATA;
+`endif
 `endif
 `ifdef M4Meg
 				VIDEO_BUFFER <= RAM1_DATA;
@@ -2351,7 +2480,11 @@ begin
 			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
 			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
 `endif
+// SRH MISTer
+
+`ifndef INT_RAM
 			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
+`endif
 			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 `ifdef M5Meg
 			if(VIDEO_ADDRESS[21])
@@ -2360,7 +2493,13 @@ begin
 				VIDEO_BUFFER <= RAM1_DATA;
 `endif
 `ifdef M1Meg
+ // SRH MISTer
+
+`ifdef INT_RAM
+				VIDEO_BUFFER <= RAM0_DATA_O;
+`else
 				VIDEO_BUFFER <= RAM0_DATA;
+`endif
 `endif
 `ifdef M4Meg
 				VIDEO_BUFFER <= RAM1_DATA;
