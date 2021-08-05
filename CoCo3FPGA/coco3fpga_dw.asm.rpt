@@ -1,5 +1,5 @@
 Assembler report for coco3fpga_dw
-Tue Aug 03 17:10:08 2021
+Wed Aug 04 22:58:34 2021
 Quartus Prime Version 17.0.2 Build 602 07/19/2017 SJ Lite Edition
 
 
@@ -38,7 +38,7 @@ agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Tue Aug 03 17:10:08 2021 ;
+; Assembler Status      ; Successful - Wed Aug 04 22:58:34 2021 ;
 ; Revision Name         ; coco3fpga_dw                          ;
 ; Top-level Entity Name ; coco3fpga_dw                          ;
 ; Family                ; Cyclone IV E                          ;
@@ -68,7 +68,7 @@ agreement for further details.
 ; Option         ; Setting                                             ;
 +----------------+-----------------------------------------------------+
 ; JTAG usercode  ; 0xFFFFFFFF                                          ;
-; Checksum       ; 0x020B3D0F                                          ;
+; Checksum       ; 0x020B6AFC                                          ;
 +----------------+-----------------------------------------------------+
 
 
@@ -78,14 +78,14 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 17.0.2 Build 602 07/19/2017 SJ Lite Edition
-    Info: Processing started: Tue Aug 03 17:09:59 2021
+    Info: Processing started: Wed Aug 04 22:58:25 2021
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off coco3fpga_dw -c coco3fpga_dw
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 4807 megabytes
-    Info: Processing ended: Tue Aug 03 17:10:09 2021
-    Info: Elapsed time: 00:00:10
+    Info: Peak virtual memory: 4806 megabytes
+    Info: Processing ended: Wed Aug 04 22:58:34 2021
+    Info: Elapsed time: 00:00:09
     Info: Total CPU time (on all processors): 00:00:05
 
 
