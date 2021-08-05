@@ -95,86 +95,23 @@
 module coco3fpga_dw(
 // Input Clocks
 CLK50MHZ,
-// SRH
-`ifndef DE2_115
-CLK24MHZ,
-CLK24MHZ_2,
-`endif
 CLK27MHZ,
-//SRH
-`ifndef DE2_115
-CLK27MHZ_2,
-CLK3_57MHZ,
-`endif
-// RAM and ROM
-`ifndef INT_RAM
-RAM0_DATA,				// 16 bit data bus to RAM 0
-RAM0_ADDRESS,
-RAM0_RW_N,
-RAM0_CS_N,				// Chip Select for RAM 0
-RAM0_BE0_N,				// Byte Enable for RAM 0
-RAM0_BE1_N,				// Byte Enable for RAM 0
-RAM0_OE_N,
-`endif
-// SRH remove RAM1 in DE2-115 implementation
-`ifndef DE2_115
-RAM1_ADDRESS,
-RAM1_ADDRESS9_1,
-RAM1_ADDRESS10_1,
-RAM1_DATA,
-RAM1_BE0_N,
-RAM1_BE1_N,
-RAM1_BE2_N,
-RAM1_BE3_N,
-RAM1_CS0_N,
-RAM1_CS1_N,
-RAM1_RW0_N,
-RAM1_RW1_N,
-RAM1_OE0_N,
-RAM1_OE1_N,
-`endif
 
+// SDRAM - SRH
+// Commented out until later - maybe
+//SDRAM_ADDRESS,
+//SDRAM_BANK,
+//SDRAM_DATA,
+//SDRAM_LDQM,
+//SDRAM_UDQM,
+//SDRAM_DQM,
+//SDRAM_RAS_N,
+//SDRAM_CAS_N,
+//SDRAM_CKE,
+//SDRAM_CLK,
+//SDRAM_CS_N,
+//SDRAM_RW_N,
 
-//	SRH	MISTer
-//	Removel of Flash declaration
-
-`ifndef MISTer
-FLASH_ADDRESS,
-FLASH_DATA,																																 
-FLASH_WE_N,
-FLASH_RESET_N,
-FLASH_CE_N,
-FLASH_OE_N,
-`endif
-
-//	SRH	MISTer
-//	Removel of Flash declaration
-
-`ifndef MISTer
-	`ifdef DE2_115
-		FLASH_WP_N,
-		FLASH_RY,
-	`endif
-`endif
-
-// SDRAM
-SDRAM_ADDRESS,
-SDRAM_BANK,
-SDRAM_DATA,
-SDRAM_LDQM,
-SDRAM_UDQM,
-`ifdef DE2_115
-SDRAM_DQM,
-`endif
-SDRAM_RAS_N,
-SDRAM_CAS_N,
-SDRAM_CKE,
-SDRAM_CLK,
-SDRAM_CS_N,
-SDRAM_RW_N,
-// VGA
-// SRH The DE2-115 has a 8,8,8 RGB VGA interface
-`ifdef DE2_115
 RED7,
 GREEN7,
 BLUE7,
@@ -187,7 +124,6 @@ BLUE5,
 RED4,
 GREEN4,
 BLUE4,
-`endif
 RED3,
 GREEN3,
 BLUE3,
@@ -202,12 +138,9 @@ GREEN0,
 BLUE0,
 H_SYNC,
 V_SYNC,
-// SRH Extra control lines for the VGA tripple DAC on the DE2-115
-`ifdef DE2_115
 VGA_SYNC_N,
 VGA_BLANK_N,
 VGA_CLK,
-`endif
 
 // PS/2
 ps2_clk,
@@ -216,59 +149,37 @@ ps2_key,
 //ms_clk,
 //ms_data,
 //Serial Ports
+
+// RS-232
 DE1TXD,
 DE1RXD,
 OPTTXD,
 OPTRXD,
-// I2C
+
+// I2C - Audio
 I2C_SCL,
 I2C_DAT,
-//Codec
+
+//Codec - Audio
 AUD_XCK,
 AUD_BCLK,
 AUD_DACDAT,
 AUD_DACLRCK,
 AUD_ADCDAT,
 AUD_ADCLRCK,
-// 7 Segment Display
-SEGMENT0_N,
-SEGMENT1_N,
-SEGMENT2_N,
-SEGMENT3_N,
-`ifdef DE2_115
-SEGMENT4_N,
-SEGMENT5_N,
-SEGMENT6_N,
-SEGMENT7_N,
-`endif
 
-// LEDs
-LEDG,
-LEDR,
 // CoCo Joystick
+// Needs removal.... ???
 PADDLE_MCLK,
 PADDLE_CLK,
 P_SWITCH,
-//SPI for SD Card
-MOSI,
-MISO,
-SPI_CLK,
-SPI_SS_N,
-`ifdef DE2_115
-SD_WP_N, // HWP = 0
-`endif
+
 // Debug Test Points
 //TEST_1,
 //TEST_2,
 //TEST_3,
 //TEST_4,
-// WiFi
-WF_RXD,
-WF_TXD,
-RST,
-//RTC I2C
-CK_CLK,
-CK_DAT,
+
 // Buttons and Switches
 
 //	SRH	MISTer
@@ -283,11 +194,9 @@ BUTTON_N,
 HBLANK,
 VBLANK,
 
-`endif
-
+// Needs removal....
 GPIO
 );
-
 
 //Analog Board
 parameter BOARD_TYPE = 8'h00;

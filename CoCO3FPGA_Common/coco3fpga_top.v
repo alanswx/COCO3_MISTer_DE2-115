@@ -99,53 +99,19 @@ parameter Version_Lo = 8'h12;
 //Memory Quantity
 // CHOOSE ONLY ONE AT A TIME
 //`define M5Meg			// Two 2Meg and DE1
-`define M1Meg			// DE1 & DE2-115
+`define M1Meg			// DE1 & DE2-115 and 128KB
 ////////////////////////////////////////////////////////////////////////////////
 
 
-input				CLK50MHZ;
-// SRH
-`ifndef DE2_115
-input				CLK24MHZ;
-input				CLK24MHZ_2;
-`endif
-input				CLK27MHZ;
-// SRH
-`ifndef DE2_115
-input				CLK27MHZ_2;
-`endif
+input			CLK50MHZ;
+input			CLK27MHZ;
 
-// SRH Changes to wire
-//output			CLK3_57MHZ;
 
-// DE1 RAM Common
-//output [17:0]	RAM0_ADDRESS;	// 512kb SRAM
-//reg	 [17:0]	RAM0_ADDRESS;
-
-//	SRH	MISTer
-`ifndef INT_RAM
-output [19:0]	RAM0_ADDRESS;		// 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
-reg	 [19:0]	RAM0_ADDRESS;
-
-output			RAM0_RW_N;
-reg				RAM0_RW_N;
-// DE1 RAM bank 0
-inout		[15:0]	RAM0_DATA;
-reg		[15:0]	RAM0_DATA;
-output				RAM0_CS_N;
-wire					RAM_CS;						// DATA_IN Mux select
-output				RAM0_BE0_N;
-reg					RAM0_BE0_N;
-output				RAM0_BE1_N;
-reg					RAM0_BE1_N;
-output				RAM0_OE_N;
-
-`else
 //	SRH	MISTer
 // Use 128KB Internal SRAM
-reg [19:0]	RAM0_ADDRESS;		// OUT 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
+reg 	[19:0]	RAM0_ADDRESS;		// OUT 2MB SRAM.  Bit 19 unconnected on DE1, gives 1MB
 //reg	 [19:0]	RAM0_ADDRESS;
-reg			RAM0_RW_N;		// OUT
+reg				RAM0_RW_N;		// OUT
 //reg				RAM0_RW_N;
 
 // SRAM	paths to be delt with later in code  - convert to RAM0_DATA_I and RAM0_DATA_O
@@ -165,506 +131,369 @@ reg				RAM0_BE1_N;	// OUT
 //reg					RAM0_BE1_N;
 wire			RAM0_OE_N;	// OUT	defined later as static '0'
 
-`endif
+wire			RAM0_BE0;
+wire			RAM0_BE1;
 
-wire					RAM0_BE0;
-wire					RAM0_BE1;
-
-// SRH	Since the DE2-115 cannot support the external ram without using the HMSC connectors, it is removed from the I/O list and changed to wires.
-//		This leaves the code alone to function as written...
-// Analog Board RAM Common
-`ifndef DE2_115
-output [19:0]	RAM1_ADDRESS;			// 2 MB SRAM
-reg	 [19:0]	RAM1_ADDRESS;
-output 			RAM1_ADDRESS9_1;
-reg	 			RAM1_ADDRESS9_1;
-output 			RAM1_ADDRESS10_1;
-reg	 			RAM1_ADDRESS10_1;
-output			RAM1_RW0_N;
-reg				RAM1_RW0_N;
-output			RAM1_RW1_N;
-reg				RAM1_RW1_N;
-// Ananlog SRAM bank 1
-inout  [15:0]	RAM1_DATA;
-reg	 [15:0]	RAM1_DATA;
-output			RAM1_BE0_N;
-reg				RAM1_BE0_N;
-wire				RAM1_BE0;
-output			RAM1_BE1_N;
-reg				RAM1_BE1_N;
-wire				RAM1_BE1;
-output			RAM1_BE2_N;
-reg				RAM1_BE2_N;
-wire				RAM1_BE2;
-output			RAM1_BE3_N;
-reg				RAM1_BE3_N;
-wire				RAM1_BE3;
-output			RAM1_CS0_N;
-wire				RAM1_CS0;
-output			RAM1_CS1_N;
-wire				RAM1_CS1;
-output			RAM1_OE0_N;
-output			RAM1_OE1_N;
-`endif
  
 //Flash ROM
 // SRH
-`ifdef DE2_115
-	//	SRH	MISTer
-	`ifdef MISTer
-		wire	[22:0]	FLASH_ADDRESS;
-	`else
-		output	[22:0]	FLASH_ADDRESS;
-	`endif
-`else
-output	[21:0]	FLASH_ADDRESS;
-`endif
+wire	[22:0]	FLASH_ADDRESS;
 
 //	SRH	MISTer
-`ifdef MISTer
-wire		[7:0]		FLASH_DATA;
-`else
-inout		[7:0]		FLASH_DATA;
-output				FLASH_WE_N;
-output				FLASH_RESET_N;
-output				FLASH_CE_N;
-output				FLASH_OE_N;
-// SRH
-`ifdef DE2_115
-	output				FLASH_WP_N;
-	input				FLASH_RY;
-`endif
-
-`endif
+wire	[7:0]	FLASH_DATA;
 
 
 // SDRAM
 // SRH
-`ifdef DE2_115
-output	[12:0]	SDRAM_ADDRESS;
-`else
-output	[11:0]	SDRAM_ADDRESS;
-`endif
-output	[1:0]		SDRAM_BANK;
-`ifndef DE2_115
-inout		[15:0]	SDRAM_DATA;
-`else
-inout		[31:0]	SDRAM_DATA;
-`endif
-output				SDRAM_LDQM;
-output				SDRAM_UDQM;
-`ifdef DE2_115
-output		[3:2]	SDRAM_DQM;
-`endif
-output				SDRAM_RAS_N;
-output				SDRAM_CAS_N;
-output				SDRAM_CKE;
-output				SDRAM_CLK;
-output				SDRAM_CS_N;
-output				SDRAM_RW_N;
+//`ifdef DE2_115
+//output	[12:0]	SDRAM_ADDRESS;
+//`else
+//output	[11:0]	SDRAM_ADDRESS;
+//`endif
+//output	[1:0]		SDRAM_BANK;
+//`ifndef DE2_115
+//inout		[15:0]	SDRAM_DATA;
+//`else
+//inout		[31:0]	SDRAM_DATA;
+//`endif
+//output				SDRAM_LDQM;
+//output				SDRAM_UDQM;
+//`ifdef DE2_115
+//output		[3:2]	SDRAM_DQM;
+//`endif
+//output				SDRAM_RAS_N;
+//output				SDRAM_CAS_N;
+//output				SDRAM_CKE;
+//output				SDRAM_CLK;
+//output				SDRAM_CS_N;
+//output				SDRAM_RW_N;
 
 // VGA
 // SRH The DE2-115 has 8 bit RBG and a few other signals
-`ifdef DE2_115
-output				RED4;
-reg					RED4;
-output				GREEN4;
-reg					GREEN4;
-output				BLUE4;
-reg					BLUE4;
-output				RED5;
-reg					RED5;
-output				GREEN5;
-reg					GREEN5;
-output				BLUE5;
-reg					BLUE5;
-output				RED6;
-reg					RED6;
-output				GREEN6;
-reg					GREEN6;
-output				BLUE6;
-reg					BLUE6;
-output				RED7;
-reg					RED7;
-output				GREEN7;
-reg					GREEN7;
-output				BLUE7;
-reg					BLUE7;
-output				VGA_SYNC_N;
-reg					VGA_SYNC_N;
-output				VGA_BLANK_N;
-reg					VGA_BLANK_N;
-output				VGA_CLK;
-`endif
+output			RED4;
+reg				RED4;
+output			GREEN4;
+reg				GREEN4;
+output			BLUE4;
+reg				BLUE4;
+output			RED5;
+reg				RED5;
+output			GREEN5;
+reg				GREEN5;
+output			BLUE5;
+reg				BLUE5;
+output			RED6;
+reg				RED6;
+output			GREEN6;
+reg				GREEN6;
+output			BLUE6;
+reg				BLUE6;
+output			RED7;
+reg				RED7;
+output			GREEN7;
+reg				GREEN7;
+output			BLUE7;
+reg				BLUE7;
+output			VGA_SYNC_N;
+reg				VGA_SYNC_N;
+output			VGA_BLANK_N;
+reg				VGA_BLANK_N;
+output			VGA_CLK;
 
-output				RED3;
-reg					RED3;
-output				GREEN3;
-reg					GREEN3;
-output				BLUE3;
-reg					BLUE3;
-output				RED2;
-reg					RED2;
-output				GREEN2;
-reg					GREEN2;
-output				BLUE2;
-reg					BLUE2;
-output				RED1;
-reg					RED1;
-output				GREEN1;
-reg					GREEN1;
-output				BLUE1;
-reg					BLUE1;
-output				RED0;
-reg					RED0;
-output				GREEN0;
-reg					GREEN0;
-output				BLUE0;
-reg					BLUE0;
-output				H_SYNC;
-reg					H_SYNC;
-output				V_SYNC;
-reg					V_SYNC;
+output			RED3;
+reg				RED3;
+output			GREEN3;
+reg				GREEN3;
+output			BLUE3;
+reg				BLUE3;
+output			RED2;
+reg				RED2;
+output			GREEN2;
+reg				GREEN2;
+output			BLUE2;
+reg				BLUE2;
+output			RED1;
+reg				RED1;
+output			GREEN1;
+reg				GREEN1;
+output			BLUE1;
+reg				BLUE1;
+output			RED0;
+reg				RED0;
+output			GREEN0;
+reg				GREEN0;
+output			BLUE0;
+reg				BLUE0;
+output			H_SYNC;
+reg				H_SYNC;
+output			V_SYNC;
+reg				V_SYNC;
 
-`ifdef MISTer
-
-output				HBLANK;
+output			HBLANK;
 //reg					HBLANK;
 
-output				VBLANK;
+output			VBLANK;
 //reg					VBLANK;
-
-`else
-
-wire					HBLANK;
-wire					VBLANK;
-
-`endif
 
 
 // PS/2
-input 				ps2_clk;
-input					ps2_data;
+input 			ps2_clk;
+input			ps2_data;
 
 input   [10:0]    ps2_key;
 
 // Serial Ports
-output				DE1TXD;
-input					DE1RXD;
-output				OPTTXD;
-input					OPTRXD;
+output			DE1TXD;
+input			DE1RXD;
+output			OPTTXD;
+input			OPTRXD;
 // I2C
-output				I2C_SCL;			// Idiosyncrasy of DE1
-inout					I2C_DAT;
+output			I2C_SCL;			// Idiosyncrasy of DE1
+inout			I2C_DAT;
 //Codec
-output				AUD_XCK;
-input					AUD_BCLK;
-output				AUD_DACDAT;
-reg					AUD_DACDAT;
-input					AUD_DACLRCK;
-input					AUD_ADCDAT;
-input					AUD_ADCLRCK;
-// Display
+output			AUD_XCK;
+input			AUD_BCLK;
+output			AUD_DACDAT;
+reg				AUD_DACDAT;
+input			AUD_DACLRCK;
+input			AUD_ADCDAT;
+input			AUD_ADCLRCK;
 
-output	[6:0]		SEGMENT0_N;
-output	[6:0]		SEGMENT1_N;
-output	[6:0]		SEGMENT2_N;
-output	[6:0]		SEGMENT3_N;
-`ifdef DE2_115
-output	[6:0]		SEGMENT4_N;
-output	[6:0]		SEGMENT5_N;
-output	[6:0]		SEGMENT6_N;
-output	[6:0]		SEGMENT7_N;
-`endif
+// 7 seg Display
 
-wire		[6:0]		SEGMENT_N;
-reg		[3:0]		DIGIT_N;
+//output	[6:0]		SEGMENT0_N;
+//output	[6:0]		SEGMENT1_N;
+//output	[6:0]		SEGMENT2_N;
+//output	[6:0]		SEGMENT3_N;
+//`ifdef DE2_115
+//output	[6:0]		SEGMENT4_N;
+//output	[6:0]		SEGMENT5_N;
+//output	[6:0]		SEGMENT6_N;
+//output	[6:0]		SEGMENT7_N;
+//`endif
+
 //`endif
 
 // LEDs
 // SRH DE2-115 has one extra Green LED
-`ifdef DE2_115
-output	[8:0]		LEDG;
-`else
-output	[7:0]		LEDG;
-`endif
+wire	[8:0]	LEDG;
 //output	[9:0]		LEDR;
 // SRH DE2-115 has 10 extra Red LED
-`ifdef DE2_115
-output	[17:0]		LEDR;
-`else
-output	[7:0]		LEDR; 			// LEDR9 and LEDR8 = A18 and A19 of 2MB SRAM
-`endif
+wire	[17:0]	LEDR;
 // CoCo Perpherial
-output				PADDLE_MCLK;
-input		[3:0]		PADDLE_CLK;
-input		[3:0]		P_SWITCH;
-//SPI
-output				MOSI;
-input					MISO;
-output				SPI_CLK;
-output				SPI_SS_N;
-`ifdef DE2_115
-input				SD_WP_N; // HWP = 0
-`endif
+output			PADDLE_MCLK;
+input	[3:0]	PADDLE_CLK;
+input	[3:0]	P_SWITCH;
 
 // Extra Buttons and Switches
 
 //	SRH	MISTer
 //	Static switches
-`ifndef MISTer
-input		[9:0]		SWITCH;			
-`else
-wire		[9:0]		SWITCH;			
-`endif
+wire	[9:0]  	SWITCH;			
 
 //	SRH	MISTer
 //	Static Buttons
-`ifndef MISTer
-input [3:0]			BUTTON_N;
-`else
-wire [3:0]			BUTTON_N;
-`endif		
+wire   	[3:0]	 BUTTON_N;
 											//  3 RESET
 											//  2 SD Card Inserted (0=Inserted) wired to switche on the SD card
 											//  1 SD Write Protect (1=Protected) wired to switche on the SD card
 											//  0 Easter Egg
 
-//WiFi
-input					WF_RXD;
-output				WF_TXD;
-output				RST;
 // Free IO Pins
-inout		[7:0]		GPIO;
-
-inout					CK_CLK;
-inout					CK_DAT;
+inout	[7:0]	GPIO;
 											
-// SRH - Movement of ports to internal wires
-`ifdef DE2_115
-wire					CLK3_57MHZ;
+wire			CLK3_57MHZ;
 
-//	Ram1
-reg	 [19:0]	RAM1_ADDRESS;
-reg	 			RAM1_ADDRESS9_1;
-reg	 			RAM1_ADDRESS10_1;
-reg				RAM1_RW0_N;
-reg				RAM1_RW1_N;
-// Ananlog SRAM bank 1
-reg 	[15:0]	RAM1_DATA;
-//reg	 [15:0]	RAM1_DATA;
-reg				RAM1_BE0_N;
-reg				RAM1_BE1_N;
-wire			RAM1_BE1;
-reg				RAM1_BE2_N;
-wire			RAM1_BE2;
-reg				RAM1_BE3_N;
-wire			RAM1_BE3;
-wire			RAM1_CS0;
-wire			RAM1_CS1;
-wire			RAM1_OE0_N;
-wire			RAM1_OE1_N;
-`endif
-
-wire					PH_2;
-reg 					PH_2_RAW;
-reg					RESET_N;
+wire			PH_2;
+reg 			PH_2_RAW;
+reg				RESET_N;
 reg		[13:0]	RESET_SM;
-reg		[6:0]		CPU_RESET_SM;
-reg					CPU_RESET;
-wire					RESET_INS;
-reg					MUGS;
-wire					RESET;
-wire					RESET_P;
-wire		[15:0]	ADDRESS;
-wire		[9:0]		BLOCK_ADDRESS;		// 5:0 for 512kb
-wire					RW_N;
-wire		[7:0]		DATA_IN;
-wire		[7:0]		DATA_OUT;
-wire					VMAX;
-wire					VMA;
-reg		[5:0]		CLK;
+reg		[6:0]	CPU_RESET_SM;
+reg				CPU_RESET;
+wire			RESET_INS;
+reg				MUGS;
+wire			RESET;
+wire			RESET_P;
+wire	[15:0]	ADDRESS;
+wire	[9:0]	BLOCK_ADDRESS;		// 5:0 for 512kb
+wire			RW_N;
+wire	[7:0]	DATA_IN;
+wire	[7:0]	DATA_OUT;
+wire			VMAX;
+wire			VMA;
+reg		[5:0]	CLK;
 
 // Gime Regs
-reg		[1:0]		ROM;
-reg					RAM;
-reg					ST_SCS;
-reg					VEC_PAG_RAM;
-reg					GIME_FIRQ;
-reg					GIME_IRQ;
-reg					MMU_EN;
-reg					COCO1;
-reg		[2:0]		V;
-reg		[6:0]		VERT;
-reg					RATE;
-reg					TIMER_INS;
-reg					MMU_TR;
-reg		[3:0]		TMR_MSB;
-reg		[7:0]		TMR_LSB;
-wire					TMR_RST;
-reg					TMR_ENABLE;
+reg		[1:0]	ROM;
+reg				RAM;
+reg				ST_SCS;
+reg				VEC_PAG_RAM;
+reg				GIME_FIRQ;
+reg				GIME_IRQ;
+reg				MMU_EN;
+reg				COCO1;
+reg		[2:0]	V;
+reg		[6:0]	VERT;
+reg				RATE;
+reg				TIMER_INS;
+reg				MMU_TR;
+reg		[3:0]	TMR_MSB;
+reg		[7:0]	TMR_LSB;
+wire			TMR_RST;
+reg				TMR_ENABLE;
 reg		[15:0]	VIDEO_BUFFER;
-reg					GRMODE;
-reg					DESCEN;
-reg					BLINK;
-reg					MONO;
-reg					HLPR;
-reg		[2:0]		LPR;
-reg		[1:0]		LPF;
-reg		[3:0]		HRES;
-reg		[1:0]		CRES;
-reg		[3:0]		VERT_FIN_SCRL;
-reg		[3:0]		SCRN_START_HSB;	// 4 extra bits for 4MB
-reg		[7:0]		SCRN_START_MSB;
-reg		[7:0]		SCRN_START_LSB;
-reg		[6:0]		HOR_OFFSET;
-reg					HVEN;
+reg				GRMODE;
+reg				DESCEN;
+reg				BLINK;
+reg				MONO;
+reg				HLPR;
+reg		[2:0]	LPR;
+reg		[1:0]	LPF;
+reg		[3:0]	HRES;
+reg		[1:0]	CRES;
+reg		[3:0]	VERT_FIN_SCRL;
+reg		[3:0]	SCRN_START_HSB;	// 4 extra bits for 4MB
+reg		[7:0]	SCRN_START_MSB;
+reg		[7:0]	SCRN_START_LSB;
+reg		[6:0]	HOR_OFFSET;
+reg				HVEN;
 reg		[11:0]	PALETTE [16:0];
-wire		[9:0]		COLOR;
-reg		[9:0]		COLOR_BUF;
-wire					H_SYNC_N;
-wire					V_SYNC_N;
-reg		[1:0]		SEL;
-reg		[7:0]		KEY_COLUMN;
-reg		[3:0]		VDG_CONTROL;
-reg					CSS;
-wire					BIT3;
-reg					CAS_MTR;
-reg					SOUND_EN;
-wire		[21:0]	VIDEO_ADDRESS;		// 8MB   17:0 for 512kb
-wire					ROM_RW;
-wire					FLASH_CE_S;
+wire	[9:0]	COLOR;
+reg		[9:0]	COLOR_BUF;
+wire			H_SYNC_N;
+wire			V_SYNC_N;
+reg		[1:0]	SEL;
+reg		[7:0]	KEY_COLUMN;
+reg		[3:0]	VDG_CONTROL;
+reg				CSS;
+wire			BIT3;
+reg				CAS_MTR;
+reg				SOUND_EN;
+wire	[21:0]	VIDEO_ADDRESS;		// 8MB   17:0 for 512kb
+wire			ROM_RW;
+wire			FLASH_CE_S;
 
-wire					ENA_DSK;
-wire					ENA_ORCC;
-wire					ENA_DISK2;
-wire					ENA_PAK;
+wire			ENA_DSK;
+wire			ENA_ORCC;
+wire			ENA_DISK2;
+wire			ENA_PAK;
 
-wire					HDD_EN;
-wire					HDD_EN_DATA;
+wire			HDD_EN;
+wire			HDD_EN_DATA;
 
-reg		[1:0]		MPI_SCS;				// IO select
-reg		[1:0]		MPI_CTS;				// ROM select
-reg		[1:0]		W_PROT;
-reg					SBS;
-reg		[9:0]		SAM00;	// 8MB    5:0 for 512kb   
-reg		[9:0]		SAM01;
-reg		[9:0]		SAM02;
-reg		[9:0]		SAM03;
-reg		[9:0]		SAM04;
-reg		[9:0]		SAM05;
-reg		[9:0]		SAM06;
-reg		[9:0]		SAM07;
-reg		[9:0]		SAM10;
-reg		[9:0]		SAM11;
-reg		[9:0]		SAM12;
-reg		[9:0]		SAM13;
-reg		[9:0]		SAM14;
-reg		[9:0]		SAM15;
-reg		[9:0]		SAM16;
-reg		[9:0]		SAM17;
-reg		[1:0]		SAM_EXT;
-wire		[72:0]	KEY;
-wire					SHIFT_OVERRIDE;
-wire					SHIFT;
-wire		[7:0]		KEYBOARD_IN;
-reg					DDR1;
-reg					DDR2;
-reg					DDR3;
-reg					DDR4;
-wire		[7:0]		DATA_REG1;
-wire		[7:0]		DATA_REG2;
-wire		[7:0]		DATA_REG3;
-wire		[7:0]		DATA_REG4;
-reg		[7:0]		DD_REG1;
-reg		[7:0]		DD_REG2;
-reg		[7:0]		DD_REG3;
-reg		[7:0]		DD_REG4;
-wire					ROM_SEL;
-reg		[5:0]		DTOA_CODE;
-reg		[5:0]		SOUND_DTOA;
-wire		[7:0]		SOUND;
-wire		[18:0]	DAC_LEFT;
-wire		[18:0]	DAC_RIGHT;
-wire		[7:0]		VU;
-wire		[7:0]		VUM;
+reg		[1:0]	MPI_SCS;				// IO select
+reg		[1:0]	MPI_CTS;				// ROM select
+reg		[1:0]	W_PROT;
+reg				SBS;
+reg		[9:0]	SAM00;	// 8MB    5:0 for 512kb   
+reg		[9:0]	SAM01;
+reg		[9:0]	SAM02;
+reg		[9:0]	SAM03;
+reg		[9:0]	SAM04;
+reg		[9:0]	SAM05;
+reg		[9:0]	SAM06;
+reg		[9:0]	SAM07;
+reg		[9:0]	SAM10;
+reg		[9:0]	SAM11;
+reg		[9:0]	SAM12;
+reg		[9:0]	SAM13;
+reg		[9:0]	SAM14;
+reg		[9:0]	SAM15;
+reg		[9:0]	SAM16;
+reg		[9:0]	SAM17;
+reg		[1:0]	SAM_EXT;
+wire	[72:0]	KEY;
+wire			SHIFT_OVERRIDE;
+wire			SHIFT;
+wire	[7:0]	KEYBOARD_IN;
+reg				DDR1;
+reg				DDR2;
+reg				DDR3;
+reg				DDR4;
+wire	[7:0]	DATA_REG1;
+wire	[7:0]	DATA_REG2;
+wire	[7:0]	DATA_REG3;
+wire	[7:0]	DATA_REG4;
+reg		[7:0]	DD_REG1;
+reg		[7:0]	DD_REG2;
+reg		[7:0]	DD_REG3;
+reg		[7:0]	DD_REG4;
+wire			ROM_SEL;
+reg		[5:0]	DTOA_CODE;
+reg		[5:0]	SOUND_DTOA;
+wire	[7:0]	SOUND;
+wire	[18:0]	DAC_LEFT;
+wire	[18:0]	DAC_RIGHT;
+wire	[7:0]	VU;
+wire	[7:0]	VUM;
 reg		[18:0]	LEFT;
 reg		[18:0]	RIGHT;
 reg		[18:0]	LEFT_BUF;
 reg		[18:0]	RIGHT_BUF;
 reg		[18:0]	LEFT_BUF2;
 reg		[18:0]	RIGHT_BUF2;
-reg		[7:0]		ORCH_LEFT;
-reg		[7:0]		ORCH_RIGHT;
-reg		[7:0]		ORCH_LEFT_EXT;
-reg		[7:0]		ORCH_RIGHT_EXT;
-reg		[7:0]		ORCH_LEFT_EXT_BUF;
-reg		[7:0]		ORCH_RIGHT_EXT_BUF;
-reg					DACLRCLK;
-reg					ADCLRCLK;
-reg		[5:0]		DAC_STATE;
-wire 					H_FLAG;
+reg		[7:0]	ORCH_LEFT;
+reg		[7:0]	ORCH_RIGHT;
+reg		[7:0]	ORCH_LEFT_EXT;
+reg		[7:0]	ORCH_RIGHT_EXT;
+reg		[7:0]	ORCH_LEFT_EXT_BUF;
+reg		[7:0]	ORCH_RIGHT_EXT_BUF;
+reg				DACLRCLK;
+reg				ADCLRCLK;
+reg		[5:0]	DAC_STATE;
+wire 			H_FLAG;
 
-reg		[1:0]		SWITCH_L;
+reg		[1:0]	SWITCH_L;
 
-wire					CPU_IRQ_N;
-wire					CPU_FIRQ_N;
-reg		[2:0]		DIV_7;
-reg					DIV_14;
+wire			CPU_IRQ_N;
+wire			CPU_FIRQ_N;
+reg		[2:0]	DIV_7;
+reg				DIV_14;
 reg		[12:0]	TIMER;
-wire					TMR_CLK;
-wire					SER_IRQ;
-reg		[4:0]		COM1_STATE;
-reg					COM1_CLOCK_X;
-reg					COM1_CLOCK;
-reg		[2:0]		COM1_CLK;
-reg		[2:0]		COM2_STATE;
-reg					COM3_CLOCK;
-reg		[2:0]		COM3_CLK;
-wire		[7:0]		DATA_HDD;
-wire					RS232_EN;
-wire					RX_CLK2;
-wire		[7:0]		DATA_RS232;
-reg		[2:0]		ROM_BANK;
-reg		[1:0]		BANK_SIZE;
-reg		[6:0]		BANK0;
-reg		[6:0]		BANK1;
-reg		[6:0]		BANK2;
-reg		[6:0]		BANK3;
-reg		[6:0]		BANK4;
-reg		[6:0]		BANK5;
-reg		[6:0]		BANK6;
-reg		[6:0]		BANK7;
-wire					SLOT3_HW;
-wire					UART51_TXD;
-wire					UART51_RXD;
-wire					UART51_RTS;
-wire					UART51_DTR;
-wire					UART50_TXD;
-wire					UART50_RXD;
-wire					UART50_RTS;
-// Clock
-//reg		[4:0]		CENT;
-//reg		[6:0]		YEAR;
-//reg		[3:0]		MNTH;
-//reg		[4:0]		DMTH;
-//reg		[2:0]		DWK;
-//reg		[4:0]		HOUR;
-//reg		[5:0]		MIN;
-reg		[9:0]		SEC;
-//reg		[5:0]		CLICK;
-reg					TICK0;
-reg					TICK1;
-reg					TICK2;
+wire			TMR_CLK;
+wire			SER_IRQ;
+reg		[4:0]	COM1_STATE;
+reg				COM1_CLOCK_X;
+reg				COM1_CLOCK;
+reg		[2:0]	COM1_CLK;
+reg		[2:0]	COM2_STATE;
+reg				COM3_CLOCK;
+reg		[2:0]	COM3_CLK;
+wire	[7:0]	DATA_HDD;
+wire			RS232_EN;
+wire			RX_CLK2;
+wire	[7:0]	DATA_RS232;
+reg		[2:0]	ROM_BANK;
+reg		[1:0]	BANK_SIZE;
+reg		[6:0]	BANK0;
+reg		[6:0]	BANK1;
+reg		[6:0]	BANK2;
+reg		[6:0]	BANK3;
+reg		[6:0]	BANK4;
+reg		[6:0]	BANK5;
+reg		[6:0]	BANK6;
+reg		[6:0]	BANK7;
+wire			SLOT3_HW;
+wire			UART51_TXD;
+wire			UART51_RXD;
+wire			UART51_RTS;
+wire			UART51_DTR;
+wire			UART50_TXD;
+wire			UART50_RXD;
+wire			UART50_RTS;
+reg		[9:0]	SEC;
+reg				TICK0;
+reg				TICK1;
+reg				TICK2;
 // Joystick
 reg		[12:0]	JOY_CLK0;
 reg		[12:0]	JOY_CLK1;
 reg		[12:0]	JOY_CLK2;
 reg		[12:0]	JOY_CLK3;
-reg		[9:0]		PADDLE_ZERO_0;
-reg		[9:0]		PADDLE_ZERO_1;
-reg		[9:0]		PADDLE_ZERO_2;
-reg		[9:0]		PADDLE_ZERO_3;
+reg		[9:0]	PADDLE_ZERO_0;
+reg		[9:0]	PADDLE_ZERO_1;
+reg		[9:0]	PADDLE_ZERO_2;
+reg		[9:0]	PADDLE_ZERO_3;
 reg		[11:0]	PADDLE_VAL_0;
 reg		[11:0]	PADDLE_VAL_1;
 reg		[11:0]	PADDLE_VAL_2;
@@ -673,284 +502,268 @@ reg		[11:0]	PADDLE_LATCH_0;
 reg		[11:0]	PADDLE_LATCH_1;
 reg		[11:0]	PADDLE_LATCH_2;
 reg		[11:0]	PADDLE_LATCH_3;
-reg		[1:0]		PADDLE_STATE_0;
-reg		[1:0]		PADDLE_STATE_1;
-reg		[1:0]		PADDLE_STATE_2;
-reg		[1:0]		PADDLE_STATE_3;
-reg		[5:0]		JOY1_COUNT;
-reg		[5:0]		JOY2_COUNT;
-reg		[5:0]		JOY3_COUNT;
-reg		[5:0]		JOY4_COUNT;
-reg					JOY_TRIGGER0;
-reg					JOY_TRIGGER1;
-reg					JOY_TRIGGER2;
-reg					JOY_TRIGGER3;
-wire					JSTICK;
-wire					JOY1;
-wire					JOY2;
-wire					JOY3;
-wire					JOY4;
-reg					PDL;
-reg					JCASE0;
-reg					JCASE1;
-reg					JCASE2;
-reg					JCASE3;
-reg					MOTOR;
-reg					WRT_PREC;
-reg					DENSITY;
-reg					HALT_EN;
-reg		[7:0]		COMMAND;
-reg		[7:0]		SECTOR;
-reg		[7:0]		DATA_EXT;
-reg		[7:0]		STATUS;
-reg					IRQ_02_N;
-reg					IRQ_02_BUF0_N;
-reg					IRQ_02_BUF1_N;
-wire					IRQ_02_UART;
-wire					IRQ_02_UART_2;
-wire					NMI_09;
-reg					HALT_BUF0;
-reg					HALT_BUF1;
-reg					HALT_BUF2;
-reg					HALT_SIG_BUF0;
-reg					HALT_SIG_BUF1;
-reg		[6:0]		HALT_STATE;
-wire					PH2_02;
-wire		[15:0]	ADDRESS_02;
-wire		[7:0]		CPU_BANK;
-wire		[7:0]		DATA_OUT_02;
-wire		[7:0]		DATA_IN_02;
-wire		[7:0]		DATA_COM1;
-reg		[8:0]		BUFF_ADD;
-reg					ADDR_RESET_N;
-reg					IMM_HALT_09;
-wire					COM1_EN;
-reg		[7:0]		TRACK_REG_R;
-reg		[7:0]		TRACK_REG_W;
-reg		[7:0]		TRACK_EXT_R;
-reg		[7:0]		TRACK_EXT_W;
-reg					NMI_09_EN;
-wire					IRQ_09;
-reg					IRQ_RESET;
-reg					BUSY0;
-reg					BUSY1;
-reg		[7:0]		DRIVE_SEL_EXT;
-wire		[3:0]		HEXX;
-wire					HALT;
-reg					FORCE_NMI_09_BUF0;
-reg					FORCE_NMI_09_BUF1;
-reg					ADDR_RST_BUFF0_N;
-reg					ADDR_RST_BUFF1_N;
-reg		[7:0]		TRACE;
-reg					HALT_100_09;
-reg					IRQ_09_EN;
-reg					ADDR_100_BUF0;
-reg					ADDR_100_BUF1;
-reg					IRQ_09_BUF0;
-reg					IRQ_09_BUF1;
-reg					IRQ_09_BUF2;
-reg					CMD_RST;
-reg					WAIT_HALT;
-reg					CMD_RST_BUF0;
-reg					CMD_RST_BUF1;
-wire					CPU_RESET_N;
-wire					RW_02_N;
-wire					DISKBUF_02;
-wire		[7:0]		DISK_BUF_Q;
-reg		[7:0]		DATA_REG;
-wire					HALT_CODE;
-wire					RAM02_00_EN;
-wire					RAM02_02_EN;
-wire					RAM02_03_EN;
-wire		[7:0]		DATAO2_00_HDD;
-wire		[7:0]		DATAO2_02_HDD;
-wire		[7:0]		DATAO2_03_HDD;
-wire		[7:0]		DATAO_09_HDD;
-reg		[7:0]		TRACK1;
-reg		[7:0]		TRACK2;
-reg		[7:0]		HEADS;
-wire					RDFIFO_RDREQ;
-wire					RDFIFO_WRREQ;
-wire					WRFIFO_RDREQ;
-wire					WRFIFO_WRREQ;
-wire		[7:0]		RDFIFO_DATA;
-wire		[7:0]		WRFIFO_DATA;
-wire					RDFIFO_RDEMPTY;
-wire					RDFIFO_WRFULL;
-wire					WRFIFO_RDEMPTY;
-wire					WRFIFO_WRFULL;
-reg					BI_IRQ_EN;
-wire					UART1_CLK;
-reg 		[11:0]	MCLOCK;
-wire					I2C_SCL_EN;
-wire					I2C_DAT_EN;
-reg		[7:0]		I2C_DEVICE;
-reg		[7:0]		I2C_REG;
-wire		[7:0]		I2C_DATA_IN;
-reg		[7:0]		I2C_DATA_OUT;
-wire		[5:0]		I2C_STATE;
-wire					I2C_DONE;
-reg		[1:0]		I2C_DONE_BUF;
-wire					I2C_FAIL;
-reg					I2C_START;
-wire		[7:0]		SPI_DATA;
-wire					SPI_EN;
-wire					act_led_n;
-wire					IRQ_SPI_N;
-wire					SPI_TRACE;
-reg		[7:0]		SPI_T;
-wire					EF;
-wire					VDA;
-wire					MF;
-wire					VPA;
-wire					ML_N;
-wire					XF;
-wire					SYNC;
-wire					VP_N;
-reg					ODD_LINE;
-wire					SPI_HALT;
-reg	[22:0]		GART_WRITE;		// 8MB   18:0 for 512kb
-reg	[22:0]		GART_READ;
-reg	[1:0]			GART_INC;
-reg	[16:0]		GART_CNT;
-reg	[7:0]			GART_BUF;
-reg	[7:0]			BI_TIMER;
-reg					DBUF_BI_TO;
-reg					DBUF_BI_TO1;
-reg					BI_TO;
-wire					BI_TO_RST;
-reg					ANALOG;
-wire					VDAC_EN;
-wire	[15:0]		VDAC_OUT;
-reg					WF_IRQ_EN;
-reg	[5:0]			COM2_CLK;
-wire					WF_CLOCK;
-reg	[1:0]			WF_BAUD;
-wire					COM2_EN;
-wire					WF_WRFIFO_RDREQ;
-wire					WF_RDFIFO_WRREQ;
-wire					WF_RDFIFO_RDREQ;
-wire		[7:0]		WF_RDFIFO_DATA;
-wire					WF_RDFIFO_RDEMPTY;
-wire					WF_RDFIFO_WRFULL;
-wire					WF_WRFIFO_WRREQ;
-wire		[7:0]		WF_WRFIFO_DATA;
-wire					WF_WRFIFO_RDEMPTY;
-wire					WF_WRFIFO_WRFULL;
-wire	[7:0]			DATA_COM2;
-wire					WF_RTS;
-reg	[1:0]			CK_DONE_BUF;
-wire					CK_CLK_EN;
-wire					CK_DAT_EN;
-reg	[7:0]			CK_DEVICE;
-reg	[7:0]			CK_REG;
-wire	[7:0]			CK_DATA_IN;
-reg	[7:0]			CK_DATA_OUT;
-wire					CK_DONE;
-wire					CK_FAIL;
-reg					CK_START;
-wire	[5:0]			CK_STATE;
-reg					SDRAM_READ;
-wire	[15:0]		HDOUT;
-reg	[15:0]		SDRAM_DIN;
-reg	[15:0]		SDRAM_DOUT;
-reg	[21:0]		SDRAM_ADDR;
-reg	[2:0]			SDRAM_STATE;
-reg					SDRAM_START;
-reg	[1:0]			SDRAM_START_BUF;
-reg					SDRAM_RD;
-reg					SDRAM_WR;
-//wire					SDRAM_NEXT;
-reg	[1:0]			SDRAM_NEXT_BUF;
-wire					SDRAM_EOB;
-wire					SDRAM_OB;
-wire					SDRAM_RDP;
-wire					SDRAM_DONE;
-wire					SDRAM_RDD;
-wire					SDRAM_STATUS;
-wire	[15:0]		SDRAM_DATA_BUF;
-wire					SDRAM_DATA_BUF_EN;
-reg	[1:0]			SDRAM_READY_BUF;
-reg					RST_FF00_N;
-reg					RST_FF02_N;
-//reg					RST_FF20_N;
-reg					RST_FF22_N;
-reg					RST_FF92_N;
-reg					RST_FF93_N;
-reg					TMR_RST_N;
-wire					CART_INT_N;
-wire					VSYNC_INT_N;
-wire					HSYNC_INT_N;
-reg					TIMER_INT_N;
-wire					KEY_INT_N;
-reg					TIMER3_IRQ_N;
-reg					HSYNC3_IRQ_N;
-reg					VSYNC3_IRQ_N;
-reg					KEY3_IRQ_N;
-reg					CART3_IRQ_N;
-reg					TIMER3_FIRQ_N;
-reg					HSYNC3_FIRQ_N;
-reg					VSYNC3_FIRQ_N;
-reg					KEY3_FIRQ_N;
-reg					CART3_FIRQ_N;
-reg					CART_INT_IN_N;
-reg					HSYNC1_POL;
-reg	[1:0]			HSYNC1_IRQ_BUF;
-reg					HSYNC1_IRQ_N;
-reg					HSYNC1_IRQ_STAT_N;
-reg					HSYNC1_IRQ_INT;
-reg					VSYNC1_POL;
-reg	[1:0]			VSYNC1_IRQ_BUF;
-reg					VSYNC1_IRQ_N;
-reg					VSYNC1_IRQ_STAT_N;
-reg					VSYNC1_IRQ_INT;
-wire					HSYNC1_CLK_N;
-wire					VSYNC1_CLK_N;
-wire					CART1_CLK_N;
-reg					CART1_POL;
-wire					CART1_BUF_RESET_N;
-wire					CART1_FIRQ_RESET_N;
-reg	[1:0]			CART_POL_BUF;
-reg	[1:0]			CART1_FIRQ_BUF;
-reg					CART1_FIRQ_N;
-reg					CART1_FIRQ_STAT_N;
-reg					CART1_FIRQ_INT;
-reg	[1:0]			HSYNC3_FIRQ_BUF;
-reg					HSYNC3_FIRQ_STAT_N;
-reg					HSYNC3_FIRQ_INT;
-reg	[1:0]			VSYNC3_FIRQ_BUF;
-reg					VSYNC3_FIRQ_STAT_N;
-reg					VSYNC3_FIRQ_INT;
-reg	[1:0]			CART3_FIRQ_BUF;
-reg					CART3_FIRQ_STAT_N;
-reg					CART3_FIRQ_INT;
-reg	[1:0]			KEY3_FIRQ_BUF;
-reg					KEY3_FIRQ_STAT_N;
-reg					KEY3_FIRQ_INT;
-reg	[1:0]			TIMER3_FIRQ_BUF;
-reg					TIMER3_FIRQ_STAT_N;
-reg					TIMER3_FIRQ_INT;
-reg	[1:0]			HSYNC3_IRQ_BUF;
-reg					HSYNC3_IRQ_STAT_N;
-reg					HSYNC3_IRQ_INT;
-reg	[1:0]			VSYNC3_IRQ_BUF;
-reg					VSYNC3_IRQ_STAT_N;
-reg					VSYNC3_IRQ_INT;
-reg	[1:0]			CART3_IRQ_BUF;
-reg					CART3_IRQ_STAT_N;
-reg					CART3_IRQ_INT;
-reg	[1:0]			KEY3_IRQ_BUF;
-reg					KEY3_IRQ_STAT_N;
-reg					KEY3_IRQ_INT;
-reg	[1:0]			TIMER3_IRQ_BUF;
-reg					TIMER3_IRQ_STAT_N;
-reg					TIMER3_IRQ_INT;
-reg	[7:0]			GPIO_OUT;
-reg	[7:0]			GPIO_DIR;
-reg					SLAVE_RESET;
-reg	[7:0]			SLAVE_ADD_HI;
-reg	[7:0]			SLAVE_ADD_LO;
-wire					SLAVE_WR;
+reg		[1:0]	PADDLE_STATE_0;
+reg		[1:0]	PADDLE_STATE_1;
+reg		[1:0]	PADDLE_STATE_2;
+reg		[1:0]	PADDLE_STATE_3;
+reg		[5:0]	JOY1_COUNT;
+reg		[5:0]	JOY2_COUNT;
+reg		[5:0]	JOY3_COUNT;
+reg		[5:0]	JOY4_COUNT;
+reg				JOY_TRIGGER0;
+reg				JOY_TRIGGER1;
+reg				JOY_TRIGGER2;
+reg				JOY_TRIGGER3;
+wire			JSTICK;
+wire			JOY1;
+wire			JOY2;
+wire			JOY3;
+wire			JOY4;
+reg				PDL;
+reg				JCASE0;
+reg				JCASE1;
+reg				JCASE2;
+reg				JCASE3;
+reg				MOTOR;
+reg				WRT_PREC;
+reg				DENSITY;
+reg				HALT_EN;
+reg		[7:0]	COMMAND;
+reg		[7:0]	SECTOR;
+reg		[7:0]	DATA_EXT;
+reg		[7:0]	STATUS;
+reg				IRQ_02_N;
+reg				IRQ_02_BUF0_N;
+reg				IRQ_02_BUF1_N;
+wire			IRQ_02_UART;
+wire			IRQ_02_UART_2;
+wire			NMI_09;
+reg				HALT_BUF0;
+reg				HALT_BUF1;
+reg				HALT_BUF2;
+reg				HALT_SIG_BUF0;
+reg				HALT_SIG_BUF1;
+reg		[6:0]	HALT_STATE;
+wire			PH2_02;
+wire	[15:0]	ADDRESS_02;
+wire	[7:0]	CPU_BANK;
+wire	[7:0]	DATA_OUT_02;
+wire	[7:0]	DATA_IN_02;
+wire	[7:0]	DATA_COM1;
+reg		[8:0]	BUFF_ADD;
+reg				ADDR_RESET_N;
+reg				IMM_HALT_09;
+wire			COM1_EN;
+reg		[7:0]	TRACK_REG_R;
+reg		[7:0]	TRACK_REG_W;
+reg		[7:0]	TRACK_EXT_R;
+reg		[7:0]	TRACK_EXT_W;
+reg				NMI_09_EN;
+wire			IRQ_09;
+reg				IRQ_RESET;
+reg				BUSY0;
+reg				BUSY1;
+reg		[7:0]	DRIVE_SEL_EXT;
+wire	[3:0]	HEXX;
+wire			HALT;
+reg				FORCE_NMI_09_BUF0;
+reg				FORCE_NMI_09_BUF1;
+reg				ADDR_RST_BUFF0_N;
+reg				ADDR_RST_BUFF1_N;
+reg		[7:0]	TRACE;
+reg				HALT_100_09;
+reg				IRQ_09_EN;
+reg				ADDR_100_BUF0;
+reg				ADDR_100_BUF1;
+reg				IRQ_09_BUF0;
+reg				IRQ_09_BUF1;
+reg				IRQ_09_BUF2;
+reg				CMD_RST;
+reg				WAIT_HALT;
+reg				CMD_RST_BUF0;
+reg				CMD_RST_BUF1;
+wire			CPU_RESET_N;
+wire			RW_02_N;
+wire			DISKBUF_02;
+wire	[7:0]	DISK_BUF_Q;
+reg		[7:0]	DATA_REG;
+wire			HALT_CODE;
+wire			RAM02_00_EN;
+wire			RAM02_02_EN;
+wire			RAM02_03_EN;
+wire	[7:0]	DATAO2_00_HDD;
+wire	[7:0]	DATAO2_02_HDD;
+wire	[7:0]	DATAO2_03_HDD;
+wire	[7:0]	DATAO_09_HDD;
+reg		[7:0]	TRACK1;
+reg		[7:0]	TRACK2;
+reg		[7:0]	HEADS;
+wire			RDFIFO_RDREQ;
+wire			RDFIFO_WRREQ;
+wire			WRFIFO_RDREQ;
+wire			WRFIFO_WRREQ;
+wire	[7:0]	RDFIFO_DATA;
+wire	[7:0]	WRFIFO_DATA;
+wire			RDFIFO_RDEMPTY;
+wire			RDFIFO_WRFULL;
+wire			WRFIFO_RDEMPTY;
+wire			WRFIFO_WRFULL;
+reg				BI_IRQ_EN;
+wire			UART1_CLK;
+reg 	[11:0]	MCLOCK;
+wire			I2C_SCL_EN;
+wire			I2C_DAT_EN;
+reg		[7:0]	I2C_DEVICE;
+reg		[7:0]	I2C_REG;
+wire	[7:0]	I2C_DATA_IN;
+reg		[7:0]	I2C_DATA_OUT;
+wire	[5:0]	I2C_STATE;
+wire			I2C_DONE;
+reg		[1:0]	I2C_DONE_BUF;
+wire			I2C_FAIL;
+reg				I2C_START;
+
+wire			VDA;
+wire			MF;
+wire			VPA;
+wire			ML_N;
+wire			XF;
+wire			SYNC;
+wire			VP_N;
+reg				ODD_LINE;
+wire			SPI_HALT;
+reg		[22:0]	GART_WRITE;		// 8MB   18:0 for 512kb
+reg		[22:0]	GART_READ;
+reg		[1:0]	GART_INC;
+reg		[16:0]	GART_CNT;
+reg		[7:0]	GART_BUF;
+reg		[7:0]	BI_TIMER;
+reg				DBUF_BI_TO;
+reg				DBUF_BI_TO1;
+reg				BI_TO;
+wire			BI_TO_RST;
+reg				ANALOG;
+wire			VDAC_EN;
+wire	[15:0]	VDAC_OUT;
+reg				WF_IRQ_EN;
+reg		[5:0]	COM2_CLK;
+wire			WF_CLOCK;
+reg		[1:0]	WF_BAUD;
+wire			COM2_EN;
+wire			WF_WRFIFO_RDREQ;
+wire			WF_RDFIFO_WRREQ;
+wire			WF_RDFIFO_RDREQ;
+wire	[7:0]	WF_RDFIFO_DATA;
+wire			WF_RDFIFO_RDEMPTY;
+wire			WF_RDFIFO_WRFULL;
+wire			WF_WRFIFO_WRREQ;
+wire	[7:0]	WF_WRFIFO_DATA;
+wire			WF_WRFIFO_RDEMPTY;
+wire			WF_WRFIFO_WRFULL;
+wire	[7:0]	DATA_COM2;
+
+//reg				SDRAM_READ;
+//wire	[15:0]	HDOUT;
+//reg		[15:0]	SDRAM_DIN;
+//reg		[15:0]	SDRAM_DOUT;
+//reg		[21:0]	SDRAM_ADDR;
+//reg		[2:0]	SDRAM_STATE;
+//reg				SDRAM_START;
+//reg		[1:0]	SDRAM_START_BUF;
+//reg				SDRAM_RD;
+//reg				SDRAM_WR;
+//wire			SDRAM_NEXT;
+//reg		[1:0]	SDRAM_NEXT_BUF;
+//wire			SDRAM_EOB;
+//wire			SDRAM_OB;
+//wire			SDRAM_RDP;
+//wire			SDRAM_DONE;
+//wire			SDRAM_RDD;
+//wire			SDRAM_STATUS;
+//wire	[15:0]	SDRAM_DATA_BUF;
+//wire			SDRAM_DATA_BUF_EN;
+//reg		[1:0]	SDRAM_READY_BUF;
+
+reg				RST_FF00_N;
+reg				RST_FF02_N;
+//reg			RST_FF20_N;
+reg				RST_FF22_N;
+reg				RST_FF92_N;
+reg				RST_FF93_N;
+reg				TMR_RST_N;
+wire			CART_INT_N;
+wire			VSYNC_INT_N;
+wire			HSYNC_INT_N;
+reg				TIMER_INT_N;
+wire			KEY_INT_N;
+reg				TIMER3_IRQ_N;
+reg				HSYNC3_IRQ_N;
+reg				VSYNC3_IRQ_N;
+reg				KEY3_IRQ_N;
+reg				CART3_IRQ_N;
+reg				TIMER3_FIRQ_N;
+reg				HSYNC3_FIRQ_N;
+reg				VSYNC3_FIRQ_N;
+reg				KEY3_FIRQ_N;
+reg				CART3_FIRQ_N;
+reg				CART_INT_IN_N;
+reg				HSYNC1_POL;
+reg		[1:0]	HSYNC1_IRQ_BUF;
+reg				HSYNC1_IRQ_N;
+reg				HSYNC1_IRQ_STAT_N;
+reg				HSYNC1_IRQ_INT;
+reg				VSYNC1_POL;
+reg		[1:0]	VSYNC1_IRQ_BUF;
+reg				VSYNC1_IRQ_N;
+reg				VSYNC1_IRQ_STAT_N;
+reg				VSYNC1_IRQ_INT;
+wire			HSYNC1_CLK_N;
+wire			VSYNC1_CLK_N;
+wire			CART1_CLK_N;
+reg				CART1_POL;
+wire			CART1_BUF_RESET_N;
+wire			CART1_FIRQ_RESET_N;
+reg		[1:0]	CART_POL_BUF;
+reg		[1:0]	CART1_FIRQ_BUF;
+reg				CART1_FIRQ_N;
+reg				CART1_FIRQ_STAT_N;
+reg				CART1_FIRQ_INT;
+reg		[1:0]	HSYNC3_FIRQ_BUF;
+reg				HSYNC3_FIRQ_STAT_N;
+reg				HSYNC3_FIRQ_INT;
+reg		[1:0]	VSYNC3_FIRQ_BUF;
+reg				VSYNC3_FIRQ_STAT_N;
+reg				VSYNC3_FIRQ_INT;
+reg		[1:0]	CART3_FIRQ_BUF;
+reg				CART3_FIRQ_STAT_N;
+reg				CART3_FIRQ_INT;
+reg		[1:0]	KEY3_FIRQ_BUF;
+reg				KEY3_FIRQ_STAT_N;
+reg				KEY3_FIRQ_INT;
+reg		[1:0]	TIMER3_FIRQ_BUF;
+reg				TIMER3_FIRQ_STAT_N;
+reg				TIMER3_FIRQ_INT;
+reg		[1:0]	HSYNC3_IRQ_BUF;
+reg				HSYNC3_IRQ_STAT_N;
+reg				HSYNC3_IRQ_INT;
+reg		[1:0]	VSYNC3_IRQ_BUF;
+reg				VSYNC3_IRQ_STAT_N;
+reg				VSYNC3_IRQ_INT;
+reg		[1:0]	CART3_IRQ_BUF;
+reg				CART3_IRQ_STAT_N;
+reg				CART3_IRQ_INT;
+reg		[1:0]	KEY3_IRQ_BUF;
+reg				KEY3_IRQ_STAT_N;
+reg				KEY3_IRQ_INT;
+reg		[1:0]	TIMER3_IRQ_BUF;
+reg				TIMER3_IRQ_STAT_N;
+reg				TIMER3_IRQ_INT;
+reg		[7:0]	GPIO_OUT;
+reg		[7:0]	GPIO_DIR;
+reg				SLAVE_RESET;
+reg		[7:0]	SLAVE_ADD_HI;
+reg		[7:0]	SLAVE_ADD_LO;
+wire			SLAVE_WR;
 
 // SRH MISTer
 //
@@ -989,48 +802,37 @@ wire					SLAVE_WR;
 											//		On  - 25 MHz
 
 
-`ifdef MISTer
 assign SWITCH[9:0] = 10'b0000010000; // This is ECB
 //assign SWITCH[9:0] = 10'b0000010110; // This is EDB
 //assign SWITCH[9:0] = 10'b0000010000; // This is Orch 80 in ROM
 
 assign BUTTON_N[3:0] = 4'b1111;
 
-`endif
 
 //assign LEDG = TRACE;														// Floppy Trace
 
 assign LEDG[0] =  RAM0_BE0 | RAM0_BE1;
-assign LEDG[1] =  RAM1_BE0 | RAM1_BE1;
-assign LEDG[2] =  RAM1_BE2 | RAM1_BE3;
+assign LEDG[1] =  1'b0;
+assign LEDG[2] =  1'b0;
 assign LEDG[3] =  FLASH_CE_S;
 assign LEDG[4] = (ADDRESS == 16'hFF84);								// SDRAM
 assign LEDG[5] =  WF_RDFIFO_RDREQ;										// WiFi
-assign LEDG[6] = !act_led_n;												// SD Card activity
+assign LEDG[6] = 1'b0;												// SD Card activity
 assign LEDG[7] = !UART50_TXD | !UART50_RXD;
 // SRH DE2-115 Extra Green LED is unused and off
-`ifdef DE2_115
 assign LEDG[8] = 1'b0;
-`endif
 
 assign LEDR[0] =  DRIVE_SEL_EXT[0] & MOTOR;
 assign LEDR[1] =  DRIVE_SEL_EXT[1] & MOTOR;
 assign LEDR[2] =  DRIVE_SEL_EXT[2] & MOTOR;
 assign LEDR[3] =  DRIVE_SEL_EXT[3] & MOTOR;
 
-`ifdef DE2_115
-assign LEDR[4] = SD_WP_N;		// SD Card Write Protected (from SDFlash socket & card... 
+assign LEDR[4] = 1'b0; 
 assign LEDR[5] = SWITCH[6];					// SD Card inserted
-`else
-assign LEDR[4] = !BUTTON_N[2] & (BUTTON_N[1] | SWITCH[6]);		// SD Card Write Protected when SD Card Inserted
-assign LEDR[5] = !BUTTON_N[2];											// SD Card inserted
-`endif
 assign LEDR[6] =  RESET_N;
 assign LEDR[7] =  KEY[55];													// Shift Lock
 // SRH DE2-115 Extra Red LEDs are unused and off
-`ifdef DE2_115
 assign LEDR[17:8] = 10'b0000000000;
-`endif
 
 //Master clock divider chain
 //	MCLOCK[0] = 50/2		= 25 MHz
@@ -1049,123 +851,13 @@ assign LEDR[17:8] = 10'b0000000000;
 always @ (negedge CLK50MHZ)				//50 MHz
 	MCLOCK <= MCLOCK + 1'b1;
 assign RST = RESET_N;
-assign SEGMENT0_N =	{7'b0100011};					//o
-assign SEGMENT1_N =	{7'b1000110};					//C
-assign SEGMENT2_N =	{7'b0100011};					//o
-assign SEGMENT3_N =	{7'b1000110};					//C
+
 //SRH DE2-115 extra digits - blank
-`ifdef DE2_115
-//assign SEGMENT4_N =	{7'b1111111};					//[blank]
-//assign SEGMENT5_N =	{7'b1111111};					//[blank]
-//assign SEGMENT6_N =	{7'b1111111};					//[blank]
-//assign SEGMENT7_N =	{7'b1111111};					//[blank]
 
-Counter_Display DC(
-	.clk(CLK50MHZ),
-	.n_reset(RESET_N),
-	.counter_item(!UART50_RXD),
-	.Digit4(SEGMENT7_N),
-	.Digit3(SEGMENT6_N),
-	.Digit2(SEGMENT5_N),
-	.Digit1(SEGMENT4_N)
-);
-
-`endif
-
-/*
-always @ (negedge V_SYNC_N)					// Anything > 200 HZ
-case(DIGIT_N)
-  4'b1110:	DIGIT_N <= 4'b1101;
-  4'b1101:	DIGIT_N <= 4'b1011;
-  4'b1011:	DIGIT_N <= 4'b0111;
-  default:  DIGIT_N <= 4'b1110;
- endcase
-
-always @ (negedge V_SYNC_N)
-begin
-	case (DIGIT_N)
-	4'b1110:
-		SEGMENT0_N <= SEGMENT_N;
-	4'b1101:
-		SEGMENT1_N <= SEGMENT_N;
-	4'b1011:
-		SEGMENT2_N <= SEGMENT_N;
-	default:
-		SEGMENT3_N <= SEGMENT_N;
-	endcase
-end
-
-assign SEGMENT_N = 	(HEXX == 4'h0)	?	{7'b1000000}:				//0
-							(HEXX == 4'h1)	?	{7'b1111001}:					//1
-							(HEXX == 4'h2)	?	{7'b0100100}:					//2
-							(HEXX == 4'h3)	?	{7'b0110000}:					//3
-							(HEXX == 4'h4)	?	{7'b0011001}:					//4
-							(HEXX == 4'h5)	?	{7'b0010010}:					//5
-							(HEXX == 4'h6)	?	{7'b0000010}:					//6
-							(HEXX == 4'h7)	?	{7'b1111000}:					//7
-							(HEXX == 4'h8)	?	{7'b0000000}:					//8
-							(HEXX == 4'h9)	?	{7'b0011000}:					//9
-							(HEXX == 4'hA)	?	{7'b0001000}:					//A
-							(HEXX == 4'hB)	?	{7'b0000011}:					//B
-							(HEXX == 4'hC)	?	{7'b1000110}:					//C
-							(HEXX == 4'hD)	?	{7'b0100001}:					//D
-							(HEXX == 4'hE)	?	{7'b0000110}:					//E
-													{7'b0001110};					//F
-
-assign HEXX	=	({DIGIT_N} == 4'b1110)	?				VIDEO_ADDRESS[10:7]:
-					({DIGIT_N} == 4'b1101)	?				VIDEO_ADDRESS[14:11]:
-					({DIGIT_N} == 4'b1011)	?				VIDEO_ADDRESS[18:15]:
-																	{1'b0,VIDEO_ADDRESS[21:19]};
-
-*/
 /*****************************************************************************
 * RAM signals
 ******************************************************************************/
-`ifdef M5Meg
-assign	RAM0_BE0 =	((ADDRESS == 16'hFF73)&&  RW_N && ({GART_READ[22:21], GART_READ[0]}  == 3'b100))	?	1'b1:
-							((ADDRESS == 16'hFF73)&& !RW_N && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b100))	?	1'b1:
-							( !VMA && !GART_CNT[0] 			 && ({GART_READ[22:21], GART_READ[0]}  == 3'b100))	?	1'b1:
-							( !VMA &&  GART_CNT[0]			 && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b100))	?	1'b1:
-							(  VMA &&  RAM_CS					 && {BLOCK_ADDRESS[9:8],ADDRESS[0]}  ==  3'b100)	?	1'b1:
-																																			1'b0;
 
-assign	RAM0_BE1 =	((ADDRESS == 16'hFF73)&&  RW_N && ({GART_READ[22:21], GART_READ[0]}  == 3'b101))	?	1'b1:
-							((ADDRESS == 16'hFF73)&& !RW_N && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b101))	?	1'b1:
-							( !VMA && !GART_CNT[0] 			 && ({GART_READ[22:21], GART_READ[0]}  == 3'b101))	?	1'b1:
-							( !VMA &&  GART_CNT[0]			 && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b101))	?	1'b1:
-							(  VMA &&  RAM_CS					 && {BLOCK_ADDRESS[9:8],ADDRESS[0]}  ==  3'b101)	?	1'b1:
-																																			1'b0;
-
-assign	RAM1_BE2 =	((ADDRESS == 16'hFF73)&&  RW_N && ({GART_READ[22:21], GART_READ[0]}  == 3'b000))	?	1'b1:
-							((ADDRESS == 16'hFF73)&& !RW_N && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b000))	?	1'b1:
-							( !VMA && !GART_CNT[0] 			 && ({GART_READ[22:21], GART_READ[0]}  == 3'b000))	?	1'b1:
-							( !VMA &&  GART_CNT[0]			 && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b000))	?	1'b1:
-							(  VMA &&  RAM_CS					 && {BLOCK_ADDRESS[9:8],ADDRESS[0]}  ==  3'b000)	?	1'b1:
-																																			1'b0;
-
-assign	RAM1_BE3 =	((ADDRESS == 16'hFF73)&&  RW_N && ({GART_READ[22:21], GART_READ[0]}  == 3'b001))	?	1'b1:
-							((ADDRESS == 16'hFF73)&& !RW_N && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b001))	?	1'b1:
-							( !VMA && !GART_CNT[0] 			 && ({GART_READ[22:21], GART_READ[0]}  == 3'b001))	?	1'b1:
-							( !VMA &&  GART_CNT[0]			 && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b001))	?	1'b1:
-							(  VMA &&  RAM_CS					 && {BLOCK_ADDRESS[9:8],ADDRESS[0]}  ==  3'b001)	?	1'b1:
-																																			1'b0;
-
-assign	RAM1_BE0 =	((ADDRESS == 16'hFF73)&&  RW_N && ({GART_READ[22:21], GART_READ[0]}  == 3'b010))	?	1'b1:
-							((ADDRESS == 16'hFF73)&& !RW_N && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b010))	?	1'b1:
-							( !VMA && !GART_CNT[0] 			 && ({GART_READ[22:21], GART_READ[0]}  == 3'b010))	?	1'b1:
-							( !VMA &&  GART_CNT[0]			 && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b010))	?	1'b1:
-							(  VMA &&  RAM_CS					 && {BLOCK_ADDRESS[9:8],ADDRESS[0]}  ==  3'b010)	?	1'b1:
-																																			1'b0;
-
-assign	RAM1_BE1 =	((ADDRESS == 16'hFF73)&&  RW_N && ({GART_READ[22:21], GART_READ[0]}  == 3'b011))	?	1'b1:
-							((ADDRESS == 16'hFF73)&& !RW_N && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b011))	?	1'b1:
-							( !VMA && !GART_CNT[0] 			 && ({GART_READ[22:21], GART_READ[0]}  == 3'b011))	?	1'b1:
-							( !VMA &&  GART_CNT[0]			 && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b011))	?	1'b1:
-							(  VMA &&  RAM_CS					 && {BLOCK_ADDRESS[9:8],ADDRESS[0]}  ==  3'b011)	?	1'b1:
-																																			1'b0;
-`endif
-
-`ifdef M1Meg
 assign	RAM0_BE0 =			((ADDRESS == 16'hFF73)&&  RW_N && ({GART_READ[22:21], GART_READ[0]}  == 3'b000))		?	1'b1:
 							((ADDRESS == 16'hFF73)&& !RW_N && ({GART_WRITE[22:21],GART_WRITE[0]} == 3'b000))		?	1'b1:
 							( !VMA && !GART_CNT[0] 			 && ({GART_READ[22:21], GART_READ[0]}  == 3'b000))		?	1'b1:
@@ -1180,11 +872,6 @@ assign	RAM0_BE1 =			((ADDRESS == 16'hFF73)&&  RW_N && ({GART_READ[22:21], GART_R
 							(  VMA &&  RAM_CS					 && ({BLOCK_ADDRESS[9:8],ADDRESS[0]}  ==  3'b001))	?	1'b1:
 																														1'b0;
 
-assign	RAM1_BE0 =	1'b0;
-assign	RAM1_BE1 =	1'b0;
-assign	RAM1_BE2	=	1'b0;
-assign	RAM1_BE3	=	1'b0;
-`endif
 
 assign	BLOCK_ADDRESS =	({MMU_EN, MMU_TR, ADDRESS[15:13]} ==  5'b10000)					?	SAM00:		// 10 000X	0000-1FFF
 									({MMU_EN, MMU_TR, ADDRESS[15:13]} ==  5'b10001)					?	SAM01:		// 10 001X	2000-3FFF
@@ -1213,11 +900,7 @@ assign	BLOCK_ADDRESS =	({MMU_EN, MMU_TR, ADDRESS[15:13]} ==  5'b10000)					?	SAM
 																														{7'b0000111,ADDRESS[15:13]};
 
 assign RAM0_CS_N = 1'b0;																						// Actual RAM CS is always enabled
-assign RAM1_CS0_N = 1'b0;																						// Actual RAM CS is always enabled
-assign RAM1_CS1_N = 1'b0;																						// Actual RAM CS is always enabled
 assign RAM0_OE_N = 1'b0;
-assign RAM1_OE0_N = 1'b0;
-assign RAM1_OE1_N = 1'b0;
 assign RAM_CS =					(ROM_SEL)										?	1'b0:		// Any slot
 								({RAM, ADDRESS[15:14]} == 3'b010)				?	1'b0:		// ROM (8000-BFFF)
 								({RAM, ADDRESS[15:13]} == 4'b0110)				?	1'b0:		// ROM (C000-DFFF)
@@ -1255,45 +938,6 @@ assign	ROM_SEL =		( RAM								== 1'b1)	?	1'b0:	// All RAM Mode excluded
 //11		32 External
 
 // SRH
-`ifndef DE2_115
-assign	FLASH_ADDRESS =	ENA_DSK				?	{9'b000000100, ADDRESS[12:0]}:	//8K Disk BASIC 8K Slot 4
-						ENA_DISK2			?	{7'b1111111,   ADDRESS[14:0]}:	//ROM Anternative Disk Controller
-						ENA_ORCC			?	{9'b000000101, ADDRESS[12:0]}:	//8K Orchestra 8K 90CC Slot 1
-// Slot 3 ROMPak
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b100000)	?	{BANK0,     ADDRESS[14:0]}:	//32K
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b110000)	?	{BANK0,     ADDRESS[14:0]}:	//32K
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b101000)	?	{BANK0,1'b0,ADDRESS[13:0]}:	//16K Lower half
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b111000)	?	{BANK0,1'b1,ADDRESS[13:0]}:	//16K Higher half
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b100001)	?	{BANK1,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b110001)	?	{BANK1,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b101001)	?	{BANK1,1'b0,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b111001)	?	{BANK1,1'b1,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b100010)	?	{BANK2,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b110010)	?	{BANK2,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b101010)	?	{BANK2,1'b0,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b111010)	?	{BANK2,1'b1,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b100011)	?	{BANK3,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b110011)	?	{BANK3,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b101011)	?	{BANK3,1'b0,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b111011)	?	{BANK3,1'b1,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b100100)	?	{BANK4,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b110100)	?	{BANK4,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b101100)	?	{BANK4,1'b0,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b111100)	?	{BANK4,1'b1,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b100101)	?	{BANK5,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b110101)	?	{BANK5,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b101101)	?	{BANK5,1'b0,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b111101)	?	{BANK5,1'b1,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b100110)	?	{BANK6,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b110110)	?	{BANK6,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b101110)	?	{BANK6,1'b0,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b111110)	?	{BANK6,1'b1,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b100111)	?	{BANK7,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b110111)	?	{BANK7,     ADDRESS[14:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b101111)	?	{BANK7,1'b0,ADDRESS[13:0]}:
-({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b111111)	?	{BANK7,1'b1,ADDRESS[13:0]}:
-												{7'b0000000, ADDRESS[14:0]};
-`else
 // For DE2-115 concanenate 1'b0 as MSB
 assign	FLASH_ADDRESS =	ENA_DSK				?	{1'b0,9'b000000100, ADDRESS[12:0]}:	//8K Disk BASIC 8K Slot 4
 						ENA_DISK2			?	{1'b0,7'b1111111,   ADDRESS[14:0]}:	//ROM Anternative Disk Controller
@@ -1332,14 +976,7 @@ assign	FLASH_ADDRESS =	ENA_DSK				?	{1'b0,9'b000000100, ADDRESS[12:0]}:	//8K Dis
 ({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b101111)	?	{1'b0,BANK7,1'b0,ADDRESS[13:0]}:
 ({ENA_PAK,BANK_SIZE,ROM_BANK}== 6'b111111)	?	{1'b0,BANK7,1'b1,ADDRESS[13:0]}:
 												{1'b0,7'b0000000, ADDRESS[14:0]};
-`endif
 
-`ifdef DE2_115
-assign FLASH_WP_N = 1'b1;  // Not writte protected for DE2-115
-`endif
-assign FLASH_WE_N = !(ROM_RW & FLASH_CE_S);
-assign FLASH_CE_N = !FLASH_CE_S;
-assign FLASH_OE_N =  (ROM_RW & FLASH_CE_S);
 //ROM
 //00		16 Internal + 16 External
 //01		16 Internal + 16 External
@@ -1357,26 +994,15 @@ assign FLASH_CE_S =	({RAM, ROM[1], ADDRESS[15:14]} ==  4'b0010)				?	1'b1:		// I
 							ENA_DISK2															?	1'b1:
 							ENA_ORCC																?	1'b1:
 																										1'b0;
-// SRH MISTer
-
-`ifndef MISTer
-assign FLASH_DATA = (!FLASH_WE_N)	?	DATA_OUT:
-										8'bZZZZZZZZ;
-`endif
-
-assign	FLASH_RESET_N = RESET_N;
 
 // SRH MISTer
 // ROM and 128KB sram
 
-`ifdef MISTer
 COCO_ROM CC3_ROM(
 .ADDR(FLASH_ADDRESS[15:0]),
 .DATA(FLASH_DATA)
 );
-`endif
 
-`ifdef INT_RAM
 
 COCO_SRAM CC3_SRAM0(
 .CLK(CLK50MHZ),
@@ -1394,25 +1020,6 @@ COCO_SRAM CC3_SRAM1(
 .DATA_O(RAM0_DATA_O[15:8])
 );
 
-//reg r_w_d1;
-//reg ram_write;
-
-//always @ (posedge CLK50MHZ or negedge RESET_N)
-//begin
-//	if(!RESET_N)
-//	begin
-//		r_w_d1 <= 1'b1;
-//		ram_write <= 1'b1;
-//	end
-//	else
-//	begin
-//		r_w_d1 <= RAM0_RW_N;
-//		ram_write <= !(!RAM0_RW_N & r_w_d1);
-//	end
-//end
-
-
-`endif
 
 
 assign	ENA_ORCC =	({ROM_SEL, MPI_CTS} == 3'b100)						?	1'b1:		// Orchestra-90CC C000-DFFF Slot 1
@@ -1427,8 +1034,8 @@ assign	HDD_EN = ({MPI_SCS[0], ADDRESS[15:4]} == 13'b1111111110100)	?	1'b1:		// F
 																								1'b0;
 assign	RS232_EN = (ADDRESS[15:2] == 14'b11111111011010)				?	1'b1:		//FF68-FF6B
 																								1'b0;
-assign	SPI_EN = (ADDRESS[15:1]  == 15'b111111110110010)				?	1'b1:		// SPI FF64-FF65
-																								1'b0;
+//assign	SPI_EN = (ADDRESS[15:1]  == 15'b111111110110010)				?	1'b1:		// SPI FF64-FF65
+//																								1'b0;
 assign	SLOT3_HW = ({MPI_SCS, ADDRESS[15:5]} == 13'b1011111111010)	?	1'b1:		// FF40-FF5F
 																								1'b0;
 assign	VDAC_EN = ({RW_N,ADDRESS[15:0]} == 17'H0FF7E)					?	1'b1:		// FF7E
@@ -1529,24 +1136,18 @@ assign	ROM_RW = !(W_PROT[1] | RW_N);
 
 
 assign	DATA_IN =
-// SRH MISTer
-`ifdef INT_RAM
 														RAM0_BE0		?	RAM0_DATA_O[7:0]:
 														RAM0_BE1		?	RAM0_DATA_O[15:8]:
-`else
-														RAM0_BE0		?	RAM0_DATA[7:0]:
-														RAM0_BE1		?	RAM0_DATA[15:8]:
-`endif
-														RAM1_BE0		?	RAM1_DATA[7:0]:
-														RAM1_BE1		?	RAM1_DATA[15:8]:
-														RAM1_BE2		?	RAM1_DATA[7:0]:
-														RAM1_BE3		?	RAM1_DATA[15:8]:
-														FLASH_CE_S	?	FLASH_DATA:
-														HDD_EN		?	DATA_HDD:
+//														RAM1_BE0		?	RAM1_DATA[7:0]:
+//														RAM1_BE1		?	RAM1_DATA[15:8]:
+//														RAM1_BE2		?	RAM1_DATA[7:0]:
+//														RAM1_BE3		?	RAM1_DATA[15:8]:
+														FLASH_CE_S		?	FLASH_DATA:
+														HDD_EN			?	DATA_HDD:
 														RS232_EN		?	DATA_RS232:
 														SLOT3_HW		?	{5'b00000, ROM_BANK}:
-												WF_RDFIFO_RDREQ	?	WF_RDFIFO_DATA:
-														SPI_EN		?	SPI_DATA:
+														WF_RDFIFO_RDREQ	?	WF_RDFIFO_DATA:
+//														SPI_EN			?	SPI_DATA:
 // FF00, FF04, FF08, FF0C, FF10, FF14, FF18, FF1C
 ({ADDRESS[15:5], ADDRESS[1:0]} == 13'b1111111100000)	?	DATA_REG1:
 // FF01, FF05, FF09, FF0D, FF11, FF15, FF19, FF1D
@@ -1585,16 +1186,16 @@ assign	DATA_IN =
 									(ADDRESS == 16'hFF76)		?	{       GART_READ[7:0]}:
 									(ADDRESS == 16'hFF77)		?	{(GART_CNT == 17'h00000),5'b00000, GART_INC[1:0]}:
 									(ADDRESS == 16'hFF7F)		?	{2'b11, MPI_CTS, W_PROT, MPI_SCS}:
-									(ADDRESS == 16'hFF80)		?	{CK_DONE_BUF[1],
-																						CK_FAIL,
-																						CK_STATE}:
-									(ADDRESS == 16'hFF81)		?	CK_DATA_IN:
+//									(ADDRESS == 16'hFF80)		?	{CK_DONE_BUF[1],
+//																						CK_FAIL,
+//																						CK_STATE}:
+//									(ADDRESS == 16'hFF81)		?	CK_DATA_IN:
 
-									(ADDRESS == 16'hFF84)		?	{SDRAM_READY_BUF[1], 3'b000, SDRAM_STATE, SDRAM_READ}:
-									(ADDRESS == 16'hFF85)		?	SDRAM_DOUT[7:0]:
-									(ADDRESS == 16'hFF86)		?	SDRAM_DOUT[15:8]:
-									(ADDRESS == 16'hFF87)		?	{1'b0, SDRAM_ADDR[21:15]}:
-									(ADDRESS == 16'hFF88)		?	SDRAM_ADDR[14:7]:
+//									(ADDRESS == 16'hFF84)		?	{SDRAM_READY_BUF[1], 3'b000, SDRAM_STATE, SDRAM_READ}:
+//									(ADDRESS == 16'hFF85)		?	SDRAM_DOUT[7:0]:
+//									(ADDRESS == 16'hFF86)		?	SDRAM_DOUT[15:8]:
+//									(ADDRESS == 16'hFF87)		?	{1'b0, SDRAM_ADDR[21:15]}:
+//									(ADDRESS == 16'hFF88)		?	SDRAM_ADDR[14:7]:
 
 									(ADDRESS == 16'hFF8E)		?	GPIO_DIR:
 									(ADDRESS == 16'hFF8F)		?	GPIO:
@@ -1664,12 +1265,7 @@ assign	DATA_IN =
 																			 KEY[0],KEY[64],KEY[63],KEY[62]}:
 
 									(ADDRESS == 16'hFFF0)		?	Version_Hi:
-`ifdef M5Meg
-									(ADDRESS == 16'hFFF1)		?	(Version_Lo + 8'h05 + BOARD_TYPE):
-`endif
-`ifdef M1Meg
 									(ADDRESS == 16'hFFF1)		?	(Version_Lo + BOARD_TYPE):
-`endif
 									(ADDRESS == 16'hFFF2)		?	8'hFE:
 									(ADDRESS == 16'hFFF3)		?	8'hEE:
 									(ADDRESS == 16'hFFF4)		?	8'hFE:
@@ -1724,158 +1320,158 @@ assign	GPIO[7] = GPIO_DIR[7]	?	GPIO_OUT[7]:
 *	SDRAM Interface
 *********************************************************************************/
 //      -- Host side
-sdramCntl SDRAM(
-.clk(CLK50MHZ),					//in  std_logic;  -- master clock
-.lock(RESET_N),					//in  std_logic;  -- true if clock is stable
-.rst(CPU_RESET),					//in  std_logic;  -- reset
-.rd(SDRAM_RD),						//in  std_logic;  -- initiate read operation
-.wr(SDRAM_WR),						//in  std_logic;  -- initiate write operation
-.earlyOpBegun(SDRAM_EOB),		//out std_logic;  -- read/write/self-refresh op has begun (async)
-.opBegun(SDRAM_OB),				//out std_logic;  -- read/write/self-refresh op has begun (clocked)
-.rdPending(SDRAM_RDP),			//out std_logic;  -- true if read operation(s) are still in the pipeline
-.done(SDRAM_DONE),				//out std_logic;  -- read or write operation is done
-.rdDone(SDRAM_RDD),				//out std_logic;  -- read operation is done and data is available
-.hAddr(SDRAM_ADDR),				//in  std_logic_vector(HADDR_WIDTH-1 downto 0);  -- address from host to SDRAM
-.hDIn(SDRAM_DIN),					//in  std_logic_vector(DATA_WIDTH-1 downto 0);  -- data from host to SDRAM
-.hDOut(HDOUT),						//out std_logic_vector(DATA_WIDTH-1 downto 0);  -- data from SDRAM to host
-.status(SDRAM_STATUS),			//out std_logic_vector(3 downto 0);  -- diagnostic status of the FSM
+//sdramCntl SDRAM(
+//.clk(CLK50MHZ),					//in  std_logic;  -- master clock
+//.lock(RESET_N),					//in  std_logic;  -- true if clock is stable
+//.rst(CPU_RESET),					//in  std_logic;  -- reset
+//.rd(SDRAM_RD),						//in  std_logic;  -- initiate read operation
+//.wr(SDRAM_WR),						//in  std_logic;  -- initiate write operation
+//.earlyOpBegun(SDRAM_EOB),		//out std_logic;  -- read/write/self-refresh op has begun (async)
+//.opBegun(SDRAM_OB),				//out std_logic;  -- read/write/self-refresh op has begun (clocked)
+//.rdPending(SDRAM_RDP),			//out std_logic;  -- true if read operation(s) are still in the pipeline
+//.done(SDRAM_DONE),				//out std_logic;  -- read or write operation is done
+//.rdDone(SDRAM_RDD),				//out std_logic;  -- read operation is done and data is available
+//.hAddr(SDRAM_ADDR),				//in  std_logic_vector(HADDR_WIDTH-1 downto 0);  -- address from host to SDRAM
+//.hDIn(SDRAM_DIN),					//in  std_logic_vector(DATA_WIDTH-1 downto 0);  -- data from host to SDRAM
+//.hDOut(HDOUT),						//out std_logic_vector(DATA_WIDTH-1 downto 0);  -- data from SDRAM to host
+//.status(SDRAM_STATUS),			//out std_logic_vector(3 downto 0);  -- diagnostic status of the FSM
 //      -- SDRAM side
-.cke(SDRAM_CKE),					//out std_logic;  -- clock-enable to SDRAM
-.ce_n(SDRAM_CS_N),				//out std_logic;  -- chip-select to SDRAM
-.ras_n(SDRAM_RAS_N),				//out std_logic;  -- SDRAM row address strobe
-.cas_n(SDRAM_CAS_N),				//out std_logic;  -- SDRAM column address strobe
-.we_n(SDRAM_RW_N),				//out std_logic;  -- SDRAM write enable
-.ba(SDRAM_BANK),					//out std_logic_vector(1 downto 0);  -- SDRAM bank address
-.sAddr(SDRAM_ADDRESS),			//out std_logic_vector(SADDR_WIDTH-1 downto 0);  -- SDRAM row/column address
+//.cke(SDRAM_CKE),					//out std_logic;  -- clock-enable to SDRAM
+//.ce_n(SDRAM_CS_N),				//out std_logic;  -- chip-select to SDRAM
+//.ras_n(SDRAM_RAS_N),				//out std_logic;  -- SDRAM row address strobe
+//.cas_n(SDRAM_CAS_N),				//out std_logic;  -- SDRAM column address strobe
+//.we_n(SDRAM_RW_N),				//out std_logic;  -- SDRAM write enable
+//.ba(SDRAM_BANK),					//out std_logic_vector(1 downto 0);  -- SDRAM bank address
+//.sAddr(SDRAM_ADDRESS),			//out std_logic_vector(SADDR_WIDTH-1 downto 0);  -- SDRAM row/column address
 // SRH - Specified 15:0 for DE2-115 should be the same for DE0
-.sDIn(SDRAM_DATA[15:0]),				//in  std_logic_vector(DATA_WIDTH-1 downto 0);  -- data from SDRAM
-.sDOut(SDRAM_DATA_BUF),			//out std_logic_vector(DATA_WIDTH-1 downto 0);  -- data to SDRAM
-.sDOutEn(SDRAM_DATA_BUF_EN),	//out std_logic;  -- true if data is output to SDRAM on sDOut
-.dqmh(SDRAM_UDQM),				//out std_logic;  -- enable upper-byte of SDRAM databus if true
-.dqml(SDRAM_LDQM)					//out std_logic  -- enable lower-byte of SDRAM databus if true
-);
+//.sDIn(SDRAM_DATA[15:0]),				//in  std_logic_vector(DATA_WIDTH-1 downto 0);  -- data from SDRAM
+//.sDOut(SDRAM_DATA_BUF),			//out std_logic_vector(DATA_WIDTH-1 downto 0);  -- data to SDRAM
+//.sDOutEn(SDRAM_DATA_BUF_EN),	//out std_logic;  -- true if data is output to SDRAM on sDOut
+//.dqmh(SDRAM_UDQM),				//out std_logic;  -- enable upper-byte of SDRAM databus if true
+//.dqml(SDRAM_LDQM)					//out std_logic  -- enable lower-byte of SDRAM databus if true
+//);
 
 // SRH - Upper 16 bits of SDRAM is inactive on DE2-115
-`ifdef DE2_115
-assign SDRAM_DATA[31:16] = 16'bZZZZZZZZZZZZZZZZ;
-assign SDRAM_DQM[3:2] = 2'b11;
-`endif
+//`ifdef DE2_115
+//assign SDRAM_DATA[31:16] = 16'bZZZZZZZZZZZZZZZZ;
+//assign SDRAM_DQM[3:2] = 2'b11;
+//`endif
 
-assign SDRAM_CLK = CLK50MHZ;
-assign SDRAM_DATA = (SDRAM_DATA_BUF_EN)	?	SDRAM_DATA_BUF:
-														16'bZZZZZZZZZZZZZZZZ;
+//assign SDRAM_CLK = CLK50MHZ;
+//assign SDRAM_DATA = (SDRAM_DATA_BUF_EN)	?	SDRAM_DATA_BUF:
+//														16'bZZZZZZZZZZZZZZZZ;
 
 
-always @ (posedge CLK50MHZ or negedge RESET_N)
-begin
-	if(!RESET_N)
-	begin
-		SDRAM_STATE <= 3'b000;
-		SDRAM_RD <= 1'b0;
-		SDRAM_WR <= 1'b0;
-		SDRAM_DOUT <= 16'h0000;
-		SDRAM_START_BUF <= 2'b00;
-	end
-	else
-	begin
-		SDRAM_START_BUF <= {SDRAM_START_BUF[0], SDRAM_START};
-		case (SDRAM_STATE)
-		3'b000:
-		begin
-			if(!SDRAM_START_BUF[1])
-				SDRAM_STATE <= 3'b001;
-		end
-		3'b001:
-		begin
-			if(SDRAM_START_BUF[1])
-			begin
-				if(SDRAM_READ)
-				begin
-					SDRAM_STATE <= 3'b010;
-					SDRAM_RD <= 1'b1;
-				end
-				else
-				begin
-					SDRAM_STATE <= 3'b101;
-					SDRAM_WR <= 1'b1;
-				end
-			end
-		end
+//always @ (posedge CLK50MHZ or negedge RESET_N)
+//begin
+//	if(!RESET_N)
+//	begin
+//		SDRAM_STATE <= 3'b000;
+//		SDRAM_RD <= 1'b0;
+//		SDRAM_WR <= 1'b0;
+//		SDRAM_DOUT <= 16'h0000;
+//		SDRAM_START_BUF <= 2'b00;
+//	end
+//	else
+//	begin
+//		SDRAM_START_BUF <= {SDRAM_START_BUF[0], SDRAM_START};
+//		case (SDRAM_STATE)
+//		3'b000:
+//		begin
+//			if(!SDRAM_START_BUF[1])
+//				SDRAM_STATE <= 3'b001;
+//		end
+//		3'b001:
+//		begin
+//			if(SDRAM_START_BUF[1])
+//			begin
+//				if(SDRAM_READ)
+//				begin
+//					SDRAM_STATE <= 3'b010;
+//					SDRAM_RD <= 1'b1;
+//				end
+//				else
+//				begin
+//					SDRAM_STATE <= 3'b101;
+//					SDRAM_WR <= 1'b1;
+//				end
+//			end
+//		end
 // Read
-		3'b010:
-		begin
-			if(SDRAM_OB)
-			begin
-				SDRAM_RD <= 1'b0;
-				if(SDRAM_DONE)
-					SDRAM_STATE <= 3'b100;
-				else
-					SDRAM_STATE <= 3'b011;
-			end
-		end
-		3'b011:
-		begin
-			if(SDRAM_DONE)
-				SDRAM_STATE <= 3'b100;
-		end
-		3'b100:
-		begin
-			SDRAM_DOUT <= HDOUT;
-			SDRAM_STATE <= 3'b000;
-		end
+//		3'b010:
+//		begin
+//			if(SDRAM_OB)
+//			begin
+//				SDRAM_RD <= 1'b0;
+//				if(SDRAM_DONE)
+//					SDRAM_STATE <= 3'b100;
+//				else
+//					SDRAM_STATE <= 3'b011;
+//			end
+//		end
+//		3'b011:
+//		begin
+//			if(SDRAM_DONE)
+//				SDRAM_STATE <= 3'b100;
+//		end
+//		3'b100:
+//		begin
+//			SDRAM_DOUT <= HDOUT;
+//			SDRAM_STATE <= 3'b000;
+//		end
 // Write
-		3'b101:
-		begin
-			if(SDRAM_OB)
-			begin
-				SDRAM_WR <= 1'b0;
-				if(SDRAM_DONE)
-					SDRAM_STATE <= 3'b000;
-				else
-					SDRAM_STATE <= 3'b110;
-			end
-		end
-		3'b110:
-		begin
-			if(SDRAM_DONE)
-			begin
-				SDRAM_STATE <= 3'b000;
-			end
-		end
-		3'b111:
-		begin
-			SDRAM_STATE <= 3'b000;
-		end
-		endcase
-	end
-end
+//		3'b101:
+//		begin
+//			if(SDRAM_OB)
+//			begin
+//				SDRAM_WR <= 1'b0;
+//				if(SDRAM_DONE)
+//					SDRAM_STATE <= 3'b000;
+//				else
+//					SDRAM_STATE <= 3'b110;
+//			end
+//		end
+//		3'b110:
+//		begin
+//			if(SDRAM_DONE)
+//			begin
+//				SDRAM_STATE <= 3'b000;
+//			end
+//		end
+//		3'b111:
+//		begin
+//			SDRAM_STATE <= 3'b000;
+//		end
+//		endcase
+//	end
+//end
 
-always @ (negedge PH_2 or negedge RESET_N)
-begin
-	if(!RESET_N)
-	begin
-		SDRAM_ADDR[6:0] <= 7'h00;
-		SDRAM_START <= 1'b0;
-		SDRAM_NEXT_BUF <= 2'b00;
-		SDRAM_READY_BUF <= 2'b00;
-	end
-	else
-	begin
-		SDRAM_NEXT_BUF <= {SDRAM_NEXT_BUF[0], (SDRAM_STATE == 3'b000)};
-		SDRAM_READY_BUF <= {SDRAM_READY_BUF[0], (SDRAM_STATE == 3'b001)};
-		if(ADDRESS[15:0] == 16'hFF88)
-			SDRAM_ADDR[6:0] <= 7'h7F;								// Set to -1 because we increment before the first operation
-		else
-			if(ADDRESS[15:0] == 16'hFF86)							// Does not matter if read or write
-			begin
-				SDRAM_ADDR[6:0] <= SDRAM_ADDR[6:0] + 1'b1;
-				SDRAM_START <= 1'b1;
-			end
-			else
-				if(SDRAM_NEXT_BUF[1])
-					SDRAM_START <= 1'b0;
-	end
-end
+//always @ (negedge PH_2 or negedge RESET_N)
+//begin
+//	if(!RESET_N)
+//	begin
+//		SDRAM_ADDR[6:0] <= 7'h00;
+//		SDRAM_START <= 1'b0;
+//		SDRAM_NEXT_BUF <= 2'b00;
+//		SDRAM_READY_BUF <= 2'b00;
+//	end
+//	else
+//	begin
+//		SDRAM_NEXT_BUF <= {SDRAM_NEXT_BUF[0], (SDRAM_STATE == 3'b000)};
+//		SDRAM_READY_BUF <= {SDRAM_READY_BUF[0], (SDRAM_STATE == 3'b001)};
+//		if(ADDRESS[15:0] == 16'hFF88)
+//			SDRAM_ADDR[6:0] <= 7'h7F;								// Set to -1 because we increment before the first operation
+//		else
+//			if(ADDRESS[15:0] == 16'hFF86)							// Does not matter if read or write
+//			begin
+//				SDRAM_ADDR[6:0] <= SDRAM_ADDR[6:0] + 1'b1;
+//				SDRAM_START <= 1'b1;
+//			end
+//			else
+//				if(SDRAM_NEXT_BUF[1])
+//					SDRAM_START <= 1'b0;
+//	end
+//end
 
 // Clock for Drivewire UART on the slave processor(6850)
 // 8 cycles in 50 MHz / 27 = 8*50/27 = 14.815 MHz
@@ -2118,20 +1714,10 @@ begin
 		SWITCH_L <= 2'b00;
 		PH_2_RAW <= 1'b0;
 		RAM0_RW_N <= 1'b1;
-		RAM1_RW0_N <= 1'b1;
-		RAM1_RW1_N <= 1'b1;
 // SRH MISTer
 
-`ifndef INT_RAM
-		RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-		RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`endif
 		RAM0_BE0_N <=  1'b1;
 		RAM0_BE1_N <= 1'b1;
-		RAM1_BE0_N <=  1'b1;
-		RAM1_BE1_N <= 1'b1;
-		RAM1_BE2_N <=  1'b1;
-		RAM1_BE3_N <= 1'b1;
 	end
 	else
 	begin
@@ -2141,72 +1727,31 @@ begin
 			SWITCH_L <= {SWITCH[0], RATE};					// Normal speed
 			PH_2_RAW <= 1'b1;
 // Grab video one more time
-`ifdef M5Meg
-			if(VIDEO_ADDRESS[21])
-				VIDEO_BUFFER <= RAM0_DATA;
-			else
-				VIDEO_BUFFER <= RAM1_DATA;
-`endif
-`ifdef M1Meg
 // SRH MISTer
 
-`ifdef INT_RAM
 				VIDEO_BUFFER <= RAM0_DATA_O;
-`else
-				VIDEO_BUFFER <= RAM0_DATA;
-`endif
-`endif
-`ifdef M4Meg
-				VIDEO_BUFFER <= RAM1_DATA;
-`endif
 			CLK <= 6'h01;
 			RAM0_BE0_N <=  !RAM0_BE0;
 			RAM0_BE1_N <=  !RAM0_BE1;
-			RAM1_BE0_N <=  !RAM1_BE0;
-			RAM1_BE1_N <=  !RAM1_BE1;
-			RAM1_BE2_N <=  !RAM1_BE2;
-			RAM1_BE3_N <=  !RAM1_BE3;
 //***************************************
 // Gart
 //***************************************
 			if(ADDRESS[15:0]==16'hFF73)
 			begin
 				RAM0_RW_N <= RW_N;
-				RAM1_RW0_N <= RW_N;
-				RAM1_RW1_N <= RW_N;
 				if(!RW_N)
 				begin
 					RAM0_ADDRESS <= GART_WRITE[20:1];
-					RAM1_ADDRESS <= GART_WRITE[20:1];
-					RAM1_ADDRESS9_1 <= GART_WRITE[10];
-					RAM1_ADDRESS10_1 <= GART_WRITE[11];
 				end
 				else
 				begin
 					RAM0_ADDRESS <= GART_READ[20:1];
-					RAM1_ADDRESS <= GART_READ[20:1];
-					RAM1_ADDRESS9_1 <= GART_READ[10];
-					RAM1_ADDRESS10_1 <= GART_READ[11];
 				end
 				if (!RW_N)
 				begin
 // SRH MISTer
 
-`ifdef INT_RAM
 					RAM0_DATA_I[15:0] <= {DATA_OUT, DATA_OUT};
-`else
-					RAM0_DATA[15:0] <= {DATA_OUT, DATA_OUT};
-`endif
-					RAM1_DATA[15:0] <= {DATA_OUT, DATA_OUT};
-				end
-				else
-				begin
-// SRH MISTer
-
-`ifndef INT_RAM
-					RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`endif
-					RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 				end
 			end
 			else
@@ -2216,66 +1761,26 @@ begin
 					if(GART_CNT[0])
 					begin
 						RAM0_RW_N <= 1'b0;
-						RAM1_RW0_N <= 1'b0;
-						RAM1_RW1_N <= 1'b0;
 						RAM0_ADDRESS <= GART_WRITE[20:1];
-						RAM1_ADDRESS <= GART_WRITE[20:1];
-						RAM1_ADDRESS9_1 <= GART_WRITE[10];
-						RAM1_ADDRESS10_1 <= GART_WRITE[11];
 // SRH MISTer
 
-`ifdef INT_RAM
 						RAM0_DATA_I[15:0] <= {GART_BUF, GART_BUF};
-`else
-						RAM0_DATA[15:0] <= {GART_BUF, GART_BUF};
-`endif
-						RAM1_DATA[15:0] <= {GART_BUF, GART_BUF};
 					end
 					else
 					begin
 						RAM0_RW_N <= 1'b1;
-						RAM1_RW0_N <= 1'b1;
-						RAM1_RW1_N <= 1'b1;
 						RAM0_ADDRESS <= GART_READ[20:1];
-						RAM1_ADDRESS <= GART_READ[20:1];
-						RAM1_ADDRESS9_1 <= GART_READ[10];
-						RAM1_ADDRESS10_1 <= GART_READ[11];
-// SRH MISTer
-
-`ifndef INT_RAM
-						RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`endif
-						RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 					end
 				end
 				else
 				begin
 					RAM0_RW_N <= RW_N;
-					RAM1_RW0_N <= RW_N;
-					RAM1_RW1_N <= RW_N;
 					RAM0_ADDRESS <= {BLOCK_ADDRESS[7:0], ADDRESS[12:1]};
-					RAM1_ADDRESS <= {BLOCK_ADDRESS[7:0], ADDRESS[12:1]};
-					RAM1_ADDRESS9_1 <= ADDRESS[10];
-					RAM1_ADDRESS10_1 <= ADDRESS[11];
 					if (!RW_N)
 					begin
 // SRH MISTer
 
-`ifdef INT_RAM
 						RAM0_DATA_I[15:0] <= {DATA_OUT, DATA_OUT};
-`else
-						RAM0_DATA[15:0] <= {DATA_OUT, DATA_OUT};
-`endif
-						RAM1_DATA[15:0] <= {DATA_OUT, DATA_OUT};
-					end
-					else
-					begin
-// SRH MISTer
-
-`ifndef INT_RAM
-						RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`endif
-						RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 					end
 				end
 			end
@@ -2288,43 +1793,12 @@ begin
 			end
 			PH_2_RAW <= 1'b0;
 			RAM0_ADDRESS <= VIDEO_ADDRESS[19:0];
-			RAM1_ADDRESS <= VIDEO_ADDRESS[19:0];
-			RAM1_ADDRESS9_1 <= VIDEO_ADDRESS[9];
-			RAM1_ADDRESS10_1 <= VIDEO_ADDRESS[10];
-`ifdef M5Meg
-			RAM0_BE0_N <= !( VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM0_BE1_N <= !( VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE0_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-			RAM1_BE1_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-`endif
-`ifdef M1Meg
 			RAM0_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
 			RAM0_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE0_N <= 1'b1;
-			RAM1_BE1_N <= 1'b1;
-			RAM1_BE2_N <= 1'b1;
-			RAM1_BE3_N <= 1'b1;
-`endif
-`ifdef M4Meg
-			RAM0_BE0_N <= 1'b1;
-			RAM0_BE1_N <= 1'b1;
-			RAM1_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-`endif
 
 // SRH MISTer
 
-`ifndef INT_RAM
-			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`endif
-			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
 			RAM0_RW_N <= 1'b1;
-			RAM1_RW0_N <= 1'b1;
-			RAM1_RW1_N <= 1'b1;
 			if({SWITCH_L} == 2'b11)		//50/2 = 25 
 				CLK <= 6'h00;
 			else
@@ -2334,58 +1808,12 @@ begin
 //		6'h17:								//	50/24 = 2.0833
 		begin
 			RAM0_ADDRESS <= VIDEO_ADDRESS[19:0];
-			RAM1_ADDRESS <= VIDEO_ADDRESS[19:0];
-			RAM1_ADDRESS9_1 <= VIDEO_ADDRESS[9];
-			RAM1_ADDRESS10_1 <= VIDEO_ADDRESS[10];
 
-`ifdef M5Meg
-			RAM0_BE0_N <= !( VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM0_BE1_N <= !( VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE0_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-			RAM1_BE1_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-`endif
-`ifdef M1Meg
 			RAM0_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
 			RAM0_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE0_N <= 1'b1;
-			RAM1_BE1_N <= 1'b1;
-			RAM1_BE2_N <= 1'b1;
-			RAM1_BE3_N <= 1'b1;
-`endif
-`ifdef M4Meg
-			RAM0_BE0_N <= 1'b1;
-			RAM0_BE1_N <= 1'b1;
-			RAM1_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-`endif
 // SRH MISTer
 
-`ifndef INT_RAM
-			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`endif
-			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`ifdef M5Meg
-			if(VIDEO_ADDRESS[21])
-				VIDEO_BUFFER <= RAM0_DATA;
-			else
-				VIDEO_BUFFER <= RAM1_DATA;
-`endif
-`ifdef M1Meg
-// SRH MISTer
-
-`ifdef INT_RAM
-				VIDEO_BUFFER <= RAM0_DATA_O;
-`else
-				VIDEO_BUFFER <= RAM0_DATA;
-`endif
-`endif
-`ifdef M4Meg
-				VIDEO_BUFFER <= RAM1_DATA;
-`endif
+			VIDEO_BUFFER <= RAM0_DATA_O;
 			if(SWITCH_L[0])				//Rate = 1?
 				CLK <= 6'h00;
 			else
@@ -2394,57 +1822,11 @@ begin
 		6'h37:								// 50/56 = 0.89286
 		begin
 			RAM0_ADDRESS <= VIDEO_ADDRESS[19:0];
-			RAM1_ADDRESS <= VIDEO_ADDRESS[19:0];
-			RAM1_ADDRESS9_1 <= VIDEO_ADDRESS[9];
-			RAM1_ADDRESS10_1 <= VIDEO_ADDRESS[10];
-`ifdef M5Meg
-			RAM0_BE0_N <= !( VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM0_BE1_N <= !( VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE0_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-			RAM1_BE1_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-`endif
-`ifdef M1Meg
 			RAM0_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
 			RAM0_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE0_N <= 1'b1;
-			RAM1_BE1_N <= 1'b1;
-			RAM1_BE2_N <= 1'b1;
-			RAM1_BE3_N <= 1'b1;
-`endif
-`ifdef M4Meg
-			RAM0_BE0_N <= 1'b1;
-			RAM0_BE1_N <= 1'b1;
-			RAM1_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-`endif
 // SRH MISTer
 
-`ifndef INT_RAM
-			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`endif
-			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`ifdef M5Meg
-			if(VIDEO_ADDRESS[21])
-				VIDEO_BUFFER <= RAM0_DATA;
-			else
-				VIDEO_BUFFER <= RAM1_DATA;
-`endif
-`ifdef M1Meg
-// SRH MISTer
-
-`ifdef INT_RAM
-				VIDEO_BUFFER <= RAM0_DATA_O;
-`else
-				VIDEO_BUFFER <= RAM0_DATA;
-`endif
-`endif
-`ifdef M4Meg
-				VIDEO_BUFFER <= RAM1_DATA;
-`endif
+			VIDEO_BUFFER <= RAM0_DATA_O;
 			CLK <= 6'h00;
 		end
 		6'h3F:								// Just in case
@@ -2455,57 +1837,10 @@ begin
 		begin
 			CLK <= CLK + 1'b1;
 			RAM0_ADDRESS <= VIDEO_ADDRESS[19:0];
-			RAM1_ADDRESS <= VIDEO_ADDRESS[19:0];
-			RAM1_ADDRESS9_1 <= VIDEO_ADDRESS[9];
-			RAM1_ADDRESS10_1 <= VIDEO_ADDRESS[10];
-`ifdef M5Meg
-			RAM0_BE0_N <= !( VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM0_BE1_N <= !( VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE0_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-			RAM1_BE1_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-`endif
-`ifdef M1Meg
 			RAM0_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
 			RAM0_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE0_N <= 1'b1;
-			RAM1_BE1_N <= 1'b1;
-			RAM1_BE2_N <= 1'b1;
-			RAM1_BE3_N <= 1'b1;
-`endif
-`ifdef M4Meg
-			RAM0_BE0_N <= 1'b1;
-			RAM0_BE1_N <= 1'b1;
-			RAM1_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-			RAM1_BE2_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-			RAM1_BE3_N <= !(!VIDEO_ADDRESS[21] &  VIDEO_ADDRESS[20]);
-`endif
 // SRH MISTer
-
-`ifndef INT_RAM
-			RAM0_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`endif
-			RAM1_DATA[15:0] <= 16'bZZZZZZZZZZZZZZZZ;
-`ifdef M5Meg
-			if(VIDEO_ADDRESS[21])
-				VIDEO_BUFFER <= RAM0_DATA;
-			else
-				VIDEO_BUFFER <= RAM1_DATA;
-`endif
-`ifdef M1Meg
- // SRH MISTer
-
-`ifdef INT_RAM
-				VIDEO_BUFFER <= RAM0_DATA_O;
-`else
-				VIDEO_BUFFER <= RAM0_DATA;
-`endif
-`endif
-`ifdef M4Meg
-				VIDEO_BUFFER <= RAM1_DATA;
-`endif
+			VIDEO_BUFFER <= RAM0_DATA_O;
 		end
 		endcase
 	end
@@ -2602,14 +1937,14 @@ begin
 		case (MPI_SCS)
 		2'b00:
 			CART_INT_IN_N <=  (!CART_INT_IN_N | SWITCH[4])
-									&(!IRQ_09 & IRQ_SPI_N & SER_IRQ);
+									&(!IRQ_09 & SER_IRQ);
 		2'b01:
-			CART_INT_IN_N <= (!IRQ_09 & IRQ_SPI_N & SER_IRQ);
+			CART_INT_IN_N <= (!IRQ_09 & SER_IRQ);
 		2'b10:
 			CART_INT_IN_N <= (!CART_INT_IN_N | SWITCH[4])
-									&(!IRQ_09 & IRQ_SPI_N & SER_IRQ);
+									&(!IRQ_09 & SER_IRQ);
 		2'b11:
-			CART_INT_IN_N <= (!IRQ_09 & IRQ_SPI_N & SER_IRQ);
+			CART_INT_IN_N <= (!IRQ_09 & SER_IRQ);
 		endcase
 	end
 end
@@ -3347,19 +2682,19 @@ begin
 		MPI_SCS <= SWITCH[2:1];
 		MPI_CTS <= SWITCH[2:1];
 // FF80
-		CK_START <= 1'b0;
+//		CK_START <= 1'b0;
 // FF81
-		CK_DATA_OUT <= 8'h00;
+//		CK_DATA_OUT <= 8'h00;
 // FF82
-		CK_DEVICE <= 8'h00;
+//		CK_DEVICE <= 8'h00;
 // FF83
-		CK_REG <= 8'h00;
+//		CK_REG <= 8'h00;
 // FF84
-		SDRAM_READ <= 1'b0;
+//		SDRAM_READ <= 1'b0;
 // FF85-FF86
-		SDRAM_DIN <= 16'h0000;
+//		SDRAM_DIN <= 16'h0000;
 // FF87-FF88
-		SDRAM_ADDR[21:7] <= 15'h0000;
+//		SDRAM_ADDR[21:7] <= 15'h0000;
 // FF8E-FF8F
 		GPIO_DIR <= 8'h00;
 		GPIO_OUT <= 8'h00;
@@ -4091,42 +3426,43 @@ begin
 				MPI_SCS <= DATA_OUT[1:0];
 				MPI_CTS <= DATA_OUT[5:4];
 			end
-			16'hFF80:
-			begin
-				CK_START <= DATA_OUT[0];
-			end
-			16'hFF81:
-			begin
-				CK_DATA_OUT <= DATA_OUT;
-			end
-			16'hFF82:
-			begin
-				CK_DEVICE <= DATA_OUT;
-			end
-			16'hFF83:
-			begin
-				CK_REG <= DATA_OUT;
-			end
-			16'hFF84:
-			begin
-				SDRAM_READ <= DATA_OUT[0];
-			end
-			16'hFF85:
-			begin
-				SDRAM_DIN[7:0] <= DATA_OUT;
-			end
-			16'hFF86:
-			begin
-				SDRAM_DIN[15:8] <= DATA_OUT;
-			end
-			16'hFF87:
-			begin
-				SDRAM_ADDR[21:15] <= DATA_OUT[6:0];
-			end
-			16'hFF88:
-			begin
-				SDRAM_ADDR[14:7] <= DATA_OUT;
-			end
+//			16'hFF80:
+//			begin
+//				CK_START <= DATA_OUT[0];
+//			end
+//			16'hFF81:
+//			begin
+//				CK_DATA_OUT <= DATA_OUT;
+//			end
+//			16'hFF82:
+//			begin
+//				CK_DEVICE <= DATA_OUT;
+//			end
+//			16'hFF83:
+//			begin
+//				CK_REG <= DATA_OUT;
+//			end
+//SRH Removal
+//			16'hFF84:
+//			begin
+//				SDRAM_READ <= DATA_OUT[0];
+//			end
+//			16'hFF85:
+//			begin
+//				SDRAM_DIN[7:0] <= DATA_OUT;
+//			end
+//			16'hFF86:
+//			begin
+//				SDRAM_DIN[15:8] <= DATA_OUT;
+//			end
+//			16'hFF87:
+//			begin
+//				SDRAM_ADDR[21:15] <= DATA_OUT[6:0];
+//			end
+//			16'hFF88:
+//			begin
+//				SDRAM_ADDR[14:7] <= DATA_OUT;
+//			end
 			16'hFF8E:
 				GPIO_DIR <= DATA_OUT;
 			16'hFF8F:
@@ -4913,80 +4249,5 @@ glb6551 RS232(
 .DSR(UART51_DTR)
 );
 
-/*****************************************************************************
-* SD Card interface
-******************************************************************************/
-`ifdef DE2_115
-SDCard SPI_09(
-	.clk_i(MCLOCK[0]),		// 25 MHz Clock means 12.5 MHz SDCard transfers
-	.cpuclk_n_i(PH_2),		// CPU Clock
-	.reset_n_i(RESET_N),		// reset (asynchronous active low)
-	.cs_i(SPI_EN),				// chip select
-	.adr_i(ADDRESS[0]),		// address[0]
-	.rw_n_i(RW_N),				// write enable
-	.dat_i(DATA_OUT),			// data input
-	.dat_o(SPI_DATA),			// data output
-	.irq_n_o(IRQ_SPI_N),		// irq output (low active)
-	.halt_o(SPI_HALT),
-  // SPI port
-	.act_led_n_o(act_led_n),
-	.card_detect_n_i(!SWITCH[6]),
-	.wp_locked_i(SD_WP_N), // 1=Locked
-	.spi_ss_n_o(SPI_SS_N),	// SPI Chip Select
-	.sclk_o(SPI_CLK),			// serial clock output
-	.mosi_o(MOSI),				// MasterOut SlaveIN
-	.miso_i(MISO));			// MasterIn SlaveOut
-`else
-SDCard SPI_09(
-	.clk_i(MCLOCK[0]),		// 25 MHz Clock means 12.5 MHz SDCard transfers
-	.cpuclk_n_i(PH_2),		// CPU Clock
-	.reset_n_i(RESET_N),		// reset (asynchronous active low)
-	.cs_i(SPI_EN),				// chip select
-	.adr_i(ADDRESS[0]),		// address[0]
-	.rw_n_i(RW_N),				// write enable
-	.dat_i(DATA_OUT),			// data input
-	.dat_o(SPI_DATA),			// data output
-	.irq_n_o(IRQ_SPI_N),		// irq output (low active)
-	.halt_o(SPI_HALT),
-  // SPI port
-	.act_led_n_o(act_led_n),
-	.card_detect_n_i(BUTTON_N[2] & !SWITCH[6]),
-	.wp_locked_i(BUTTON_N[1] & !SWITCH[6]),
-	.spi_ss_n_o(SPI_SS_N),	// SPI Chip Select
-	.sclk_o(SPI_CLK),			// serial clock output
-	.mosi_o(MOSI),				// MasterOut SlaveIN
-	.miso_i(MISO));			// MasterIn SlaveOut
-`endif
-
-always @ (negedge PH_2 or negedge RESET_N) 
-begin
-		if(!RESET_N)
-			CK_DONE_BUF <= 2'b00;
-		else
-			CK_DONE_BUF <= {CK_DONE_BUF[0], CK_DONE};
-end
-
-I2C GLB_RTC(
-.CLOCK(MCLOCK[6]),
-.RESET_N(RESET_N),
-.I2C_CLK(CK_CLK),
-.I2C_CLK_EN(CK_CLK_EN),
-.I2C_DAT(CK_DAT),
-.I2C_DAT_EN(CK_DAT_EN),
-.DEVICE(CK_DEVICE[7:1]),
-.REGISTER(CK_REG),
-.DATA_IN(CK_DATA_IN),
-.DATA_OUT(CK_DATA_OUT),
-.STATE(CK_STATE),
-.DONE(CK_DONE),
-.FAIL(CK_FAIL),
-.RW_N(CK_DEVICE[0]),
-.START(CK_START)
-);
-assign CK_CLK = (CK_CLK_EN == 1'b0) 	?	1'b0:
-														1'bZ;
-
-assign CK_DAT = (CK_DAT_EN == 1'b0) 	?	1'b0:
-														1'bZ;
 
 endmodule
