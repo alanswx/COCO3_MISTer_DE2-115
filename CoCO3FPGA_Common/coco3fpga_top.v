@@ -104,7 +104,6 @@ parameter Version_Lo = 8'h12;
 
 
 input			CLK50MHZ;
-input			CLK27MHZ;
 
 
 //	SRH	MISTer
@@ -296,12 +295,20 @@ wire   	[3:0]	 BUTTON_N;
 											//  2 SD Card Inserted (0=Inserted) wired to switche on the SD card
 											//  1 SD Write Protect (1=Protected) wired to switche on the SD card
 											//  0 Easter Egg
+input			COCO_RESET_N;
 
 // Free IO Pins
 inout	[7:0]	GPIO;
 											
 wire			CLK3_57MHZ;
 
+//WiFi
+wire 			WF_RXD;
+wire 			WF_TXD;
+wire 			RST;
+
+wire			WF_RTS;
+wire			EF;
 wire			PH_2;
 reg 			PH_2_RAW;
 reg				RESET_N;
@@ -804,7 +811,7 @@ assign SWITCH[9:0] = 10'b0000010000; // This is ECB
 //assign SWITCH[9:0] = 10'b0000010110; // This is EDB
 //assign SWITCH[9:0] = 10'b0000010000; // This is Orch 80 in ROM
 
-assign BUTTON_N[3:0] = 4'b1111;
+assign BUTTON_N[3:0] = {COCO_RESET_N, 3'b111};
 
 
 //assign LEDG = TRACE;														// Floppy Trace
