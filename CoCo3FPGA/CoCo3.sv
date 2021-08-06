@@ -216,7 +216,7 @@ pll pll
         .rst(0),
         .outclk_0(clk_ram),
         .outclk_1(clk_vid),
-		  .outclk_2(clk_sys2),
+		  .outclk_2(clk_sys_2),
         .locked(pll_locked)
 );
 
@@ -321,6 +321,9 @@ wire [7:0] b;
 
 coco3fpga_dw coco3 (
 .CLK50MHZ(CLK_50M),
+.COCO_RESET_N(~reset),
+//.COCO_RESET_N(1'b1),
+
 // SDRAM
 /*
 .SDRAM_ADDRESS(SDRAM_A),
@@ -336,32 +339,14 @@ coco3fpga_dw coco3 (
 .SDRAM_CS_N(SDRAM_nCS),
 .SDRAM_RW_N(SDRAM_nWE),
 */
-// VGA
-// SRH The DE2-115 has a 8,8,8 RGB VGA interface
-.RED7(r[7]),
-.GREEN7(g[7]),
-.BLUE7(b[7]),
-.RED6(r[6]),
-.GREEN6(g[6]),
-.BLUE6(b[6]),
-.RED5(r[5]),
-.GREEN5(g[5]),
-.BLUE5(b[5]),
-.RED4(r[4]),
-.GREEN4(g[4]),
-.BLUE4(b[4]),
-.RED3(r[3]),
-.GREEN3(g[3]),
-.BLUE3(b[3]),
-.RED2(r[2]),
-.GREEN2(g[2]),
-.BLUE2(b[2]),
-.RED1(r[1]),
-.GREEN1(g[1]),
-.BLUE1(b[1]),
-.RED0(r[0]),
-.GREEN0(g[0]),
-.BLUE0(b[0]),
+
+
+.RED(r),
+.GREEN(g),
+.BLUE(b),
+
+
+
 .H_SYNC(hs),
 .V_SYNC(vs),
 .HBLANK(hblank),
@@ -371,89 +356,11 @@ coco3fpga_dw coco3 (
 .ps2_clk(ps2_kbd_clk),
 .ps2_data(ps2_kbd_data),
 
-.ps2_key(ps2_key),
-.BUTTON_N(button_n)
-);
-/*
-coco3fpga_dw coco3 (
-// Input Clocks
-.CLK50MHZ(CLK_50M),
-        l
-CLK27MHZ,
-// RAM and ROM
-RAM0_DATA,				// 16 bit data bus to RAM 0
-RAM0_ADDRESS,
-RAM0_RW_N,
-RAM0_CS_N,				// Chip Select for RAM 0
-RAM0_BE0_N,				// Byte Enable for RAM 0
-RAM0_BE1_N,				// Byte Enable for RAM 0
-RAM0_OE_N,
-FLASH_ADDRESS,
-FLASH_WE_N,
-FLASH_RESET_N,
-FLASH_CE_N,
-FLASH_OE_N,
-//ms_clk,
-//ms_data,
-//Serial Ports
-DE1TXD,
-DE1RXD,
-OPTTXD,
-OPTRXD,
-// I2C
-I2C_SCL,
-I2C_DAT,
-//Codec
-AUD_XCK,
-AUD_BCLK,
-AUD_DACDAT,
-AUD_DACLRCK,
-AUD_ADCDAT,
-AUD_ADCLRCK,
-// 7 Segment Display
-SEGMENT0_N,
-SEGMENT1_N,
-SEGMENT2_N,
-SEGMENT3_N,
-SEGMENT4_N,
-SEGMENT5_N,
-SEGMENT6_N,
-SEGMENT7_N,
-// LEDs
-LEDG,
-LEDR,
-// CoCo Joystick
-PADDLE_MCLK,
-PADDLE_CLK,
-P_SWITCH,
-//SPI for SD Card
-MOSI,
-MISO,
-SPI_CLK,
-SPI_SS_N,
-SD_WP_N, // HWP = 0
-// WiFi
-WF_RXD,
-WF_TXD,
-RST,
-//RTC I2C
-CK_CLK,
-CK_DAT,
-// Buttons and Switches
-SWITCH,
-BUTTON_N,
-GPIO
+//.ps2_key(ps2_key),
+//.BUTTON_N(button_n)
 );
 
-        .RESET(RESET | status[0] | buttons[1]),
-        .CLK(clk_sys),
-        .ENA_6(ce_6m),
-        .ENA_4(ce_4m),
-        .ENA_1M79(ce_1m79)
-);
-*/
 wire reset = RESET | status[0] | buttons[1];
-wire [3:0] button_n = { ~reset, 1'b1,1'b1,1'b1} ;
 
 
 endmodule
