@@ -293,7 +293,11 @@ wire	[9:0]  	SWITCH;
 
 //	SRH	MISTer
 //	Static Buttons
-wire   	[3:0]	 BUTTON_N;
+`ifndef MISTer
+input [3:0]			BUTTON_N;
+`else
+input [3:0]			BUTTON_N;
+`endif		
 											//  3 RESET
 											//  2 SD Card Inserted (0=Inserted) wired to switche on the SD card
 											//  1 SD Write Protect (1=Protected) wired to switche on the SD card
@@ -806,7 +810,7 @@ assign SWITCH[9:0] = 10'b0000010000; // This is ECB
 //assign SWITCH[9:0] = 10'b0000010110; // This is EDB
 //assign SWITCH[9:0] = 10'b0000010000; // This is Orch 80 in ROM
 
-assign BUTTON_N[3:0] = 4'b1111;
+//assign BUTTON_N[3:0] = 4'b1111;
 
 
 //assign LEDG = TRACE;														// Floppy Trace

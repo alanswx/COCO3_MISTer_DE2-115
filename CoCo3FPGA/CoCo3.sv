@@ -195,8 +195,8 @@ localparam  CONF_STR = {
         "O35,Scandoubler Fx,None,HQ2x,CRT 25%,CRT 50%,CRT 75%;",
         "-;",
         "R0,Reset;",
-        "J1,Fire,Start 1P,Start 2P,Coin,Cheat;",
-        "jn,A,Start,Select,R,L;",
+        "J1,Button;",
+        "jn,A;",
         "V,v",`BUILD_DATE
 };
 
@@ -371,7 +371,8 @@ coco3fpga_dw coco3 (
 .ps2_clk(ps2_kbd_clk),
 .ps2_data(ps2_kbd_data),
 
-.ps2_key(ps2_key)
+.ps2_key(ps2_key),
+.BUTTON_N(button_n)
 );
 /*
 coco3fpga_dw coco3 (

@@ -193,6 +193,7 @@ BUTTON_N,
 `else
 HBLANK,
 VBLANK,
+BUTTON_N,
 
 // Needs removal....
 GPIO

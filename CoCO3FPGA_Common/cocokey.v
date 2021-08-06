@@ -221,7 +221,7 @@ always @(posedge CLK50MHZ) begin
 		SHIFT_ARROW_L <= 1'b0;
 		SHIFT_ARROW_R <= 1'b0;
 	end
-	else if (input_strobe)
+	if (input_strobe)
 	begin
 		case(SCAN)
 		8'h00:
