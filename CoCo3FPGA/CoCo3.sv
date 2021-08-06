@@ -321,8 +321,8 @@ wire [7:0] b;
 
 coco3fpga_dw coco3 (
 .CLK50MHZ(CLK_50M),
-.COCO_RESET_N(~reset),
-//.COCO_RESET_N(1'b1),
+//.COCO_RESET_N(~reset),
+.COCO_RESET_N(1'b1),
 
 // SDRAM
 /*
