@@ -1,5 +1,5 @@
 Analysis & Synthesis report for coco3fpga_dw
-Wed Aug 04 22:52:45 2021
+Thu Aug 05 21:10:02 2021
 Quartus Prime Version 17.0.2 Build 602 07/19/2017 SJ Lite Edition
 
 
@@ -137,13 +137,13 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed Aug 04 22:52:44 2021       ;
+; Analysis & Synthesis Status        ; Successful - Thu Aug 05 21:10:01 2021       ;
 ; Quartus Prime Version              ; 17.0.2 Build 602 07/19/2017 SJ Lite Edition ;
 ; Revision Name                      ; coco3fpga_dw                                ;
 ; Top-level Entity Name              ; coco3fpga_dw                                ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 46,658                                      ;
-;     Total combinational functions  ; 45,189                                      ;
+; Total logic elements               ; 46,675                                      ;
+;     Total combinational functions  ; 45,205                                      ;
 ;     Dedicated logic registers      ; 3,098                                       ;
 ; Total registers                    ; 3098                                        ;
 ; Total pins                         ; 64                                          ;
@@ -256,110 +256,105 @@ agreement for further details.
 ;     Processor 1            ; 100.0%      ;
 ;     Processor 2            ;   0.0%      ;
 ;     Processor 3            ;   0.0%      ;
-;     Processor 4            ;   0.0%      ;
-;     Processor 5            ;   0.0%      ;
-;     Processor 6            ;   0.0%      ;
-;     Processor 7            ;   0.0%      ;
-;     Processor 8            ;   0.0%      ;
+;     Processors 4-8         ;   0.0%      ;
 +----------------------------+-------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                                   ;
-+------------------------------------------------+-----------------+------------------------------+------------------------------------------------------------------------------+---------+
-; File Name with User-Entered Path               ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                 ; Library ;
-+------------------------------------------------+-----------------+------------------------------+------------------------------------------------------------------------------+---------+
-; ../CoCO3FPGA_Common/sram/coco_ram.vhd          ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/sram/coco_ram.vhd                           ;         ;
-; ../CoCO3FPGA_Common/rom/coco_rom.vhd           ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/rom/coco_rom.vhd                            ;         ;
-; ../CoCO3FPGA_Common/COCO3GEN.v                 ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/COCO3GEN.v                                  ;         ;
-; ../CoCO3FPGA_Common/PS2_Key/ps2_keyboard.v     ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/PS2_Key/ps2_keyboard.v                      ;         ;
-; ../CoCO3FPGA_Common/i2c.v                      ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/i2c.v                                       ;         ;
-; ../CoCO3FPGA_Common/disk02.v                   ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/disk02.v                                    ;         ;
-; ../CoCO3FPGA_Common/buffer_dp.v                ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/buffer_dp.v                                 ;         ;
-; ../CoCO3FPGA_Common/FIFO_1024.v                ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/FIFO_1024.v                                 ;         ;
-; ../CoCO3FPGA_Common/VDAC.v                     ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/VDAC.v                                      ;         ;
-; ../CoCO3FPGA_Common/FIFO_WRITE.v               ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/FIFO_WRITE.v                                ;         ;
-; ../CoCO3FPGA_Common/FIFO_READ.v                ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/FIFO_READ.v                                 ;         ;
-; ../CoCO3FPGA_Common/T65/T65_Pack.vhd           ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/T65/T65_Pack.vhd                            ;         ;
-; ../CoCO3FPGA_Common/T65/T65_MCode.vhd          ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/T65/T65_MCode.vhd                           ;         ;
-; ../CoCO3FPGA_Common/T65/T65_ALU.vhd            ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/T65/T65_ALU.vhd                             ;         ;
-; ../CoCO3FPGA_Common/T65/T65.vhd                ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/T65/T65.vhd                                 ;         ;
-; ../CoCO3FPGA_Common/coco3vid.v                 ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v                                  ;         ;
-; ../CoCO3FPGA_Common/cocokey.v                  ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/cocokey.v                                   ;         ;
-; ../CoCO3FPGA_Common/UART_6850/uart_6850.v      ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6850/uart_6850.v                       ;         ;
-; ../CoCO3FPGA_Common/UART_6850/6850TX.v         ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6850/6850TX.v                          ;         ;
-; ../CoCO3FPGA_Common/UART_6850/6850RX.v         ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6850/6850RX.v                          ;         ;
-; ../CoCO3FPGA_Common/UART_6551/uart_6551.v      ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/uart_6551.v                       ;         ;
-; ../CoCO3FPGA_Common/UART_6551/6551tx.v         ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/6551tx.v                          ;         ;
-; ../CoCO3FPGA_Common/UART_6551/6551rx.v         ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/6551rx.v                          ;         ;
-; ../CoCO3FPGA_Common/CPU09/cpu09l_128.vhd       ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/CPU09/cpu09l_128.vhd                        ;         ;
-; coco3fpga_dw.v                                 ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v                                     ;         ;
-; ../CoCo3FPGA_Common/disk02_02.v                ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCo3FPGA_Common/disk02_02.v                                 ;         ;
-; ../CoCO3FPGA_Common/PH2_CLK.v                  ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/PH2_CLK.v                                   ;         ;
-; /coco3_mister/coco3fpga_common/paddles.v       ; yes             ; Auto-Found Verilog HDL File  ; /coco3_mister/coco3fpga_common/paddles.v                                     ;         ;
-; /coco3_mister/coco3fpga_common/coco3io.v       ; yes             ; Auto-Found Verilog HDL File  ; /coco3_mister/coco3fpga_common/coco3io.v                                     ;         ;
-; /coco3_mister/coco3fpga_common/coco3fpga_top.v ; yes             ; Auto-Found Verilog HDL File  ; /coco3_mister/coco3fpga_common/coco3fpga_top.v                               ;         ;
-; /coco3_mister/coco3fpga_common/sound.v         ; yes             ; Auto-Found Verilog HDL File  ; /coco3_mister/coco3fpga_common/sound.v                                       ;         ;
-; altsyncram.tdf                                 ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf        ;         ;
-; stratix_ram_block.inc                          ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratix_ram_block.inc ;         ;
-; lpm_mux.inc                                    ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_mux.inc           ;         ;
-; lpm_decode.inc                                 ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_decode.inc        ;         ;
-; aglobal170.inc                                 ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/aglobal170.inc        ;         ;
-; a_rdenreg.inc                                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_rdenreg.inc         ;         ;
-; altrom.inc                                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altrom.inc            ;         ;
-; altram.inc                                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altram.inc            ;         ;
-; altdpram.inc                                   ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altdpram.inc          ;         ;
-; db/altsyncram_vcg1.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_vcg1.tdf                             ;         ;
-; db/altsyncram_3fn1.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_3fn1.tdf                             ;         ;
-; db/altsyncram_cjo1.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_cjo1.tdf                             ;         ;
-; dcfifo.tdf                                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/dcfifo.tdf            ;         ;
-; lpm_counter.inc                                ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_counter.inc       ;         ;
-; lpm_add_sub.inc                                ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_add_sub.inc       ;         ;
-; a_graycounter.inc                              ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_graycounter.inc     ;         ;
-; a_fefifo.inc                                   ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_fefifo.inc          ;         ;
-; a_gray2bin.inc                                 ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_gray2bin.inc        ;         ;
-; dffpipe.inc                                    ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/dffpipe.inc           ;         ;
-; alt_sync_fifo.inc                              ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/alt_sync_fifo.inc     ;         ;
-; lpm_compare.inc                                ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_compare.inc       ;         ;
-; altsyncram_fifo.inc                            ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram_fifo.inc   ;         ;
-; db/dcfifo_m6m1.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dcfifo_m6m1.tdf                                 ;         ;
-; db/a_graycounter_577.tdf                       ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/a_graycounter_577.tdf                           ;         ;
-; db/a_graycounter_1lc.tdf                       ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/a_graycounter_1lc.tdf                           ;         ;
-; db/altsyncram_hs61.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_hs61.tdf                             ;         ;
-; db/alt_synch_pipe_8pl.tdf                      ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_8pl.tdf                          ;         ;
-; db/dffpipe_pe9.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_pe9.tdf                                 ;         ;
-; db/alt_synch_pipe_9pl.tdf                      ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_9pl.tdf                          ;         ;
-; db/dffpipe_qe9.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_qe9.tdf                                 ;         ;
-; db/cmpr_n76.tdf                                ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cmpr_n76.tdf                                    ;         ;
-; db/dcfifo_s6m1.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dcfifo_s6m1.tdf                                 ;         ;
-; db/alt_synch_pipe_apl.tdf                      ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_apl.tdf                          ;         ;
-; db/dffpipe_re9.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_re9.tdf                                 ;         ;
-; db/alt_synch_pipe_bpl.tdf                      ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_bpl.tdf                          ;         ;
-; db/dffpipe_se9.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_se9.tdf                                 ;         ;
-; db/cmpr_b66.tdf                                ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cmpr_b66.tdf                                    ;         ;
-; db/mux_j28.tdf                                 ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/mux_j28.tdf                                     ;         ;
-; db/dcfifo_14i1.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dcfifo_14i1.tdf                                 ;         ;
-; db/a_graycounter_677.tdf                       ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/a_graycounter_677.tdf                           ;         ;
-; db/a_graycounter_2lc.tdf                       ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/a_graycounter_2lc.tdf                           ;         ;
-; db/altsyncram_1v61.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_1v61.tdf                             ;         ;
-; db/alt_synch_pipe_cpl.tdf                      ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_cpl.tdf                          ;         ;
-; db/dffpipe_te9.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_te9.tdf                                 ;         ;
-; db/alt_synch_pipe_dpl.tdf                      ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_dpl.tdf                          ;         ;
-; db/dffpipe_ue9.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_ue9.tdf                                 ;         ;
-; db/cmpr_o76.tdf                                ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cmpr_o76.tdf                                    ;         ;
-; db/altsyncram_rbm1.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_rbm1.tdf                             ;         ;
-; db/altsyncram_lmb1.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_lmb1.tdf                             ;         ;
-; db/altsyncram_0h81.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_0h81.tdf                             ;         ;
-; db/decode_rsa.tdf                              ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/decode_rsa.tdf                                  ;         ;
-; db/mux_bnb.tdf                                 ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/mux_bnb.tdf                                     ;         ;
-; altshift_taps.tdf                              ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altshift_taps.tdf     ;         ;
-; lpm_constant.inc                               ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_constant.inc      ;         ;
-; db/shift_taps_56m.tdf                          ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/shift_taps_56m.tdf                              ;         ;
-; db/altsyncram_uk31.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_uk31.tdf                             ;         ;
-; db/add_sub_24e.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/add_sub_24e.tdf                                 ;         ;
-; db/cntr_6pf.tdf                                ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cntr_6pf.tdf                                    ;         ;
-; db/cmpr_ogc.tdf                                ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cmpr_ogc.tdf                                    ;         ;
-+------------------------------------------------+-----------------+------------------------------+------------------------------------------------------------------------------+---------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                               ;
++--------------------------------------------+-----------------+------------------------------+------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path           ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                 ; Library ;
++--------------------------------------------+-----------------+------------------------------+------------------------------------------------------------------------------+---------+
+; ../CoCO3FPGA_Common/sram/coco_ram.vhd      ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/sram/coco_ram.vhd                           ;         ;
+; ../CoCO3FPGA_Common/rom/coco_rom.vhd       ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/rom/coco_rom.vhd                            ;         ;
+; ../CoCO3FPGA_Common/COCO3GEN.v             ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/COCO3GEN.v                                  ;         ;
+; ../CoCO3FPGA_Common/PS2_Key/ps2_keyboard.v ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/PS2_Key/ps2_keyboard.v                      ;         ;
+; ../CoCO3FPGA_Common/i2c.v                  ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/i2c.v                                       ;         ;
+; ../CoCO3FPGA_Common/disk02.v               ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/disk02.v                                    ;         ;
+; ../CoCO3FPGA_Common/buffer_dp.v            ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/buffer_dp.v                                 ;         ;
+; ../CoCO3FPGA_Common/FIFO_1024.v            ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/FIFO_1024.v                                 ;         ;
+; ../CoCO3FPGA_Common/VDAC.v                 ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/VDAC.v                                      ;         ;
+; ../CoCO3FPGA_Common/FIFO_WRITE.v           ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/FIFO_WRITE.v                                ;         ;
+; ../CoCO3FPGA_Common/FIFO_READ.v            ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/FIFO_READ.v                                 ;         ;
+; ../CoCO3FPGA_Common/T65/T65_Pack.vhd       ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/T65/T65_Pack.vhd                            ;         ;
+; ../CoCO3FPGA_Common/T65/T65_MCode.vhd      ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/T65/T65_MCode.vhd                           ;         ;
+; ../CoCO3FPGA_Common/T65/T65_ALU.vhd        ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/T65/T65_ALU.vhd                             ;         ;
+; ../CoCO3FPGA_Common/T65/T65.vhd            ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/T65/T65.vhd                                 ;         ;
+; ../CoCO3FPGA_Common/coco3vid.v             ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v                                  ;         ;
+; ../CoCO3FPGA_Common/cocokey.v              ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/cocokey.v                                   ;         ;
+; ../CoCO3FPGA_Common/UART_6850/uart_6850.v  ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6850/uart_6850.v                       ;         ;
+; ../CoCO3FPGA_Common/UART_6850/6850TX.v     ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6850/6850TX.v                          ;         ;
+; ../CoCO3FPGA_Common/UART_6850/6850RX.v     ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6850/6850RX.v                          ;         ;
+; ../CoCO3FPGA_Common/UART_6551/uart_6551.v  ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/uart_6551.v                       ;         ;
+; ../CoCO3FPGA_Common/UART_6551/6551tx.v     ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/6551tx.v                          ;         ;
+; ../CoCO3FPGA_Common/UART_6551/6551rx.v     ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/6551rx.v                          ;         ;
+; ../CoCO3FPGA_Common/CPU09/cpu09l_128.vhd   ; yes             ; User VHDL File               ; X:/COCO3_Mister/CoCO3FPGA_Common/CPU09/cpu09l_128.vhd                        ;         ;
+; coco3fpga_dw.v                             ; yes             ; User Verilog HDL File        ; X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v                                     ;         ;
+; ../CoCo3FPGA_Common/disk02_02.v            ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCo3FPGA_Common/disk02_02.v                                 ;         ;
+; ../CoCO3FPGA_Common/PH2_CLK.v              ; yes             ; User Wizard-Generated File   ; X:/COCO3_Mister/CoCO3FPGA_Common/PH2_CLK.v                                   ;         ;
+; /coco3_mister/coco3fpga_common/paddles.v   ; yes             ; Auto-Found Verilog HDL File  ; /coco3_mister/coco3fpga_common/paddles.v                                     ;         ;
+; /coco3_mister/coco3fpga_common/coco3io.v   ; yes             ; Auto-Found Verilog HDL File  ; /coco3_mister/coco3fpga_common/coco3io.v                                     ;         ;
+; /coco3_mister/coco3fpga_common/sound.v     ; yes             ; Auto-Found Verilog HDL File  ; /coco3_mister/coco3fpga_common/sound.v                                       ;         ;
+; altsyncram.tdf                             ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf        ;         ;
+; stratix_ram_block.inc                      ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratix_ram_block.inc ;         ;
+; lpm_mux.inc                                ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_mux.inc           ;         ;
+; lpm_decode.inc                             ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_decode.inc        ;         ;
+; aglobal170.inc                             ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/aglobal170.inc        ;         ;
+; a_rdenreg.inc                              ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_rdenreg.inc         ;         ;
+; altrom.inc                                 ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altrom.inc            ;         ;
+; altram.inc                                 ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altram.inc            ;         ;
+; altdpram.inc                               ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altdpram.inc          ;         ;
+; db/altsyncram_vcg1.tdf                     ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_vcg1.tdf                             ;         ;
+; db/altsyncram_3fn1.tdf                     ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_3fn1.tdf                             ;         ;
+; db/altsyncram_cjo1.tdf                     ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_cjo1.tdf                             ;         ;
+; dcfifo.tdf                                 ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/dcfifo.tdf            ;         ;
+; lpm_counter.inc                            ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_counter.inc       ;         ;
+; lpm_add_sub.inc                            ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_add_sub.inc       ;         ;
+; a_graycounter.inc                          ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_graycounter.inc     ;         ;
+; a_fefifo.inc                               ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_fefifo.inc          ;         ;
+; a_gray2bin.inc                             ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_gray2bin.inc        ;         ;
+; dffpipe.inc                                ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/dffpipe.inc           ;         ;
+; alt_sync_fifo.inc                          ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/alt_sync_fifo.inc     ;         ;
+; lpm_compare.inc                            ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_compare.inc       ;         ;
+; altsyncram_fifo.inc                        ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram_fifo.inc   ;         ;
+; db/dcfifo_m6m1.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dcfifo_m6m1.tdf                                 ;         ;
+; db/a_graycounter_577.tdf                   ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/a_graycounter_577.tdf                           ;         ;
+; db/a_graycounter_1lc.tdf                   ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/a_graycounter_1lc.tdf                           ;         ;
+; db/altsyncram_hs61.tdf                     ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_hs61.tdf                             ;         ;
+; db/alt_synch_pipe_8pl.tdf                  ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_8pl.tdf                          ;         ;
+; db/dffpipe_pe9.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_pe9.tdf                                 ;         ;
+; db/alt_synch_pipe_9pl.tdf                  ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_9pl.tdf                          ;         ;
+; db/dffpipe_qe9.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_qe9.tdf                                 ;         ;
+; db/cmpr_n76.tdf                            ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cmpr_n76.tdf                                    ;         ;
+; db/dcfifo_s6m1.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dcfifo_s6m1.tdf                                 ;         ;
+; db/alt_synch_pipe_apl.tdf                  ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_apl.tdf                          ;         ;
+; db/dffpipe_re9.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_re9.tdf                                 ;         ;
+; db/alt_synch_pipe_bpl.tdf                  ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_bpl.tdf                          ;         ;
+; db/dffpipe_se9.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_se9.tdf                                 ;         ;
+; db/cmpr_b66.tdf                            ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cmpr_b66.tdf                                    ;         ;
+; db/mux_j28.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/mux_j28.tdf                                     ;         ;
+; db/dcfifo_14i1.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dcfifo_14i1.tdf                                 ;         ;
+; db/a_graycounter_677.tdf                   ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/a_graycounter_677.tdf                           ;         ;
+; db/a_graycounter_2lc.tdf                   ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/a_graycounter_2lc.tdf                           ;         ;
+; db/altsyncram_1v61.tdf                     ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_1v61.tdf                             ;         ;
+; db/alt_synch_pipe_cpl.tdf                  ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_cpl.tdf                          ;         ;
+; db/dffpipe_te9.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_te9.tdf                                 ;         ;
+; db/alt_synch_pipe_dpl.tdf                  ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/alt_synch_pipe_dpl.tdf                          ;         ;
+; db/dffpipe_ue9.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/dffpipe_ue9.tdf                                 ;         ;
+; db/cmpr_o76.tdf                            ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cmpr_o76.tdf                                    ;         ;
+; db/altsyncram_rbm1.tdf                     ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_rbm1.tdf                             ;         ;
+; db/altsyncram_lmb1.tdf                     ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_lmb1.tdf                             ;         ;
+; db/altsyncram_0h81.tdf                     ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_0h81.tdf                             ;         ;
+; db/decode_rsa.tdf                          ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/decode_rsa.tdf                                  ;         ;
+; db/mux_bnb.tdf                             ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/mux_bnb.tdf                                     ;         ;
+; altshift_taps.tdf                          ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altshift_taps.tdf     ;         ;
+; lpm_constant.inc                           ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_constant.inc      ;         ;
+; db/shift_taps_56m.tdf                      ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/shift_taps_56m.tdf                              ;         ;
+; db/altsyncram_uk31.tdf                     ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_uk31.tdf                             ;         ;
+; db/add_sub_24e.tdf                         ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/add_sub_24e.tdf                                 ;         ;
+; db/cntr_6pf.tdf                            ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cntr_6pf.tdf                                    ;         ;
+; db/cmpr_ogc.tdf                            ; yes             ; Auto-Generated Megafunction  ; X:/COCO3_Mister/CoCo3FPGA/db/cmpr_ogc.tdf                                    ;         ;
++--------------------------------------------+-----------------+------------------------------+------------------------------------------------------------------------------+---------+
 
 
 +----------------------------------------------------------------------------+
@@ -367,16 +362,16 @@ agreement for further details.
 +---------------------------------------------+------------------------------+
 ; Resource                                    ; Usage                        ;
 +---------------------------------------------+------------------------------+
-; Estimated Total logic elements              ; 46,658                       ;
+; Estimated Total logic elements              ; 46,675                       ;
 ;                                             ;                              ;
-; Total combinational functions               ; 45189                        ;
+; Total combinational functions               ; 45205                        ;
 ; Logic element usage by number of LUT inputs ;                              ;
-;     -- 4 input functions                    ; 42013                        ;
-;     -- 3 input functions                    ; 1888                         ;
-;     -- <=2 input functions                  ; 1288                         ;
+;     -- 4 input functions                    ; 42039                        ;
+;     -- 3 input functions                    ; 1861                         ;
+;     -- <=2 input functions                  ; 1305                         ;
 ;                                             ;                              ;
 ; Logic elements by mode                      ;                              ;
-;     -- normal mode                          ; 44404                        ;
+;     -- normal mode                          ; 44420                        ;
 ;     -- arithmetic mode                      ; 785                          ;
 ;                                             ;                              ;
 ; Total registers                             ; 3098                         ;
@@ -389,8 +384,8 @@ agreement for further details.
 ; Embedded Multiplier 9-bit elements          ; 0                            ;
 ;                                             ;                              ;
 ; Maximum fan-out node                        ; cpu09:GLBCPU09|Selector329~3 ;
-; Maximum fan-out                             ; 11971                        ;
-; Total fan-out                               ; 190822                       ;
+; Maximum fan-out                             ; 11974                        ;
+; Total fan-out                               ; 190879                       ;
 ; Average fan-out                             ; 3.92                         ;
 +---------------------------------------------+------------------------------+
 
@@ -400,14 +395,14 @@ agreement for further details.
 +-----------------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
 ; Compilation Hierarchy Node                                      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                            ; Entity Name            ; Library Name ;
 +-----------------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------+------------------------+--------------+
-; |coco3fpga_dw                                                   ; 45189 (3167)        ; 3098 (1384)               ; 1166390     ; 0            ; 0       ; 0         ; 64   ; 0            ; |coco3fpga_dw                                                                                                                                  ; coco3fpga_dw           ; work         ;
-;    |COCO3VIDEO:COCOVID|                                         ; 2223 (2223)         ; 403 (403)                 ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO3VIDEO:COCOVID                                                                                                               ; COCO3VIDEO             ; work         ;
+; |coco3fpga_dw                                                   ; 45205 (3176)        ; 3098 (1384)               ; 1166390     ; 0            ; 0       ; 0         ; 64   ; 0            ; |coco3fpga_dw                                                                                                                                  ; coco3fpga_dw           ; work         ;
+;    |COCO3VIDEO:COCOVID|                                         ; 2222 (2222)         ; 403 (403)                 ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO3VIDEO:COCOVID                                                                                                               ; COCO3VIDEO             ; work         ;
 ;       |COCO3GEN:coco3gen|                                       ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COCO3GEN:coco3gen                                                                                             ; COCO3GEN               ; work         ;
 ;          |altsyncram:altsyncram_component|                      ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COCO3GEN:coco3gen|altsyncram:altsyncram_component                                                             ; altsyncram             ; work         ;
 ;             |altsyncram_lmb1:auto_generated|                    ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COCO3GEN:coco3gen|altsyncram:altsyncram_component|altsyncram_lmb1:auto_generated                              ; altsyncram_lmb1        ; work         ;
 ;    |COCOKEY:coco_keyboard|                                      ; 403 (303)           ; 138 (90)                  ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCOKEY:coco_keyboard                                                                                                            ; COCOKEY                ; work         ;
 ;       |ps2_keyboard:KEYBOARD|                                   ; 100 (100)           ; 48 (48)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCOKEY:coco_keyboard|ps2_keyboard:KEYBOARD                                                                                      ; ps2_keyboard           ; work         ;
-;    |COCO_ROM:CC3_ROM|                                           ; 35552 (35552)       ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO_ROM:CC3_ROM                                                                                                                 ; COCO_ROM               ; work         ;
+;    |COCO_ROM:CC3_ROM|                                           ; 35555 (35555)       ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO_ROM:CC3_ROM                                                                                                                 ; COCO_ROM               ; work         ;
 ;    |COCO_SRAM:CC3_SRAM0|                                        ; 48 (0)              ; 3 (0)                     ; 524288      ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO_SRAM:CC3_SRAM0                                                                                                              ; COCO_SRAM              ; work         ;
 ;       |altsyncram:SRAM_rtl_0|                                   ; 48 (0)              ; 3 (0)                     ; 524288      ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO_SRAM:CC3_SRAM0|altsyncram:SRAM_rtl_0                                                                                        ; altsyncram             ; work         ;
 ;          |altsyncram_0h81:auto_generated|                       ; 48 (0)              ; 3 (3)                     ; 524288      ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|COCO_SRAM:CC3_SRAM0|altsyncram:SRAM_rtl_0|altsyncram_0h81:auto_generated                                                         ; altsyncram_0h81        ; work         ;
@@ -475,9 +470,9 @@ agreement for further details.
 ;       |PH2_CLK_altclkctrl_7ji:PH2_CLK_altclkctrl_7ji_component| ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|PH2_CLK:PH2_02_inst|PH2_CLK_altclkctrl_7ji:PH2_CLK_altclkctrl_7ji_component                                                      ; PH2_CLK_altclkctrl_7ji ; work         ;
 ;    |PH2_CLK:PH2_CLK_inst|                                       ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|PH2_CLK:PH2_CLK_inst                                                                                                             ; PH2_CLK                ; work         ;
 ;       |PH2_CLK_altclkctrl_7ji:PH2_CLK_altclkctrl_7ji_component| ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|PH2_CLK:PH2_CLK_inst|PH2_CLK_altclkctrl_7ji:PH2_CLK_altclkctrl_7ji_component                                                     ; PH2_CLK_altclkctrl_7ji ; work         ;
-;    |T65:GLB6502|                                                ; 791 (402)           ; 130 (130)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|T65:GLB6502                                                                                                                      ; T65                    ; work         ;
+;    |T65:GLB6502|                                                ; 790 (402)           ; 130 (130)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|T65:GLB6502                                                                                                                      ; T65                    ; work         ;
 ;       |T65_ALU:alu|                                             ; 154 (154)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|T65:GLB6502|T65_ALU:alu                                                                                                          ; T65_ALU                ; work         ;
-;       |T65_MCode:mcode|                                         ; 235 (235)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|T65:GLB6502|T65_MCode:mcode                                                                                                      ; T65_MCode              ; work         ;
+;       |T65_MCode:mcode|                                         ; 234 (234)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|T65:GLB6502|T65_MCode:mcode                                                                                                      ; T65_MCode              ; work         ;
 ;    |VDAC:VDAC_inst|                                             ; 0 (0)               ; 0 (0)                     ; 3072        ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|VDAC:VDAC_inst                                                                                                                   ; VDAC                   ; work         ;
 ;       |altsyncram:altsyncram_component|                         ; 0 (0)               ; 0 (0)                     ; 3072        ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|VDAC:VDAC_inst|altsyncram:altsyncram_component                                                                                   ; altsyncram             ; work         ;
 ;          |altsyncram_rbm1:auto_generated|                       ; 0 (0)               ; 0 (0)                     ; 3072        ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|VDAC:VDAC_inst|altsyncram:altsyncram_component|altsyncram_rbm1:auto_generated                                                    ; altsyncram_rbm1        ; work         ;
@@ -491,7 +486,7 @@ agreement for further details.
 ;    |buffer_dp:buffer_dp_write|                                  ; 0 (0)               ; 0 (0)                     ; 4096        ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|buffer_dp:buffer_dp_write                                                                                                        ; buffer_dp              ; work         ;
 ;       |altsyncram:altsyncram_component|                         ; 0 (0)               ; 0 (0)                     ; 4096        ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|buffer_dp:buffer_dp_write|altsyncram:altsyncram_component                                                                        ; altsyncram             ; work         ;
 ;          |altsyncram_cjo1:auto_generated|                       ; 0 (0)               ; 0 (0)                     ; 4096        ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|buffer_dp:buffer_dp_write|altsyncram:altsyncram_component|altsyncram_cjo1:auto_generated                                         ; altsyncram_cjo1        ; work         ;
-;    |cpu09:GLBCPU09|                                             ; 1913 (1913)         ; 335 (335)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|cpu09:GLBCPU09                                                                                                                   ; cpu09                  ; work         ;
+;    |cpu09:GLBCPU09|                                             ; 1922 (1922)         ; 335 (335)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|cpu09:GLBCPU09                                                                                                                   ; cpu09                  ; work         ;
 ;    |disk02:disk02_inst|                                         ; 0 (0)               ; 0 (0)                     ; 4096        ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|disk02:disk02_inst                                                                                                               ; disk02                 ; work         ;
 ;       |altsyncram:altsyncram_component|                         ; 0 (0)               ; 0 (0)                     ; 4096        ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|disk02:disk02_inst|altsyncram:altsyncram_component                                                                               ; altsyncram             ; work         ;
 ;          |altsyncram_vcg1:auto_generated|                       ; 0 (0)               ; 0 (0)                     ; 4096        ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|disk02:disk02_inst|altsyncram:altsyncram_component|altsyncram_vcg1:auto_generated                                                ; altsyncram_vcg1        ; work         ;
@@ -501,12 +496,12 @@ agreement for further details.
 ;    |disk02_02:disk02_03_inst|                                   ; 0 (0)               ; 0 (0)                     ; 32768       ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|disk02_02:disk02_03_inst                                                                                                         ; disk02_02              ; work         ;
 ;       |altsyncram:altsyncram_component|                         ; 0 (0)               ; 0 (0)                     ; 32768       ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|disk02_02:disk02_03_inst|altsyncram:altsyncram_component                                                                         ; altsyncram             ; work         ;
 ;          |altsyncram_3fn1:auto_generated|                       ; 0 (0)               ; 0 (0)                     ; 32768       ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|disk02_02:disk02_03_inst|altsyncram:altsyncram_component|altsyncram_3fn1:auto_generated                                          ; altsyncram_3fn1        ; work         ;
-;    |glb6551:RS232|                                              ; 257 (149)           ; 111 (75)                  ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6551:RS232                                                                                                                    ; glb6551                ; work         ;
+;    |glb6551:RS232|                                              ; 256 (148)           ; 111 (75)                  ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6551:RS232                                                                                                                    ; glb6551                ; work         ;
 ;       |uart51_rx:rx|                                            ; 56 (56)             ; 22 (22)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6551:RS232|uart51_rx:rx                                                                                                       ; uart51_rx              ; work         ;
 ;       |uart51_tx:tx|                                            ; 52 (52)             ; 14 (14)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6551:RS232|uart51_tx:tx                                                                                                       ; uart51_tx              ; work         ;
-;    |glb6850:COM1|                                               ; 148 (43)            ; 86 (50)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6850:COM1                                                                                                                     ; glb6850                ; work         ;
-;       |UART_RX:RX|                                              ; 56 (56)             ; 22 (22)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6850:COM1|UART_RX:RX                                                                                                          ; UART_RX                ; work         ;
-;       |UART_TX:TX|                                              ; 49 (49)             ; 14 (14)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6850:COM1|UART_TX:TX                                                                                                          ; UART_TX                ; work         ;
+;    |glb6850:COM1|                                               ; 146 (43)            ; 86 (50)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6850:COM1                                                                                                                     ; glb6850                ; work         ;
+;       |UART_RX:RX|                                              ; 55 (55)             ; 22 (22)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6850:COM1|UART_RX:RX                                                                                                          ; UART_RX                ; work         ;
+;       |UART_TX:TX|                                              ; 48 (48)             ; 14 (14)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6850:COM1|UART_TX:TX                                                                                                          ; UART_TX                ; work         ;
 ;    |glb6850:COM2|                                               ; 135 (43)            ; 69 (34)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6850:COM2                                                                                                                     ; glb6850                ; work         ;
 ;       |UART_RX:RX|                                              ; 55 (55)             ; 22 (22)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6850:COM2|UART_RX:RX                                                                                                          ; UART_RX                ; work         ;
 ;       |UART_TX:TX|                                              ; 37 (37)             ; 13 (13)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |coco3fpga_dw|glb6850:COM2|UART_TX:TX                                                                                                          ; UART_TX                ; work         ;
@@ -1215,14 +1210,14 @@ Encoding Type:  One-Hot
 +---------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------+--------------------------------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------+
-; User-Specified and Inferred Latches                                                                       ;
-+----------------------------------------------------+-----------------------------+------------------------+
-; Latch Name                                         ; Latch Enable Signal         ; Free of Timing Hazards ;
-+----------------------------------------------------+-----------------------------+------------------------+
-; MUGS                                               ; COCOKEY:coco_keyboard|RESET ; yes                    ;
-; Number of user-specified and inferred latches = 1  ;                             ;                        ;
-+----------------------------------------------------+-----------------------------+------------------------+
++---------------------------------------------------------------------------------------------------+
+; User-Specified and Inferred Latches                                                               ;
++----------------------------------------------------+---------------------+------------------------+
+; Latch Name                                         ; Latch Enable Signal ; Free of Timing Hazards ;
++----------------------------------------------------+---------------------+------------------------+
+; MUGS                                               ; RESET_P             ; yes                    ;
+; Number of user-specified and inferred latches = 1  ;                     ;                        ;
++----------------------------------------------------+---------------------+------------------------+
 Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
 
 
@@ -1238,18 +1233,18 @@ Note: All latches listed above may not be present at the end of synthesis due to
 ; RIGHT_BUF[0]                                           ; Stuck at GND due to stuck port data_in             ;
 ; LEFT[0]                                                ; Stuck at GND due to stuck port data_in             ;
 ; RIGHT[0]                                               ; Stuck at GND due to stuck port data_in             ;
-; RED3~reg0                                              ; Stuck at GND due to stuck port data_in             ;
-; RED2~reg0                                              ; Stuck at GND due to stuck port data_in             ;
-; RED1~reg0                                              ; Stuck at GND due to stuck port data_in             ;
-; RED0~reg0                                              ; Stuck at GND due to stuck port data_in             ;
-; GREEN3~reg0                                            ; Stuck at GND due to stuck port data_in             ;
-; GREEN2~reg0                                            ; Stuck at GND due to stuck port data_in             ;
-; GREEN1~reg0                                            ; Stuck at GND due to stuck port data_in             ;
-; GREEN0~reg0                                            ; Stuck at GND due to stuck port data_in             ;
-; BLUE3~reg0                                             ; Stuck at GND due to stuck port data_in             ;
-; BLUE2~reg0                                             ; Stuck at GND due to stuck port data_in             ;
-; BLUE1~reg0                                             ; Stuck at GND due to stuck port data_in             ;
-; BLUE0~reg0                                             ; Stuck at GND due to stuck port data_in             ;
+; RED[3]~reg0                                            ; Stuck at GND due to stuck port data_in             ;
+; RED[2]~reg0                                            ; Stuck at GND due to stuck port data_in             ;
+; RED[1]~reg0                                            ; Stuck at GND due to stuck port data_in             ;
+; RED[0]~reg0                                            ; Stuck at GND due to stuck port data_in             ;
+; GREEN[3]~reg0                                          ; Stuck at GND due to stuck port data_in             ;
+; GREEN[2]~reg0                                          ; Stuck at GND due to stuck port data_in             ;
+; GREEN[1]~reg0                                          ; Stuck at GND due to stuck port data_in             ;
+; GREEN[0]~reg0                                          ; Stuck at GND due to stuck port data_in             ;
+; BLUE[3]~reg0                                           ; Stuck at GND due to stuck port data_in             ;
+; BLUE[2]~reg0                                           ; Stuck at GND due to stuck port data_in             ;
+; BLUE[1]~reg0                                           ; Stuck at GND due to stuck port data_in             ;
+; BLUE[0]~reg0                                           ; Stuck at GND due to stuck port data_in             ;
 ; VGA_BLANK_N~reg0                                       ; Stuck at VCC due to stuck port data_in             ;
 ; VGA_SYNC_N~reg0                                        ; Stuck at VCC due to stuck port data_in             ;
 ; COCO3VIDEO:COCOVID|ROW_OFFSET_X[9]                     ; Stuck at GND due to stuck port data_in             ;
@@ -1537,7 +1532,7 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +-------------------------------------------------------------------------------------------------------------------------+---------+
 ; glb6850:COM1|UART_TX:TX|TX_DATA                                                                                         ; 2       ;
 ; glb6551:RS232|uart51_tx:tx|TX_DATA                                                                                      ; 3       ;
-; I2C:GLB_I2C|I2C_CLK_EN                                                                                                  ; 30      ;
+; I2C:GLB_I2C|I2C_CLK_EN                                                                                                  ; 31      ;
 ; COCO3VIDEO:COCOVID|VSYNC_N                                                                                              ; 11      ;
 ; glb6551:RS232|RESET_NX                                                                                                  ; 3       ;
 ; glb6850:COM1|TDRE                                                                                                       ; 5       ;
@@ -1565,9 +1560,9 @@ Note: All latches listed above may not be present at the end of synthesis due to
 ; HSYNC1_IRQ_BUF[1]                                                                                                       ; 2       ;
 ; CART1_FIRQ_BUF[1]                                                                                                       ; 2       ;
 ; glb6551:RS232|TX_DONE1                                                                                                  ; 2       ;
-; I2C:GLB_I2C|BIT[2]                                                                                                      ; 17      ;
-; I2C:GLB_I2C|BIT[0]                                                                                                      ; 24      ;
+; I2C:GLB_I2C|BIT[2]                                                                                                      ; 16      ;
 ; I2C:GLB_I2C|BIT[1]                                                                                                      ; 26      ;
+; I2C:GLB_I2C|BIT[0]                                                                                                      ; 23      ;
 ; ORCH_RIGHT_EXT[7]                                                                                                       ; 1       ;
 ; ORCH_LEFT_EXT[7]                                                                                                        ; 1       ;
 ; I2C:GLB_I2C|I2C_DAT_EN                                                                                                  ; 9       ;
@@ -1604,6 +1599,7 @@ Note: All latches listed above may not be present at the end of synthesis due to
 ; ORCH_RIGHT_EXT_BUF[7]                                                                                                   ; 1       ;
 ; ORCH_LEFT_EXT_BUF[7]                                                                                                    ; 1       ;
 ; BLINK                                                                                                                   ; 18      ;
+; COCOKEY:coco_keyboard|ps2_keyboard:KEYBOARD|KILLER                                                                      ; 2       ;
 ; FIFO_WRITE:WF_FIFO_WRITE_inst|dcfifo:dcfifo_component|dcfifo_s6m1:auto_generated|a_graycounter_577:rdptr_g1p|counter5a0 ; 9       ;
 ; FIFO_WRITE:FIFO_WRITE_inst|dcfifo:dcfifo_component|dcfifo_s6m1:auto_generated|a_graycounter_577:rdptr_g1p|counter5a0    ; 9       ;
 ; FIFO_1024:WF_FIFO_READ_inst|dcfifo:dcfifo_component|dcfifo_14i1:auto_generated|a_graycounter_2lc:wrptr_g1p|counter8a0   ; 6       ;
@@ -1611,7 +1607,6 @@ Note: All latches listed above may not be present at the end of synthesis due to
 ; glb6850:COM2|TX_DONE1                                                                                                   ; 2       ;
 ; FIFO_READ:FIFO_READ_inst|dcfifo:dcfifo_component|dcfifo_m6m1:auto_generated|a_graycounter_1lc:wrptr_g1p|counter8a0      ; 6       ;
 ; glb6850:COM1|UART_TX:TX|TX_DONE                                                                                         ; 3       ;
-; COCOKEY:coco_keyboard|ps2_keyboard:KEYBOARD|KILLER                                                                      ; 2       ;
 ; glb6551:RS232|uart51_rx:rx|RX_DATA1                                                                                     ; 12      ;
 ; FIFO_1024:WF_FIFO_READ_inst|dcfifo:dcfifo_component|dcfifo_14i1:auto_generated|a_graycounter_677:rdptr_g1p|parity6      ; 3       ;
 ; FIFO_READ:FIFO_READ_inst|dcfifo:dcfifo_component|dcfifo_m6m1:auto_generated|a_graycounter_577:rdptr_g1p|parity6         ; 2       ;
@@ -1633,8 +1628,8 @@ Note: All latches listed above may not be present at the end of synthesis due to
 ; ORCH_LEFT[7]                                                                                                            ; 1       ;
 ; ORCH_RIGHT[7]                                                                                                           ; 1       ;
 ; TIMER[12]                                                                                                               ; 3       ;
-; TIMER[0]                                                                                                                ; 3       ;
-; TIMER[9]                                                                                                                ; 3       ;
+; TIMER[1]                                                                                                                ; 3       ;
+; TIMER[2]                                                                                                                ; 3       ;
 ; Total number of inverted registers = 143*                                                                               ;         ;
 +-------------------------------------------------------------------------------------------------------------------------+---------+
 * Table truncated at 100 items. To change the number of inverted registers reported, set the "Number of Inverted Registers Reported" option under Assignments->Settings->Analysis and Synthesis Settings->More Settings
@@ -1661,105 +1656,105 @@ Note: All latches listed above may not be present at the end of synthesis due to
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                           ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------+
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|GART_READ[2]                                           ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|GART_READ[11]                                          ;
-; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |coco3fpga_dw|GART_READ[20]                                          ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|GART_CNT[8]                                            ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|GART_CNT[11]                                           ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|GART_READ[1]                                           ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|GART_READ[13]                                          ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |coco3fpga_dw|GART_READ[18]                                          ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|GART_CNT[2]                                            ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|GART_CNT[12]                                           ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|glb6850:COM2|CTL_REG[5]                                ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|glb6850:COM1|CTL_REG[5]                                ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|S[15]                                      ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|glb6850:COM1|CTL_REG[2]                                ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|S[14]                                      ;
 ; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |coco3fpga_dw|BUFF_ADD[7]                                            ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|CHAR_LATCH_0[11]                    ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|CHAR_LATCH_0[10]                    ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|CHAR_LATCH_0[15]                    ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|CHAR_LATCH_0[5]                     ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|DL[0]                                      ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|CHAR_LATCH_0[2]                     ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|DL[6]                                      ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|DD_REG4[3]                                             ;
-; 3:1                ; 6 bits    ; 12 LEs        ; 0 LEs                ; 12 LEs                 ; Yes        ; |coco3fpga_dw|SBS                                                    ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|DD_REG3[5]                                             ;
-; 3:1                ; 6 bits    ; 12 LEs        ; 0 LEs                ; 12 LEs                 ; Yes        ; |coco3fpga_dw|DTOA_CODE[1]                                           ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|DD_REG2[5]                                             ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|KEY_COLUMN[1]                                          ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|DD_REG1[0]                                             ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 0 LEs                ; 12 LEs                 ; Yes        ; |coco3fpga_dw|VDG_CONTROL[3]                                         ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|DD_REG3[6]                                             ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 0 LEs                ; 12 LEs                 ; Yes        ; |coco3fpga_dw|DTOA_CODE[4]                                           ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|DD_REG2[7]                                             ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|KEY_COLUMN[4]                                          ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|DD_REG1[7]                                             ;
 ; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |coco3fpga_dw|RAM0_DATA_I[15]                                        ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|S[4]                                       ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|op_code[1]                              ;
-; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; Yes        ; |coco3fpga_dw|COM1_CLK[2]                                            ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR2[2]                           ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|BAH[1]                                     ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|PC[7]                                      ;
-; 16:1               ; 5 bits    ; 50 LEs        ; 10 LEs               ; 40 LEs                 ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|ROM_ADDRESS[6]                      ;
-; 16:1               ; 18 bits   ; 180 LEs       ; 18 LEs               ; 162 LEs                ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|RAM_ADDRESS[9]                      ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|sp[4]                                   ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|up[2]                                   ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|ea[1]                                   ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|sp[15]                                  ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|S[6]                                       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|op_code[4]                              ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; Yes        ; |coco3fpga_dw|COM1_CLK[1]                                            ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR4[2]                           ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|BAH[7]                                     ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|PC[1]                                      ;
+; 16:1               ; 5 bits    ; 50 LEs        ; 10 LEs               ; 40 LEs                 ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|ROM_ADDRESS[4]                      ;
+; 16:1               ; 18 bits   ; 180 LEs       ; 18 LEs               ; 162 LEs                ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|RAM_ADDRESS[14]                     ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|sp[0]                                   ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|up[0]                                   ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|ea[0]                                   ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|sp[8]                                   ;
 ; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|up[9]                                   ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|accb[4]                                 ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|dp[0]                                   ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|xreg[3]                                 ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|xreg[11]                                ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|yreg[3]                                 ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|accb[1]                                 ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|dp[7]                                   ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|xreg[4]                                 ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|xreg[9]                                 ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|yreg[1]                                 ;
 ; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|yreg[9]                                 ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|AD[2]                                      ;
-; 6:1                ; 6 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |coco3fpga_dw|T65:GLB6502|BAL[4]                                     ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|AD[6]                                      ;
+; 6:1                ; 6 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |coco3fpga_dw|T65:GLB6502|BAL[6]                                     ;
 ; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |coco3fpga_dw|T65:GLB6502|BAL[1]                                     ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR7[4]                           ;
-; 5:1                ; 10 bits   ; 30 LEs        ; 20 LEs               ; 10 LEs                 ; Yes        ; |coco3fpga_dw|COCOKEY:coco_keyboard|ps2_keyboard:KEYBOARD|TIMER[2]   ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|glb6551:RS232|RX_REG[6]                                ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |coco3fpga_dw|glb6850:COM2|RX_REG[5]                                 ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |coco3fpga_dw|glb6850:COM1|RX_REG[7]                                 ;
-; 17:1               ; 3 bits    ; 33 LEs        ; 33 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR[7]                            ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR2[7]                           ;
+; 5:1                ; 10 bits   ; 30 LEs        ; 20 LEs               ; 10 LEs                 ; Yes        ; |coco3fpga_dw|COCOKEY:coco_keyboard|ps2_keyboard:KEYBOARD|TIMER[5]   ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |coco3fpga_dw|glb6551:RS232|RX_REG[5]                                ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |coco3fpga_dw|glb6850:COM2|RX_REG[1]                                 ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |coco3fpga_dw|glb6850:COM1|RX_REG[1]                                 ;
+; 17:1               ; 3 bits    ; 33 LEs        ; 33 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR[5]                            ;
 ; 17:1               ; 2 bits    ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR[0]                            ;
-; 17:1               ; 4 bits    ; 44 LEs        ; 0 LEs                ; 44 LEs                 ; Yes        ; |coco3fpga_dw|DRIVE_SEL_EXT[4]                                       ;
+; 17:1               ; 4 bits    ; 44 LEs        ; 0 LEs                ; 44 LEs                 ; Yes        ; |coco3fpga_dw|DRIVE_SEL_EXT[5]                                       ;
 ; 17:1               ; 8 bits    ; 88 LEs        ; 0 LEs                ; 88 LEs                 ; Yes        ; |coco3fpga_dw|TRACK_EXT_W[5]                                         ;
-; 17:1               ; 8 bits    ; 88 LEs        ; 0 LEs                ; 88 LEs                 ; Yes        ; |coco3fpga_dw|DATA_EXT[5]                                            ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|ea[10]                                  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 0 LEs                ; 88 LEs                 ; Yes        ; |coco3fpga_dw|DATA_EXT[3]                                            ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|ea[11]                                  ;
 ; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|pc[8]                                   ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|pc[2]                                   ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 14 LEs               ; 7 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|md[2]                                   ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|acca[1]                                 ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 96 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR5[9]                           ;
-; 32:1               ; 5 bits    ; 105 LEs       ; 60 LEs               ; 45 LEs                 ; Yes        ; |coco3fpga_dw|COM1_STATE[4]                                          ;
-; 17:1               ; 4 bits    ; 44 LEs        ; 4 LEs                ; 40 LEs                 ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|ROM_ADDRESS[0]                      ;
-; 6:1                ; 8 bits    ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |coco3fpga_dw|T65:GLB6502|PC[15]                                     ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|pc[5]                                   ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 14 LEs               ; 7 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|md[4]                                   ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|acca[4]                                 ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 96 LEs               ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR7[14]                          ;
+; 32:1               ; 5 bits    ; 105 LEs       ; 60 LEs               ; 45 LEs                 ; Yes        ; |coco3fpga_dw|COM1_STATE[0]                                          ;
+; 17:1               ; 4 bits    ; 44 LEs        ; 4 LEs                ; 40 LEs                 ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|ROM_ADDRESS[1]                      ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |coco3fpga_dw|T65:GLB6502|PC[12]                                     ;
 ; 6:1                ; 8 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |coco3fpga_dw|cpu09:GLBCPU09|md[15]                                  ;
-; 6:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |coco3fpga_dw|GART_WRITE[5]                                          ;
-; 6:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |coco3fpga_dw|GART_WRITE[10]                                         ;
-; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |coco3fpga_dw|GART_WRITE[22]                                         ;
-; 64:1               ; 2 bits    ; 84 LEs        ; 6 LEs                ; 78 LEs                 ; Yes        ; |coco3fpga_dw|CLK[0]                                                 ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 2 LEs                ; 6 LEs                  ; Yes        ; |coco3fpga_dw|glb6551:RS232|FRAME                                    ;
-; 19:1               ; 12 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|RED5~reg0                                              ;
-; 128:1              ; 3 bits    ; 255 LEs       ; 3 LEs                ; 252 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM1|UART_TX:TX|BIT[2]                         ;
-; 128:1              ; 3 bits    ; 255 LEs       ; 3 LEs                ; 252 LEs                ; Yes        ; |coco3fpga_dw|glb6551:RS232|uart51_tx:tx|BIT[0]                      ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |coco3fpga_dw|GART_WRITE[0]                                          ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |coco3fpga_dw|GART_WRITE[11]                                         ;
+; 6:1                ; 7 bits    ; 28 LEs        ; 7 LEs                ; 21 LEs                 ; Yes        ; |coco3fpga_dw|GART_WRITE[21]                                         ;
+; 64:1               ; 2 bits    ; 84 LEs        ; 6 LEs                ; 78 LEs                 ; Yes        ; |coco3fpga_dw|CLK[1]                                                 ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 2 LEs                ; 6 LEs                  ; Yes        ; |coco3fpga_dw|glb6551:RS232|PARITY                                   ;
+; 19:1               ; 12 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|BLUE[4]~reg0                                           ;
+; 128:1              ; 3 bits    ; 255 LEs       ; 3 LEs                ; 252 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM1|UART_TX:TX|BIT[1]                         ;
+; 128:1              ; 3 bits    ; 255 LEs       ; 3 LEs                ; 252 LEs                ; Yes        ; |coco3fpga_dw|glb6551:RS232|uart51_tx:tx|BIT[1]                      ;
 ; 33:1               ; 3 bits    ; 66 LEs        ; 6 LEs                ; 60 LEs                 ; Yes        ; |coco3fpga_dw|CLK[2]                                                 ;
 ; 65:1               ; 3 bits    ; 129 LEs       ; 3 LEs                ; 126 LEs                ; Yes        ; |coco3fpga_dw|glb6551:RS232|uart51_rx:rx|BIT[0]                      ;
-; 65:1               ; 3 bits    ; 129 LEs       ; 3 LEs                ; 126 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM1|UART_RX:RX|BIT[2]                         ;
+; 65:1               ; 3 bits    ; 129 LEs       ; 3 LEs                ; 126 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM1|UART_RX:RX|BIT[1]                         ;
 ; 65:1               ; 3 bits    ; 129 LEs       ; 3 LEs                ; 126 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM2|UART_RX:RX|BIT[2]                         ;
 ; 128:1              ; 3 bits    ; 255 LEs       ; 3 LEs                ; 252 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM2|UART_TX:TX|BIT[0]                         ;
 ; 7:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |coco3fpga_dw|COMMAND[3]                                             ;
-; 66:1               ; 4 bits    ; 176 LEs       ; 12 LEs               ; 164 LEs                ; Yes        ; |coco3fpga_dw|glb6551:RS232|uart51_rx:rx|STATE[3]                    ;
-; 66:1               ; 4 bits    ; 176 LEs       ; 12 LEs               ; 164 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM1|UART_RX:RX|STATE[1]                       ;
-; 66:1               ; 4 bits    ; 176 LEs       ; 12 LEs               ; 164 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM2|UART_RX:RX|STATE[3]                       ;
-; 68:1               ; 12 bits   ; 540 LEs       ; 24 LEs               ; 516 LEs                ; Yes        ; |coco3fpga_dw|RAM0_ADDRESS[8]                                        ;
-; 68:1               ; 4 bits    ; 180 LEs       ; 12 LEs               ; 168 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM1|UART_TX:TX|STATE[1]                       ;
-; 22:1               ; 3 bits    ; 42 LEs        ; 3 LEs                ; 39 LEs                 ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|SG_LINES[1]                         ;
+; 66:1               ; 4 bits    ; 176 LEs       ; 12 LEs               ; 164 LEs                ; Yes        ; |coco3fpga_dw|glb6551:RS232|uart51_rx:rx|STATE[2]                    ;
+; 66:1               ; 4 bits    ; 176 LEs       ; 12 LEs               ; 164 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM1|UART_RX:RX|STATE[3]                       ;
+; 66:1               ; 4 bits    ; 176 LEs       ; 12 LEs               ; 164 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM2|UART_RX:RX|STATE[0]                       ;
+; 68:1               ; 12 bits   ; 540 LEs       ; 24 LEs               ; 516 LEs                ; Yes        ; |coco3fpga_dw|RAM0_ADDRESS[2]                                        ;
+; 68:1               ; 4 bits    ; 180 LEs       ; 12 LEs               ; 168 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM1|UART_TX:TX|STATE[3]                       ;
+; 22:1               ; 3 bits    ; 42 LEs        ; 3 LEs                ; 39 LEs                 ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|SG_LINES[2]                         ;
 ; 68:1               ; 4 bits    ; 180 LEs       ; 12 LEs               ; 168 LEs                ; Yes        ; |coco3fpga_dw|glb6850:COM2|UART_TX:TX|STATE[1]                       ;
-; 69:1               ; 4 bits    ; 184 LEs       ; 12 LEs               ; 172 LEs                ; Yes        ; |coco3fpga_dw|glb6551:RS232|uart51_tx:tx|STATE[2]                    ;
-; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR0[15]                          ;
-; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR0[14]                          ;
-; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR0[13]                          ;
-; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR0[12]                          ;
+; 69:1               ; 4 bits    ; 184 LEs       ; 12 LEs               ; 172 LEs                ; Yes        ; |coco3fpga_dw|glb6551:RS232|uart51_tx:tx|STATE[1]                    ;
+; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR3[15]                          ;
+; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR2[14]                          ;
+; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR1[13]                          ;
+; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR1[12]                          ;
 ; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR3[11]                          ;
-; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR1[10]                          ;
+; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR0[10]                          ;
 ; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR1[9]                           ;
-; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR1[8]                           ;
+; 45:1               ; 4 bits    ; 120 LEs       ; 120 LEs              ; 0 LEs                  ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|COLOR0[8]                           ;
 ; 841:1              ; 3 bits    ; 1680 LEs      ; 39 LEs               ; 1641 LEs               ; Yes        ; |coco3fpga_dw|RAM0_ADDRESS[14]                                       ;
-; 5:1                ; 12 bits   ; 36 LEs        ; 24 LEs               ; 12 LEs                 ; Yes        ; |coco3fpga_dw|TIMER[0]                                               ;
-; 63:1               ; 3 bits    ; 126 LEs       ; 3 LEs                ; 123 LEs                ; Yes        ; |coco3fpga_dw|I2C:GLB_I2C|BIT[0]                                     ;
+; 5:1                ; 12 bits   ; 36 LEs        ; 24 LEs               ; 12 LEs                 ; Yes        ; |coco3fpga_dw|TIMER[1]                                               ;
+; 63:1               ; 3 bits    ; 126 LEs       ; 3 LEs                ; 123 LEs                ; Yes        ; |coco3fpga_dw|I2C:GLB_I2C|BIT[2]                                     ;
 ; 12:1               ; 2 bits    ; 16 LEs        ; 2 LEs                ; 14 LEs                 ; Yes        ; |coco3fpga_dw|RAM0_BE1_N                                             ;
 ; 19:1               ; 4 bits    ; 48 LEs        ; 0 LEs                ; 48 LEs                 ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|NUM_ROW[3]                          ;
-; 269:1              ; 14 bits   ; 2506 LEs      ; 112 LEs              ; 2394 LEs               ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|ROW_ADD[19]                         ;
+; 269:1              ; 14 bits   ; 2506 LEs      ; 112 LEs              ; 2394 LEs               ; Yes        ; |coco3fpga_dw|COCO3VIDEO:COCOVID|ROW_ADD[11]                         ;
 ; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |coco3fpga_dw|T65:GLB6502|Mux68                                      ;
 ; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |coco3fpga_dw|T65:GLB6502|Mux74                                      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |coco3fpga_dw|T65:GLB6502|T65_MCode:mcode|Mux96                      ;
@@ -1805,7 +1800,7 @@ Note: All latches listed above may not be present at the end of synthesis due to
 ; 9:1                ; 2 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; No         ; |coco3fpga_dw|COCOKEY:coco_keyboard|ps2_keyboard:KEYBOARD|Selector28 ;
 ; 13:1               ; 7 bits    ; 56 LEs        ; 56 LEs               ; 0 LEs                  ; No         ; |coco3fpga_dw|cpu09:GLBCPU09|Selector384                             ;
 ; 14:1               ; 7 bits    ; 63 LEs        ; 63 LEs               ; 0 LEs                  ; No         ; |coco3fpga_dw|cpu09:GLBCPU09|Selector374                             ;
-; 16:1               ; 8 bits    ; 80 LEs        ; 80 LEs               ; 0 LEs                  ; No         ; |coco3fpga_dw|cpu09:GLBCPU09|Selector332                             ;
+; 16:1               ; 8 bits    ; 80 LEs        ; 80 LEs               ; 0 LEs                  ; No         ; |coco3fpga_dw|cpu09:GLBCPU09|Selector331                             ;
 ; 20:1               ; 16 bits   ; 208 LEs       ; 160 LEs              ; 48 LEs                 ; No         ; |coco3fpga_dw|cpu09:GLBCPU09|state                                   ;
 ; 21:1               ; 4 bits    ; 56 LEs        ; 8 LEs                ; 48 LEs                 ; No         ; |coco3fpga_dw|cpu09:GLBCPU09|state                                   ;
 ; 22:1               ; 6 bits    ; 84 LEs        ; 12 LEs               ; 72 LEs                 ; No         ; |coco3fpga_dw|cpu09:GLBCPU09|state                                   ;
@@ -3213,14 +3208,15 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------------------+-------------------------------+
 
 
-+------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "glb6551:RS232"                                                                        ;
-+--------+--------+----------+-------------------------------------------------------------------------------------+
-; Port   ; Type   ; Severity ; Details                                                                             ;
-+--------+--------+----------+-------------------------------------------------------------------------------------+
-; RX_CLK ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; CS[1]  ; Input  ; Info     ; Stuck at GND                                                                        ;
-+--------+--------+----------+-------------------------------------------------------------------------------------+
++---------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "glb6551:RS232"                                                                           ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port      ; Type   ; Severity ; Details                                                                             ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; RX_CLK    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; CS[1]     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; RXDATA_IN ; Input  ; Info     ; Stuck at GND                                                                        ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +-------------------------------------------------------------------------------------------------------------------------------+
@@ -3262,13 +3258,14 @@ Note: In order to hide this table in the UI and the text report file, please set
 +--------+--------+----------+-------------------------------------------------------------------------------------+
 
 
-+----------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "glb6850:COM1"                                                                       ;
-+------+--------+----------+-------------------------------------------------------------------------------------+
-; Port ; Type   ; Severity ; Details                                                                             ;
-+------+--------+----------+-------------------------------------------------------------------------------------+
-; IRQ  ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+------+--------+----------+-------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "glb6850:COM1"                                                                         ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+; Port   ; Type   ; Severity ; Details                                                                             ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+; IRQ    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; RXDATA ; Input  ; Info     ; Stuck at GND                                                                        ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------+
@@ -3338,20 +3335,20 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     SCLR SLD          ; 12                          ;
 ;     plain             ; 302                         ;
 ; cycloneiii_io_obuf    ; 9                           ;
-; cycloneiii_lcell_comb ; 45193                       ;
+; cycloneiii_lcell_comb ; 45209                       ;
 ;     arith             ; 785                         ;
 ;         2 data inputs ; 591                         ;
 ;         3 data inputs ; 194                         ;
-;     normal            ; 44408                       ;
+;     normal            ; 44424                       ;
 ;         0 data inputs ; 12                          ;
-;         1 data inputs ; 92                          ;
-;         2 data inputs ; 597                         ;
-;         3 data inputs ; 1694                        ;
-;         4 data inputs ; 42013                       ;
+;         1 data inputs ; 91                          ;
+;         2 data inputs ; 615                         ;
+;         3 data inputs ; 1667                        ;
+;         4 data inputs ; 42039                       ;
 ; cycloneiii_ram_block  ; 238                         ;
 ;                       ;                             ;
 ; Max LUT depth         ; 26.00                       ;
-; Average LUT depth     ; 17.05                       ;
+; Average LUT depth     ; 16.92                       ;
 +-----------------------+-----------------------------+
 
 
@@ -3360,7 +3357,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:32:10     ;
+; Top            ; 00:32:01     ;
 +----------------+--------------+
 
 
@@ -3370,7 +3367,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.2 Build 602 07/19/2017 SJ Lite Edition
-    Info: Processing started: Wed Aug 04 22:20:08 2021
+    Info: Processing started: Thu Aug 05 20:37:32 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off coco3fpga_dw -c coco3fpga_dw
 Info (20032): Parallel compilation is enabled and will use up to 8 processors
 Info (12021): Found 2 design units, including 1 entities, in source file /coco3_mister/coco3fpga_common/sram/coco_ram.vhd
@@ -3442,7 +3439,7 @@ Info (12021): Found 2 design units, including 0 entities, in source file /coco3_
     Info (12022): Found design unit 1: common File: X:/COCO3_Mister/CoCO3FPGA_Common/SDRAM_CONTROLLER/common.vhd Line: 31
     Info (12022): Found design unit 2: common-body File: X:/COCO3_Mister/CoCO3FPGA_Common/SDRAM_CONTROLLER/common.vhd Line: 57
 Info (12021): Found 1 design units, including 1 entities, in source file coco3fpga_dw.v
-    Info (12023): Found entity 1: coco3fpga_dw File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 95
+    Info (12023): Found entity 1: coco3fpga_dw File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 77
 Info (12021): Found 1 design units, including 1 entities, in source file /coco3_mister/coco3fpga_common/uart_clk.v
     Info (12023): Found entity 1: UART_CLK File: X:/COCO3_Mister/CoCO3FPGA_Common/UART_CLK.v Line: 40
 Info (12021): Found 1 design units, including 1 entities, in source file /coco3_mister/coco3fpga_common/disk02_02.v
@@ -3450,53 +3447,48 @@ Info (12021): Found 1 design units, including 1 entities, in source file /coco3_
 Info (12021): Found 2 design units, including 2 entities, in source file /coco3_mister/coco3fpga_common/ph2_clk.v
     Info (12023): Found entity 1: PH2_CLK_altclkctrl_7ji File: X:/COCO3_Mister/CoCO3FPGA_Common/PH2_CLK.v Line: 47
     Info (12023): Found entity 2: PH2_CLK File: X:/COCO3_Mister/CoCO3FPGA_Common/PH2_CLK.v Line: 98
-Warning (10236): Verilog HDL Implicit Net warning at coco3fpga_top.v(851): created implicit net for "RST" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 851
-Warning (10236): Verilog HDL Implicit Net warning at CoCo3IO.v(91): created implicit net for "EF" File: X:/COCO3_Mister/CoCo3FPGA_Common/CoCo3IO.v Line: 91
-Warning (10236): Verilog HDL Implicit Net warning at CoCo3IO.v(558): created implicit net for "WF_TXD" File: X:/COCO3_Mister/CoCo3FPGA_Common/CoCo3IO.v Line: 558
-Warning (10236): Verilog HDL Implicit Net warning at CoCo3IO.v(559): created implicit net for "WF_RXD" File: X:/COCO3_Mister/CoCo3FPGA_Common/CoCo3IO.v Line: 559
-Warning (10236): Verilog HDL Implicit Net warning at CoCo3IO.v(560): created implicit net for "WF_RTS" File: X:/COCO3_Mister/CoCo3FPGA_Common/CoCo3IO.v Line: 560
 Info (12127): Elaborating entity "coco3fpga_dw" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at coco3fpga_top.v(851): object "RST" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 851
-Warning (10036): Verilog HDL or VHDL warning at coco3fpga_top.v(126): object "RAM0_CS_N" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 126
-Warning (10036): Verilog HDL or VHDL warning at coco3fpga_top.v(132): object "RAM0_OE_N" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 132
-Warning (10036): Verilog HDL or VHDL warning at coco3fpga_top.v(277): object "LEDG" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 277
-Warning (10036): Verilog HDL or VHDL warning at coco3fpga_top.v(280): object "LEDR" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 280
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(309): object "CPU_RESET_SM" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 309
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(320): object "VMAX" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 320
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(340): object "TMR_RST" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 340
-Warning (10036): Verilog HDL or VHDL warning at coco3fpga_top.v(344): object "DESCEN" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 344
-Warning (10036): Verilog HDL or VHDL warning at coco3fpga_top.v(346): object "MONO" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 346
-Warning (10036): Verilog HDL or VHDL warning at coco3fpga_top.v(371): object "ROM_RW" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 371
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(425): object "VU" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 425
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(426): object "VUM" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 426
-Warning (10036): Verilog HDL or VHDL warning at coco3fpga_top.v(440): object "ADCLRCLK" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 440
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(483): object "TICK0" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 483
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(484): object "TICK1" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 484
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(485): object "TICK2" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 485
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(565): object "HEXX" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 565
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(631): object "ODD_LINE" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 631
-Warning (10858): Verilog HDL warning at coco3fpga_top.v(632): object SPI_HALT used but never assigned File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 632
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(643): object "ANALOG" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 643
-Info (10035): Verilog HDL or VHDL information at coco3fpga_top.v(647): object "COM2_CLK" declared but not used File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 647
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(850): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 850
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(1578): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1578
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(1622): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1622
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(1666): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1666
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(1701): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1701
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(1836): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1836
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(1881): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1881
-Warning (10240): Verilog HDL Always Construct warning at coco3fpga_top.v(1857): inferring latch(es) for variable "MUGS", which holds its previous value in one or more paths through the always construct File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1857
+Warning (10036): Verilog HDL or VHDL warning at coco3fpga_dw.v(165): object "RAM0_CS_N" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 165
+Warning (10036): Verilog HDL or VHDL warning at coco3fpga_dw.v(171): object "RAM0_OE_N" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 171
+Warning (10036): Verilog HDL or VHDL warning at coco3fpga_dw.v(186): object "LEDG" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 186
+Warning (10036): Verilog HDL or VHDL warning at coco3fpga_dw.v(189): object "LEDR" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 189
+Warning (10036): Verilog HDL or VHDL warning at coco3fpga_dw.v(210): object "RST" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 210
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(218): object "CPU_RESET_SM" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 218
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(229): object "VMAX" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 229
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(249): object "TMR_RST" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 249
+Warning (10036): Verilog HDL or VHDL warning at coco3fpga_dw.v(253): object "DESCEN" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 253
+Warning (10036): Verilog HDL or VHDL warning at coco3fpga_dw.v(255): object "MONO" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 255
+Warning (10036): Verilog HDL or VHDL warning at coco3fpga_dw.v(280): object "ROM_RW" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 280
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(334): object "VU" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 334
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(335): object "VUM" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 335
+Warning (10036): Verilog HDL or VHDL warning at coco3fpga_dw.v(349): object "ADCLRCLK" assigned a value but never read File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 349
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(392): object "TICK0" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 392
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(393): object "TICK1" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 393
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(394): object "TICK2" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 394
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(474): object "HEXX" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 474
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(540): object "ODD_LINE" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 540
+Warning (10858): Verilog HDL warning at coco3fpga_dw.v(541): object SPI_HALT used but never assigned File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 541
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(552): object "ANALOG" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 552
+Info (10035): Verilog HDL or VHDL information at coco3fpga_dw.v(556): object "COM2_CLK" declared but not used File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 556
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(759): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 759
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(1487): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1487
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(1531): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1531
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(1575): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1575
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(1610): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1610
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(1745): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1745
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(1790): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1790
+Warning (10240): Verilog HDL Always Construct warning at coco3fpga_dw.v(1766): inferring latch(es) for variable "MUGS", which holds its previous value in one or more paths through the always construct File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1766
 Warning (10040): Verilog HDL or VHDL arithmetic warning at CoCo3IO.v(376): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/CoCo3IO.v Line: 376
 Warning (10040): Verilog HDL or VHDL arithmetic warning at CoCo3IO.v(426): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/CoCo3IO.v Line: 426
 Warning (10040): Verilog HDL or VHDL arithmetic warning at CoCo3IO.v(699): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/CoCo3IO.v Line: 699
 Warning (10040): Verilog HDL or VHDL arithmetic warning at CoCo3IO.v(777): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/CoCo3IO.v Line: 777
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(2565): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 2565
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(2605): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 2605
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(3380): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 3380
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(3916): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 3916
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(3922): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 3922
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(3924): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 3924
-Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_top.v(3927): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 3927
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(2474): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 2474
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(2514): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 2514
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(3289): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3289
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(3825): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3825
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(3831): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3831
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(3833): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3833
+Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3fpga_dw.v(3836): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3836
 Warning (10040): Verilog HDL or VHDL arithmetic warning at paddles.v(90): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/paddles.v Line: 90
 Warning (10040): Verilog HDL or VHDL arithmetic warning at paddles.v(106): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/paddles.v Line: 106
 Warning (10040): Verilog HDL or VHDL arithmetic warning at paddles.v(126): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/paddles.v Line: 126
@@ -3513,17 +3505,17 @@ Warning (10040): Verilog HDL or VHDL arithmetic warning at paddles.v(357): loss 
 Warning (10040): Verilog HDL or VHDL arithmetic warning at paddles.v(373): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/paddles.v Line: 373
 Warning (10040): Verilog HDL or VHDL arithmetic warning at paddles.v(393): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/paddles.v Line: 393
 Warning (10040): Verilog HDL or VHDL arithmetic warning at paddles.v(405): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCo3FPGA_Common/paddles.v Line: 405
-Warning (10030): Net "SPI_HALT" at coco3fpga_top.v(632) has no driver or initial value, using a default initial value '0' File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 632
-Info (10041): Inferred latch for "MUGS" at coco3fpga_top.v(1857) File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1857
-Warning (10862): input port "CLK27MHZ" at coco3fpga_top.v(107) has no fan-out File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 107
-Warning (10862): input port "AUD_ADCDAT" at coco3fpga_top.v(257) has no fan-out File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 257
-Warning (10862): input port "AUD_ADCLRCK" at coco3fpga_top.v(258) has no fan-out File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 258
-Info (12128): Elaborating entity "COCO_ROM" for hierarchy "COCO_ROM:CC3_ROM" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1002
-Info (12128): Elaborating entity "COCO_SRAM" for hierarchy "COCO_SRAM:CC3_SRAM0" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1011
-Warning (10492): VHDL Process Statement warning at coco_ram.vhd(102): signal "CLK" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: X:/COCO3_Mister/CoCO3FPGA_Common/sram/coco_ram.vhd Line: 102
-Info (12128): Elaborating entity "PH2_CLK" for hierarchy "PH2_CLK:PH2_CLK_inst" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1851
+Warning (10030): Net "DE1RXD" at coco3fpga_dw.v(103) has no driver or initial value, using a default initial value '0' File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 103
+Warning (10030): Net "OPTRXD" at coco3fpga_dw.v(105) has no driver or initial value, using a default initial value '0' File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 105
+Warning (10030): Net "SPI_HALT" at coco3fpga_dw.v(541) has no driver or initial value, using a default initial value '0' File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 541
+Info (10041): Inferred latch for "MUGS" at coco3fpga_dw.v(1766) File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1766
+Warning (10862): input port "AUD_ADCDAT" at coco3fpga_dw.v(116) has no fan-out File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 116
+Warning (10862): input port "AUD_ADCLRCK" at coco3fpga_dw.v(117) has no fan-out File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 117
+Info (12128): Elaborating entity "COCO_ROM" for hierarchy "COCO_ROM:CC3_ROM" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 911
+Info (12128): Elaborating entity "COCO_SRAM" for hierarchy "COCO_SRAM:CC3_SRAM0" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 920
+Info (12128): Elaborating entity "PH2_CLK" for hierarchy "PH2_CLK:PH2_CLK_inst" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1760
 Info (12128): Elaborating entity "PH2_CLK_altclkctrl_7ji" for hierarchy "PH2_CLK:PH2_CLK_inst|PH2_CLK_altclkctrl_7ji:PH2_CLK_altclkctrl_7ji_component" File: X:/COCO3_Mister/CoCO3FPGA_Common/PH2_CLK.v Line: 117
-Info (12128): Elaborating entity "cpu09" for hierarchy "cpu09:GLBCPU09" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 1918
+Info (12128): Elaborating entity "cpu09" for hierarchy "cpu09:GLBCPU09" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 1827
 Info (10425): VHDL Case Statement information at cpu09l_128.vhd(2517): OTHERS choice is never selected File: X:/COCO3_Mister/CoCO3FPGA_Common/CPU09/cpu09l_128.vhd Line: 2517
 Info (10425): VHDL Case Statement information at cpu09l_128.vhd(3726): OTHERS choice is never selected File: X:/COCO3_Mister/CoCO3FPGA_Common/CPU09/cpu09l_128.vhd Line: 3726
 Info (10425): VHDL Case Statement information at cpu09l_128.vhd(5779): OTHERS choice is never selected File: X:/COCO3_Mister/CoCO3FPGA_Common/CPU09/cpu09l_128.vhd Line: 5779
@@ -3758,13 +3750,13 @@ Warning (10040): Verilog HDL or VHDL arithmetic warning at i2c.v(258): loss of c
 Warning (10040): Verilog HDL or VHDL arithmetic warning at i2c.v(319): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/i2c.v Line: 319
 Warning (10040): Verilog HDL or VHDL arithmetic warning at i2c.v(410): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/i2c.v Line: 410
 Warning (10040): Verilog HDL or VHDL arithmetic warning at i2c.v(470): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/i2c.v Line: 470
-Info (12128): Elaborating entity "COCOKEY" for hierarchy "COCOKEY:coco_keyboard" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 4031
+Info (12128): Elaborating entity "COCOKEY" for hierarchy "COCOKEY:coco_keyboard" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3940
 Warning (10040): Verilog HDL or VHDL arithmetic warning at cocokey.v(198): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/cocokey.v Line: 198
 Warning (10040): Verilog HDL or VHDL arithmetic warning at cocokey.v(704): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/cocokey.v Line: 704
 Info (12128): Elaborating entity "ps2_keyboard" for hierarchy "COCOKEY:coco_keyboard|ps2_keyboard:KEYBOARD" File: X:/COCO3_Mister/CoCO3FPGA_Common/cocokey.v Line: 714
 Warning (10040): Verilog HDL or VHDL arithmetic warning at ps2_keyboard.v(144): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/PS2_Key/ps2_keyboard.v Line: 144
 Warning (10040): Verilog HDL or VHDL arithmetic warning at ps2_keyboard.v(183): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/PS2_Key/ps2_keyboard.v Line: 183
-Info (12128): Elaborating entity "VDAC" for hierarchy "VDAC:VDAC_inst" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 4192
+Info (12128): Elaborating entity "VDAC" for hierarchy "VDAC:VDAC_inst" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 4037
 Info (12128): Elaborating entity "altsyncram" for hierarchy "VDAC:VDAC_inst|altsyncram:altsyncram_component" File: X:/COCO3_Mister/CoCO3FPGA_Common/VDAC.v Line: 90
 Info (12130): Elaborated megafunction instantiation "VDAC:VDAC_inst|altsyncram:altsyncram_component" File: X:/COCO3_Mister/CoCO3FPGA_Common/VDAC.v Line: 90
 Info (12133): Instantiated megafunction "VDAC:VDAC_inst|altsyncram:altsyncram_component" with the following parameter: File: X:/COCO3_Mister/CoCO3FPGA_Common/VDAC.v Line: 90
@@ -3790,7 +3782,7 @@ Info (12133): Instantiated megafunction "VDAC:VDAC_inst|altsyncram:altsyncram_co
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_rbm1.tdf
     Info (12023): Found entity 1: altsyncram_rbm1 File: X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_rbm1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_rbm1" for hierarchy "VDAC:VDAC_inst|altsyncram:altsyncram_component|altsyncram_rbm1:auto_generated" File: c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "COCO3VIDEO" for hierarchy "COCO3VIDEO:COCOVID" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 4225
+Info (12128): Elaborating entity "COCO3VIDEO" for hierarchy "COCO3VIDEO:COCOVID" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 4070
 Info (10035): Verilog HDL or VHDL information at coco3vid.v(164): object "RAM_ADDRESS_X" declared but not used File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 164
 Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3vid.v(259): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 259
 Warning (10040): Verilog HDL or VHDL arithmetic warning at coco3vid.v(295): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 295
@@ -3856,7 +3848,7 @@ Warning (287001): Assertion warning: Device family Cyclone IV E does not have M4
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_lmb1.tdf
     Info (12023): Found entity 1: altsyncram_lmb1 File: X:/COCO3_Mister/CoCo3FPGA/db/altsyncram_lmb1.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_lmb1" for hierarchy "COCO3VIDEO:COCOVID|COCO3GEN:coco3gen|altsyncram:altsyncram_component|altsyncram_lmb1:auto_generated" File: c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Info (12128): Elaborating entity "glb6551" for hierarchy "glb6551:RS232" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 4247
+Info (12128): Elaborating entity "glb6551" for hierarchy "glb6551:RS232" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 4092
 Warning (10040): Verilog HDL or VHDL arithmetic warning at uart_6551.v(283): loss of carry in addition or borrow in subtraction File: X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/uart_6551.v Line: 283
 Info (12128): Elaborating entity "uart51_tx" for hierarchy "glb6551:RS232|uart51_tx:tx" File: X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/uart_6551.v Line: 465
 Warning (10230): Verilog HDL assignment warning at 6551tx.v(155): truncated value with size 32 to match size of target (3) File: X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/6551tx.v Line: 155
@@ -3874,10 +3866,10 @@ Warning (19016): Clock multiplexers are found and protected
     Warning (19017): Found clock multiplexer JSTICK
     Warning (19017): Found clock multiplexer JSTICK~0
     Warning (19017): Found clock multiplexer JSTICK~1
-    Warning (19017): Found clock multiplexer TMR_CLK File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 451
+    Warning (19017): Found clock multiplexer TMR_CLK File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 360
     Warning (19017): Found clock multiplexer glb6551:RS232|TX_CLK File: X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/uart_6551.v Line: 128
     Warning (19017): Found clock multiplexer glb6551:RS232|RX_CLK File: X:/COCO3_Mister/CoCO3FPGA_Common/UART_6551/uart_6551.v Line: 92
-    Warning (19017): Found clock multiplexer WF_CLOCK File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 648
+    Warning (19017): Found clock multiplexer WF_CLOCK File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 557
     Warning (19017): Found clock multiplexer glb6850:COM2|RX_CLK_X File: X:/COCO3_Mister/CoCO3FPGA_Common/UART_6850/uart_6850.v Line: 124
     Warning (19017): Found clock multiplexer glb6850:COM2|TX_CLK_X File: X:/COCO3_Mister/CoCO3FPGA_Common/UART_6850/uart_6850.v Line: 123
     Warning (19017): Found clock multiplexer glb6850:COM1|RX_CLK_X File: X:/COCO3_Mister/CoCO3FPGA_Common/UART_6850/uart_6850.v Line: 124
@@ -3952,8 +3944,8 @@ Warning (13004): Presettable and clearable registers converted to equivalent cir
     Warning (13310): Register "COCO3VIDEO:COCOVID|VLPR[1]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|VLPR[1]~_emulated" and latch "COCO3VIDEO:COCOVID|VLPR[1]~9" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
     Warning (13310): Register "COCO3VIDEO:COCOVID|VLPR[0]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|VLPR[0]~_emulated" and latch "COCO3VIDEO:COCOVID|VLPR[0]~13" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
     Warning (13310): Register "COCO3VIDEO:COCOVID|NUM_ROW[3]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|NUM_ROW[3]~_emulated" and latch "COCO3VIDEO:COCOVID|NUM_ROW[3]~5" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
-    Warning (13310): Register "COCO3VIDEO:COCOVID|NUM_ROW[2]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|NUM_ROW[2]~_emulated" and latch "COCO3VIDEO:COCOVID|NUM_ROW[2]~9" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
-    Warning (13310): Register "COCO3VIDEO:COCOVID|NUM_ROW[1]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|NUM_ROW[1]~_emulated" and latch "COCO3VIDEO:COCOVID|NUM_ROW[1]~13" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
+    Warning (13310): Register "COCO3VIDEO:COCOVID|NUM_ROW[1]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|NUM_ROW[1]~_emulated" and latch "COCO3VIDEO:COCOVID|NUM_ROW[1]~9" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
+    Warning (13310): Register "COCO3VIDEO:COCOVID|NUM_ROW[2]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|NUM_ROW[2]~_emulated" and latch "COCO3VIDEO:COCOVID|NUM_ROW[2]~13" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
     Warning (13310): Register "COCO3VIDEO:COCOVID|NUM_ROW[0]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|NUM_ROW[0]~_emulated" and latch "COCO3VIDEO:COCOVID|NUM_ROW[0]~17" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
     Warning (13310): Register "COCO3VIDEO:COCOVID|ROW_ADD[16]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|ROW_ADD[16]~_emulated" and latch "COCO3VIDEO:COCOVID|ROW_ADD[16]~15" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
     Warning (13310): Register "COCO3VIDEO:COCOVID|ROW_ADD[15]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|ROW_ADD[15]~_emulated" and latch "COCO3VIDEO:COCOVID|ROW_ADD[15]~19" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
@@ -3976,37 +3968,38 @@ Warning (13004): Presettable and clearable registers converted to equivalent cir
     Warning (13310): Register "COCO3VIDEO:COCOVID|ROW_ADD[17]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|ROW_ADD[17]~_emulated" and latch "COCO3VIDEO:COCOVID|ROW_ADD[17]~87" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
     Warning (13310): Register "COCO3VIDEO:COCOVID|ROW_ADD[22]" is converted into an equivalent circuit using register "COCO3VIDEO:COCOVID|ROW_ADD[22]~_emulated" and latch "COCO3VIDEO:COCOVID|ROW_ADD[22]~91" File: X:/COCO3_Mister/CoCO3FPGA_Common/coco3vid.v Line: 1981
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "RED3" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 203
-    Warning (13410): Pin "GREEN3" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 205
-    Warning (13410): Pin "BLUE3" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 207
-    Warning (13410): Pin "RED2" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 209
-    Warning (13410): Pin "GREEN2" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 211
-    Warning (13410): Pin "BLUE2" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 213
-    Warning (13410): Pin "RED1" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 215
-    Warning (13410): Pin "GREEN1" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 217
-    Warning (13410): Pin "BLUE1" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 219
-    Warning (13410): Pin "RED0" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 221
-    Warning (13410): Pin "GREEN0" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 223
-    Warning (13410): Pin "BLUE0" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 225
-    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 197
-    Warning (13410): Pin "VGA_BLANK_N" is stuck at VCC File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 199
+    Warning (13410): Pin "RED[0]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "RED[1]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "RED[2]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "RED[3]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "GREEN[0]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "GREEN[1]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "GREEN[2]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "GREEN[3]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "BLUE[0]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "BLUE[1]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "BLUE[2]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "BLUE[3]" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 3949
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 91
+    Warning (13410): Pin "VGA_BLANK_N" is stuck at VCC File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 92
+    Warning (13410): Pin "DE1RXD" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 103
+    Warning (13410): Pin "OPTRXD" is stuck at GND File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 105
 Info (17049): 43 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 3 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "CLK27MHZ" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 107
-    Warning (15610): No output dependent on input pin "AUD_ADCDAT" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 257
-    Warning (15610): No output dependent on input pin "AUD_ADCLRCK" File: X:/COCO3_Mister/CoCo3FPGA_Common/coco3fpga_top.v Line: 258
-Info (21057): Implemented 47036 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 18 input pins
-    Info (21059): Implemented 37 output pins
+Warning (21074): Design contains 2 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "AUD_ADCDAT" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 116
+    Warning (15610): No output dependent on input pin "AUD_ADCLRCK" File: X:/COCO3_Mister/CoCo3FPGA/coco3fpga_dw.v Line: 117
+Info (21057): Implemented 47053 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 16 input pins
+    Info (21059): Implemented 39 output pins
     Info (21060): Implemented 9 bidirectional pins
-    Info (21061): Implemented 46732 logic cells
+    Info (21061): Implemented 46749 logic cells
     Info (21064): Implemented 238 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 190 warnings
-    Info: Peak virtual memory: 5861 megabytes
-    Info: Processing ended: Wed Aug 04 22:52:46 2021
-    Info: Elapsed time: 00:32:38
-    Info: Total CPU time (on all processors): 00:32:48
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 186 warnings
+    Info: Peak virtual memory: 5871 megabytes
+    Info: Processing ended: Thu Aug 05 21:10:03 2021
+    Info: Elapsed time: 00:32:31
+    Info: Total CPU time (on all processors): 00:32:41
 
 

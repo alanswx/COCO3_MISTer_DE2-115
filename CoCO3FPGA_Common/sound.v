@@ -74,12 +74,7 @@ assign SOUND		=	{1'b0, SBS, SOUND_DTOA};
 assign DAC_LEFT	=	{2'b00, ORCH_LEFT,  ORCH_LEFT_EXT, 1'b0}	+ {1'b0, SOUND, 10'h000};
 assign DAC_RIGHT	=	{2'b00, ORCH_RIGHT, ORCH_RIGHT_EXT, 1'b0}	+ {1'b0, SOUND, 10'h000};
 
-// SRH No CLK24 in DE2-115.  Select the 25Mhz for DE2-115
-`ifdef DE2_115
 assign AUD_XCK = MCLOCK[0];  // 25Mhz
-`else
-assign AUD_XCK = CLK24MHZ_2;
-`endif
 
 //Delay LRCLK half cycle
 always @(posedge AUD_BCLK)

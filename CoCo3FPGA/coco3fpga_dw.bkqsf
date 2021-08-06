@@ -144,7 +144,8 @@ set_location_assignment PIN_Y14 -to FLASH_WE_N
 set_location_assignment PIN_R22 -to BUTTON_N[0]
 set_location_assignment PIN_R21 -to BUTTON_N[1]
 set_location_assignment PIN_T22 -to BUTTON_N[2]
-set_location_assignment PIN_T21 -to BUTTON_N[3]
+#set_location_assignment PIN_T21 -to BUTTON_N[3]
+set_location_assignment PIN_T21 -to COCO_RESET_N
 set_global_assignment -name STRATIX_CONFIGURATION_DEVICE EPCS4
 set_global_assignment -name RESERVE_ASDO_AFTER_CONFIGURATION "AS INPUT TRI-STATED"
 set_location_assignment PIN_AB15 -to FLASH_CE_N
