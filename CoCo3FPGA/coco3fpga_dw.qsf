@@ -95,7 +95,6 @@ set_location_assignment PIN_R24 -to COCO_RESET_N
 #set_location_assignment PIN_R24 -to BUTTON_N[3]
 set_location_assignment PIN_N21 -to BUTTON_N[2]
 set_location_assignment PIN_M21 -to BUTTON_N[1]
-set_location_assignment PIN_M23 -to BUTTON_N[0]
 set_location_assignment PIN_AD15 -to CK_CLK
 set_location_assignment PIN_AG25 -to CK_DAT
 set_location_assignment PIN_B14 -to CLK27MHZ
@@ -427,4 +426,5 @@ set_global_assignment -name QIP_FILE ../CoCo3FPGA_Common/disk02_02.qip
 set_global_assignment -name QIP_FILE ../CoCO3FPGA_Common/PH2_CLK.qip
 set_global_assignment -name MIF_FILE ../CoCO3FPGA_Common/disk02_02.mif
 set_global_assignment -name SMART_RECOMPILE OFF
+set_location_assignment PIN_M23 -to EE
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -103,9 +103,9 @@ begin
 		if R_W = '0' then
     		SRAM(to_integer(unsigned(ADDR))) <= DATA_I;
 		end if;
-		DATA_O <= SRAM(to_integer(unsigned(ADDR)));
 	end if;
   end process;
 
+  DATA_O <= SRAM(to_integer(unsigned(ADDR)));
 
 end RTL;

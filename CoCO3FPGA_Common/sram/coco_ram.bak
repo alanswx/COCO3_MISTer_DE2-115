@@ -97,7 +97,7 @@ architecture RTL of COCO_SRAM is
 
 begin
 
-  P_SRAM : process(ADDR,R_W,DATA_I)
+  P_SRAM : process(CLK,ADDR,R_W,DATA_I)
   begin
 	if CLK'event and CLK='1' then
 		if R_W = '0' then
