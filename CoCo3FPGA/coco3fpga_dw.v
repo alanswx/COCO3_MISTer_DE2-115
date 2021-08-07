@@ -100,9 +100,9 @@ input				ps2_data,
 
 // RS-232
 output				DE1TXD,
-output				DE1RXD,
+input				DE1RXD,
 output				OPTTXD,
-output				OPTRXD,
+input				OPTRXD,
 
 // I2C - Audio
 output				I2C_SCL,
@@ -123,6 +123,7 @@ input	[3:0]		PADDLE_CLK,
 input	[3:0]		P_SWITCH,
 
 //	GPIO
+input				EE,
 
 inout	[7:0]		GPIO
 );
@@ -713,7 +714,7 @@ assign SWITCH[9:0] = 10'b0000010000; // This is ECB
 //assign SWITCH[9:0] = 10'b0000010110; // This is EDB
 //assign SWITCH[9:0] = 10'b0000010000; // This is Orch 80 in ROM
 
-assign BUTTON_N[3:0] = {COCO_RESET_N, 3'b111};
+assign BUTTON_N[3:0] = {COCO_RESET_N, 2'b1,EE};
 
 
 //assign LEDG = TRACE;														// Floppy Trace
@@ -912,7 +913,7 @@ COCO_ROM CC3_ROM(
 
 
 COCO_SRAM CC3_SRAM0(
-.CLK(CLK50MHZ),
+.CLK(~CLK50MHZ),
 .ADDR(RAM0_ADDRESS[15:0]),
 .R_W(RAM0_RW_N | RAM0_BE0_N),
 .DATA_I(RAM0_DATA_I[7:0]),
@@ -920,7 +921,7 @@ COCO_SRAM CC3_SRAM0(
 );
 
 COCO_SRAM CC3_SRAM1(
-.CLK(CLK50MHZ),
+.CLK(~CLK50MHZ),
 .ADDR(RAM0_ADDRESS[15:0]),
 .R_W(RAM0_RW_N | RAM0_BE1_N),
 .DATA_I(RAM0_DATA_I[15:8]),
