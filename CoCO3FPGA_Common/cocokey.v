@@ -711,8 +711,8 @@ end
 //	KB_CLK[4] = 50/32	= 1.5625 MHz
 //	KB_CLK[5] = 50/64	= 0.78125 MHz
 
-/*
 
+/*
 always @ (posedge CLK50MHZ)				//50 MHz
 	KB_CLK <= KB_CLK + 1'b1;
 

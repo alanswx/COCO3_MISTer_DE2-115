@@ -246,7 +246,7 @@ wire [21:0] gamma_bus;
 
 assign CLK_VIDEO = clk_sys;
 
-hps_io #(.CONF_STR(CONF_STR)) hps_io
+hps_io #(.CONF_STR(CONF_STR)/*,.PS2DIV(100)*/) hps_io
 (
 //        .clk_sys(clk_sys),
 		  .clk_sys(CLK_50M),
@@ -322,8 +322,8 @@ wire [7:0] b;
 wire easter_egg = ~status[10];
 coco3fpga_dw coco3 (
 .CLK50MHZ(CLK_50M),
-//.COCO_RESET_N(~reset),
-.COCO_RESET_N(1'b1),
+.COCO_RESET_N(~reset),
+//.COCO_RESET_N(1'b1),
 
 // SDRAM
 /*
@@ -356,12 +356,12 @@ coco3fpga_dw coco3 (
 // PS/2
 .ps2_clk(ps2_kbd_clk),
 .ps2_data(ps2_kbd_data),
-
-//.ps2_key(ps2_key),
+.ps2_key(ps2_key),
 //.BUTTON_N(button_n)
 );
 
-wire reset = RESET | status[0] | buttons[1];
+//wire reset = RESET | status[0] | buttons[1];
+wire reset = buttons[1];
 
 
 endmodule

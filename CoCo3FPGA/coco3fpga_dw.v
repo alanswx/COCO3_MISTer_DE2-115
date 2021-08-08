@@ -96,7 +96,7 @@ output				VBLANK,
 
 input				ps2_clk,
 input				ps2_data,
-
+input          ps2_key,
 // RS-232
 output				DE1TXD,
 input				DE1RXD,
@@ -950,13 +950,21 @@ assign	VDAC_EN = ({RW_N,ADDRESS[15:0]} == 17'H0FF7E)					?	1'b1:		// FF7E
 assign	SLAVE_WR = ({RW_N,ADDRESS[15:0]} == 17'H1FF6F)					?	1'b1:		// FF6F
 																								1'b0;
 
-always @(negedge PH_2 or negedge RESET_N)
+																								
+																								
+reg  PH_2_req;																								
+always @(negedge CLK50MHZ)
+begin
+   PH_2_req<=PH_2;
+end
+
+always @(negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		ROM_BANK <= 3'b000;
 	end
-	else
+	else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
 	begin
 		if({SLOT3_HW, RW_N} == 2'b10)
 			case (ADDRESS[4:0])
@@ -1812,7 +1820,8 @@ end
 */
 // CPU section copyrighted by John Kent
 cpu09 GLBCPU09(
-	.clk(PH_2),
+	.clk(CLK50MHZ),
+	.ce(PH_2),
 	.rst(CPU_RESET),
 	.vma(VMA),
 	.addr(ADDRESS),
@@ -1820,11 +1829,12 @@ cpu09 GLBCPU09(
 	.data_in(DATA_IN),
 	.data_out(DATA_OUT),
 	.halt(HALT_BUF2),
-	.hold(1'b0),
 	.irq(!CPU_IRQ_N),
 	.firq(!CPU_FIRQ_N),
 	.nmi(NMI_09)
 );
+
+
 
 // Disk Drive Controller / Slave processor
 `include "..\CoCo3FPGA_Common\CoCo3IO.v"
@@ -1833,13 +1843,15 @@ cpu09 GLBCPU09(
 // Interrupt Sources
 //***********************************************************************
 // Interrupt source for CART signal
-always @(negedge PH_2 or negedge RESET_N)
+
+always @(negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		CART_INT_IN_N <= 1'b1;
 	end
-	else
+	else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		case (MPI_SCS)
 		2'b00:
@@ -1865,7 +1877,7 @@ assign KEY_INT_N = (KEYBOARD_IN == 8'hFF);
 //***********************************************************************
 // Interrupt Latch RESETs
 //***********************************************************************
-always @(negedge PH_2 or negedge RESET_N)
+always @(negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
@@ -1877,7 +1889,8 @@ begin
 		RST_FF93_N <= 1'b1;
 		TMR_RST_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		case({RW_N,ADDRESS})
 		17'h1FF00:
@@ -1995,14 +2008,15 @@ end
 // Polarity	HSYNC1_POL
 // Clear		FF00
 assign HSYNC1_CLK_N = HSYNC_INT_N ^ HSYNC1_POL;
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		HSYNC1_IRQ_BUF <= 2'b11;
 		HSYNC1_IRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		HSYNC1_IRQ_BUF <= {HSYNC1_IRQ_BUF[0], HSYNC1_IRQ_STAT_N};
 		HSYNC1_IRQ_N <= HSYNC1_IRQ_BUF[1] | !HSYNC1_IRQ_INT;
@@ -2030,14 +2044,15 @@ end
 // Polarity	VSYNC1_POL
 // Clear		FF02
 assign VSYNC1_CLK_N = VSYNC_INT_N ^ VSYNC1_POL;
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		VSYNC1_IRQ_BUF <= 2'b11;
 		VSYNC1_IRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		VSYNC1_IRQ_BUF <= {VSYNC1_IRQ_BUF[0], VSYNC1_IRQ_STAT_N};
 		VSYNC1_IRQ_N <= VSYNC1_IRQ_BUF[1] | !VSYNC1_IRQ_INT;
@@ -2114,14 +2129,15 @@ end
 // Input		HSYNC_INT_N
 // Switch	HSYNC3_FIRQ_INT
 // Clear		FF93
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		HSYNC3_FIRQ_BUF <= 2'b11;
 		HSYNC3_FIRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		HSYNC3_FIRQ_BUF <= {HSYNC3_FIRQ_BUF[0], HSYNC3_FIRQ_STAT_N};
 		HSYNC3_FIRQ_N <= HSYNC3_FIRQ_BUF[1] | !HSYNC3_FIRQ_INT;
@@ -2147,14 +2163,15 @@ end
 // Input		VSYNC_FIRQ_INT_N
 // Switch	VSYNC3_INT
 // Clear		FF93
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		VSYNC3_FIRQ_BUF <= 2'b11;
 		VSYNC3_FIRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		VSYNC3_FIRQ_BUF <= {VSYNC3_FIRQ_BUF[0], VSYNC3_FIRQ_STAT_N};
 		VSYNC3_FIRQ_N <= VSYNC3_FIRQ_BUF[1] | !VSYNC3_FIRQ_INT;
@@ -2180,14 +2197,15 @@ end
 // Input		CART_INT_N
 // Switch	CART3_FIRQ_INT
 // Clear		FF93
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		CART3_FIRQ_BUF <= 2'b11;
 		CART3_FIRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		CART3_FIRQ_BUF <= {CART3_FIRQ_BUF[0], CART3_FIRQ_STAT_N};
 		CART3_FIRQ_N <= CART3_FIRQ_BUF[1] | !CART3_FIRQ_INT;
@@ -2213,14 +2231,15 @@ end
 // Input		KEY_INT_N
 // Switch	KEY3_FIRQ_INT
 // Clear		FF93
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		KEY3_FIRQ_BUF <= 2'b11;
 		KEY3_FIRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		KEY3_FIRQ_BUF <= {KEY3_FIRQ_BUF[0], KEY3_FIRQ_STAT_N};
 		KEY3_FIRQ_N <= KEY3_FIRQ_BUF[1] | !KEY3_FIRQ_INT;
@@ -2246,14 +2265,15 @@ end
 // Input		TIMER_INT_N
 // Switch	TIMER3_FIRQ_INT
 // Clear		FF93
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		TIMER3_FIRQ_BUF <= 2'b11;
 		TIMER3_FIRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		TIMER3_FIRQ_BUF <= {TIMER3_FIRQ_BUF[0], TIMER3_FIRQ_STAT_N};
 		TIMER3_FIRQ_N <= TIMER3_FIRQ_BUF[1] | !TIMER3_FIRQ_INT;
@@ -2282,14 +2302,15 @@ end
 // Input		HSYNC_INT_N
 // Switch	HSYNC3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		HSYNC3_IRQ_BUF <= 2'b11;
 		HSYNC3_IRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		HSYNC3_IRQ_BUF <= {HSYNC3_IRQ_BUF[0], HSYNC3_IRQ_STAT_N};
 		HSYNC3_IRQ_N <= HSYNC3_IRQ_BUF[1] | !HSYNC3_IRQ_INT;
@@ -2315,14 +2336,15 @@ end
 // Input		VSYNC_IRQ_INT_N
 // Switch	VSYNC3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		VSYNC3_IRQ_BUF <= 2'b11;
 		VSYNC3_IRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		VSYNC3_IRQ_BUF <= {VSYNC3_IRQ_BUF[0], VSYNC3_IRQ_STAT_N};
 		VSYNC3_IRQ_N <= VSYNC3_IRQ_BUF[1] | !VSYNC3_IRQ_INT;
@@ -2348,14 +2370,15 @@ end
 // Input		CART_INT_N
 // Switch	CART3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		CART3_IRQ_BUF <= 2'b11;
 		CART3_IRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		CART3_IRQ_BUF <= {CART3_IRQ_BUF[0], CART3_IRQ_STAT_N};
 		CART3_IRQ_N <= CART3_IRQ_BUF[1] | !CART3_IRQ_INT;
@@ -2382,14 +2405,15 @@ end
 // Input		KEY_INT_N
 // Switch	KEY3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		KEY3_IRQ_BUF <= 2'b11;
 		KEY3_IRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		KEY3_IRQ_BUF <= {KEY3_IRQ_BUF[0], KEY3_IRQ_STAT_N};
 		KEY3_IRQ_N <= KEY3_IRQ_BUF[1] | !KEY3_IRQ_INT;
@@ -2415,14 +2439,15 @@ end
 // Input		TIMER_INT_N
 // Switch	TIMER3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		TIMER3_IRQ_BUF <= 2'b11;
 		TIMER3_IRQ_N <= 1'b1;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		TIMER3_IRQ_BUF <= {TIMER3_IRQ_BUF[0], TIMER3_IRQ_STAT_N};
 		TIMER3_IRQ_N <= TIMER3_IRQ_BUF[1] | !TIMER3_IRQ_INT;
@@ -2518,7 +2543,7 @@ begin
 end
 
 // Most of the latches for settings
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
@@ -2746,7 +2771,8 @@ begin
 // FFDE / FFDF
 		RAM <= 1'b0;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 // Sound Mux
 		case ({SOUND_EN,SEL})
@@ -3932,6 +3958,7 @@ COCOKEY coco_keyboard(
 		.SLO_CLK(V_SYNC_N),
 		.PS2_CLK(ps2_clk),
 		.PS2_DATA(ps2_data),
+		.PS2_KEY(ps2_key),
 		.KEY(KEY),
 		.SHIFT(SHIFT),
 		.SHIFT_OVERRIDE(SHIFT_OVERRIDE),
