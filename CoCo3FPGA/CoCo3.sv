@@ -193,6 +193,7 @@ localparam  CONF_STR = {
 		  "O89,Aspect ratio,Original,Full Screen,[ARC1],[ARC2];",
         "H0O2,Orientation,Vert,Horz;",
         "O35,Scandoubler Fx,None,HQ2x,CRT 25%,CRT 50%,CRT 75%;",
+		  "OA,Easter Egg,Off,On;",
         "-;",
         "R0,Reset;",
         "J1,Button;",
@@ -318,7 +319,7 @@ wire [7:0] r;
 wire [7:0] g;
 wire [7:0] b;
 
-
+wire easter_egg = ~status[10];
 coco3fpga_dw coco3 (
 .CLK50MHZ(CLK_50M),
 //.COCO_RESET_N(~reset),
@@ -345,7 +346,7 @@ coco3fpga_dw coco3 (
 .GREEN(g),
 .BLUE(b),
 
-
+.EE(1'b1/*easter_egg*/),
 
 .H_SYNC(hs),
 .V_SYNC(vs),
