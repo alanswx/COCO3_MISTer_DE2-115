@@ -388,6 +388,10 @@ set_global_assignment -name MISC_FILE "C:/Projects/Coco/V4.1.0_DE2_115/CoCo3FPGA
 set_location_assignment PIN_AF14 -to SD_WP_N
 set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS ON
 set_global_assignment -name NUM_PARALLEL_PROCESSORS 8
+set_global_assignment -name SMART_RECOMPILE OFF
+set_location_assignment PIN_M23 -to EE
+set_global_assignment -name OPTIMIZATION_MODE "AGGRESSIVE PERFORMANCE"
+set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/CPU09/cpu09l_128a.vhd
 set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/sram/coco_ram.vhd
 set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/rom/coco_rom.vhd
 set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/Counter_Display.vhd
@@ -415,7 +419,6 @@ set_global_assignment -name VERILOG_FILE ../CoCO3FPGA_Common/UART_6551/uart_6551
 set_global_assignment -name VERILOG_FILE ../CoCO3FPGA_Common/UART_6551/6551tx.v
 set_global_assignment -name VERILOG_FILE ../CoCO3FPGA_Common/UART_6551/6551rx.v
 set_global_assignment -name VERILOG_FILE ../CoCO3FPGA_Common/SPI/SDCard.v
-set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/CPU09/cpu09l_128.vhd
 set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/SDRAM_CONTROLLER/sdramcntl.vhd
 set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/SDRAM_CONTROLLER/common.vhd
 set_global_assignment -name SDC_FILE coco3fpga_dw.sdc
@@ -425,6 +428,4 @@ set_global_assignment -name QIP_FILE ../CoCO3FPGA_Common/disk02.qip
 set_global_assignment -name QIP_FILE ../CoCo3FPGA_Common/disk02_02.qip
 set_global_assignment -name QIP_FILE ../CoCO3FPGA_Common/PH2_CLK.qip
 set_global_assignment -name MIF_FILE ../CoCO3FPGA_Common/disk02_02.mif
-set_global_assignment -name SMART_RECOMPILE OFF
-set_location_assignment PIN_M23 -to EE
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -197,7 +197,7 @@ wire	[9:0]  	SWITCH;
 
 //	SRH	MISTer
 //	Static Buttons
-wire   	[3:1]	 BUTTON_N;
+wire   	[3:0]	 BUTTON_N;
 											//  3 RESET
 											//  2 SD Card Inserted (0=Inserted) wired to switche on the SD card
 											//  1 SD Write Protect (1=Protected) wired to switche on the SD card
@@ -362,6 +362,7 @@ wire			TMR_CLK;
 wire			SER_IRQ;
 reg		[4:0]	COM1_STATE;
 reg				COM1_CLOCK_X;
+reg				COM1_CLOCK_X_D;
 reg				COM1_CLOCK;
 reg		[2:0]	COM1_CLK;
 reg		[2:0]	COM2_STATE;
@@ -519,6 +520,7 @@ wire			WRFIFO_WRFULL;
 reg				BI_IRQ_EN;
 wire			UART1_CLK;
 reg 	[11:0]	MCLOCK;
+reg 	[11:0]	MCLOCK_DELAY;
 wire			I2C_SCL_EN;
 wire			I2C_DAT_EN;
 reg		[7:0]	I2C_DEVICE;
@@ -757,7 +759,11 @@ assign LEDR[17:8] = 10'b0000000000;
 //	MCLOCK[11] = 50/4096	= 12.20703125 KHz
 
 always @ (negedge CLK50MHZ)				//50 MHz
+begin
 	MCLOCK <= MCLOCK + 1'b1;
+	MCLOCK_DELAY <= MCLOCK;
+end
+
 assign RST = RESET_N;
 
 //SRH DE2-115 extra digits - blank
@@ -951,7 +957,7 @@ assign	VDAC_EN = ({RW_N,ADDRESS[15:0]} == 17'H0FF7E)					?	1'b1:		// FF7E
 assign	SLAVE_WR = ({RW_N,ADDRESS[15:0]} == 17'H1FF6F)					?	1'b1:		// FF6F
 																								1'b0;
 
-always @(negedge PH_2 or negedge RESET_N)
+always @(negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -959,49 +965,54 @@ begin
 	end
 	else
 	begin
-		if({SLOT3_HW, RW_N} == 2'b10)
-			case (ADDRESS[4:0])
-			5'h00:
-			begin
-				ROM_BANK <= DATA_OUT[2:0];
-			end
-			5'h02:
-			begin
-				BANK0 <= DATA_OUT[6:0];
-			end
-			5'h03:
-			begin
-				BANK_SIZE <= DATA_OUT[1:0];
-			end
-			5'h04:
-			begin
-				BANK1 <= DATA_OUT[6:0];
-			end
-			5'h05:
-			begin
-				BANK2 <= DATA_OUT[6:0];
-			end
-			5'h06:
-			begin
-				BANK3 <= DATA_OUT[6:0];
-			end
-			5'h07:
-			begin
-				BANK4 <= DATA_OUT[6:0];
-			end
-			5'h08:
-			begin
-				BANK5 <= DATA_OUT[6:0];
-			end
-			5'h09:
-			begin
-				BANK6 <= DATA_OUT[6:0];
-			end
-			5'h0A:
-			begin
-				BANK7 <= DATA_OUT[6:0];
-			end
-			endcase
+		if (PH_2)
+		begin
+			if({SLOT3_HW, RW_N} == 2'b10)
+				begin
+				case (ADDRESS[4:0])
+				5'h00:
+				begin
+					ROM_BANK <= DATA_OUT[2:0];
+				end
+				5'h02:
+				begin
+					BANK0 <= DATA_OUT[6:0];
+				end
+				5'h03:
+				begin
+					BANK_SIZE <= DATA_OUT[1:0];
+				end
+				5'h04:
+				begin
+					BANK1 <= DATA_OUT[6:0];
+				end
+				5'h05:
+				begin
+					BANK2 <= DATA_OUT[6:0];
+				end
+				5'h06:
+				begin
+					BANK3 <= DATA_OUT[6:0];
+				end
+				5'h07:
+				begin
+					BANK4 <= DATA_OUT[6:0];
+				end
+				5'h08:
+				begin
+					BANK5 <= DATA_OUT[6:0];
+				end
+				5'h09:
+				begin
+					BANK6 <= DATA_OUT[6:0];
+				end
+				5'h0A:
+				begin
+					BANK7 <= DATA_OUT[6:0];
+				end
+				endcase
+				end
+	    end
 	end
 end
 /*
@@ -1224,165 +1235,13 @@ assign	GPIO[6] = GPIO_DIR[6]	?	GPIO_OUT[6]:
 assign	GPIO[7] = GPIO_DIR[7]	?	GPIO_OUT[7]:
 												1'bZ;
 
-/********************************************************************************
-*	SDRAM Interface
-*********************************************************************************/
-//      -- Host side
-//sdramCntl SDRAM(
-//.clk(CLK50MHZ),					//in  std_logic;  -- master clock
-//.lock(RESET_N),					//in  std_logic;  -- true if clock is stable
-//.rst(CPU_RESET),					//in  std_logic;  -- reset
-//.rd(SDRAM_RD),						//in  std_logic;  -- initiate read operation
-//.wr(SDRAM_WR),						//in  std_logic;  -- initiate write operation
-//.earlyOpBegun(SDRAM_EOB),		//out std_logic;  -- read/write/self-refresh op has begun (async)
-//.opBegun(SDRAM_OB),				//out std_logic;  -- read/write/self-refresh op has begun (clocked)
-//.rdPending(SDRAM_RDP),			//out std_logic;  -- true if read operation(s) are still in the pipeline
-//.done(SDRAM_DONE),				//out std_logic;  -- read or write operation is done
-//.rdDone(SDRAM_RDD),				//out std_logic;  -- read operation is done and data is available
-//.hAddr(SDRAM_ADDR),				//in  std_logic_vector(HADDR_WIDTH-1 downto 0);  -- address from host to SDRAM
-//.hDIn(SDRAM_DIN),					//in  std_logic_vector(DATA_WIDTH-1 downto 0);  -- data from host to SDRAM
-//.hDOut(HDOUT),						//out std_logic_vector(DATA_WIDTH-1 downto 0);  -- data from SDRAM to host
-//.status(SDRAM_STATUS),			//out std_logic_vector(3 downto 0);  -- diagnostic status of the FSM
-//      -- SDRAM side
-//.cke(SDRAM_CKE),					//out std_logic;  -- clock-enable to SDRAM
-//.ce_n(SDRAM_CS_N),				//out std_logic;  -- chip-select to SDRAM
-//.ras_n(SDRAM_RAS_N),				//out std_logic;  -- SDRAM row address strobe
-//.cas_n(SDRAM_CAS_N),				//out std_logic;  -- SDRAM column address strobe
-//.we_n(SDRAM_RW_N),				//out std_logic;  -- SDRAM write enable
-//.ba(SDRAM_BANK),					//out std_logic_vector(1 downto 0);  -- SDRAM bank address
-//.sAddr(SDRAM_ADDRESS),			//out std_logic_vector(SADDR_WIDTH-1 downto 0);  -- SDRAM row/column address
-// SRH - Specified 15:0 for DE2-115 should be the same for DE0
-//.sDIn(SDRAM_DATA[15:0]),				//in  std_logic_vector(DATA_WIDTH-1 downto 0);  -- data from SDRAM
-//.sDOut(SDRAM_DATA_BUF),			//out std_logic_vector(DATA_WIDTH-1 downto 0);  -- data to SDRAM
-//.sDOutEn(SDRAM_DATA_BUF_EN),	//out std_logic;  -- true if data is output to SDRAM on sDOut
-//.dqmh(SDRAM_UDQM),				//out std_logic;  -- enable upper-byte of SDRAM databus if true
-//.dqml(SDRAM_LDQM)					//out std_logic  -- enable lower-byte of SDRAM databus if true
-//);
-
-// SRH - Upper 16 bits of SDRAM is inactive on DE2-115
-//`ifdef DE2_115
-//assign SDRAM_DATA[31:16] = 16'bZZZZZZZZZZZZZZZZ;
-//assign SDRAM_DQM[3:2] = 2'b11;
-//`endif
-
-//assign SDRAM_CLK = CLK50MHZ;
-//assign SDRAM_DATA = (SDRAM_DATA_BUF_EN)	?	SDRAM_DATA_BUF:
-//														16'bZZZZZZZZZZZZZZZZ;
-
-
-//always @ (posedge CLK50MHZ or negedge RESET_N)
-//begin
-//	if(!RESET_N)
-//	begin
-//		SDRAM_STATE <= 3'b000;
-//		SDRAM_RD <= 1'b0;
-//		SDRAM_WR <= 1'b0;
-//		SDRAM_DOUT <= 16'h0000;
-//		SDRAM_START_BUF <= 2'b00;
-//	end
-//	else
-//	begin
-//		SDRAM_START_BUF <= {SDRAM_START_BUF[0], SDRAM_START};
-//		case (SDRAM_STATE)
-//		3'b000:
-//		begin
-//			if(!SDRAM_START_BUF[1])
-//				SDRAM_STATE <= 3'b001;
-//		end
-//		3'b001:
-//		begin
-//			if(SDRAM_START_BUF[1])
-//			begin
-//				if(SDRAM_READ)
-//				begin
-//					SDRAM_STATE <= 3'b010;
-//					SDRAM_RD <= 1'b1;
-//				end
-//				else
-//				begin
-//					SDRAM_STATE <= 3'b101;
-//					SDRAM_WR <= 1'b1;
-//				end
-//			end
-//		end
-// Read
-//		3'b010:
-//		begin
-//			if(SDRAM_OB)
-//			begin
-//				SDRAM_RD <= 1'b0;
-//				if(SDRAM_DONE)
-//					SDRAM_STATE <= 3'b100;
-//				else
-//					SDRAM_STATE <= 3'b011;
-//			end
-//		end
-//		3'b011:
-//		begin
-//			if(SDRAM_DONE)
-//				SDRAM_STATE <= 3'b100;
-//		end
-//		3'b100:
-//		begin
-//			SDRAM_DOUT <= HDOUT;
-//			SDRAM_STATE <= 3'b000;
-//		end
-// Write
-//		3'b101:
-//		begin
-//			if(SDRAM_OB)
-//			begin
-//				SDRAM_WR <= 1'b0;
-//				if(SDRAM_DONE)
-//					SDRAM_STATE <= 3'b000;
-//				else
-//					SDRAM_STATE <= 3'b110;
-//			end
-//		end
-//		3'b110:
-//		begin
-//			if(SDRAM_DONE)
-//			begin
-//				SDRAM_STATE <= 3'b000;
-//			end
-//		end
-//		3'b111:
-//		begin
-//			SDRAM_STATE <= 3'b000;
-//		end
-//		endcase
-//	end
-//end
-
-//always @ (negedge PH_2 or negedge RESET_N)
-//begin
-//	if(!RESET_N)
-//	begin
-//		SDRAM_ADDR[6:0] <= 7'h00;
-//		SDRAM_START <= 1'b0;
-//		SDRAM_NEXT_BUF <= 2'b00;
-//		SDRAM_READY_BUF <= 2'b00;
-//	end
-//	else
-//	begin
-//		SDRAM_NEXT_BUF <= {SDRAM_NEXT_BUF[0], (SDRAM_STATE == 3'b000)};
-//		SDRAM_READY_BUF <= {SDRAM_READY_BUF[0], (SDRAM_STATE == 3'b001)};
-//		if(ADDRESS[15:0] == 16'hFF88)
-//			SDRAM_ADDR[6:0] <= 7'h7F;								// Set to -1 because we increment before the first operation
-//		else
-//			if(ADDRESS[15:0] == 16'hFF86)							// Does not matter if read or write
-//			begin
-//				SDRAM_ADDR[6:0] <= SDRAM_ADDR[6:0] + 1'b1;
-//				SDRAM_START <= 1'b1;
-//			end
-//			else
-//				if(SDRAM_NEXT_BUF[1])
-//					SDRAM_START <= 1'b0;
-//	end
-//end
 
 // Clock for Drivewire UART on the slave processor(6850)
 // 8 cycles in 50 MHz / 27 = 8*50/27 = 14.815 MHz
+//				111	1111 1111 0000 0000	0000 0000
+//				A98 7654 3210 fedc ba98	7654 3210
+// 27 bit.....  011 0010 0110 0100 1001 1001 0010
+// 
 always @(negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
@@ -1392,6 +1251,7 @@ begin
 	end
 	else
 	begin
+		COM1_CLOCK_X_D <= COM1_CLOCK_X;
 		case (COM1_STATE)
 		5'h00:
 		begin
@@ -1492,7 +1352,7 @@ begin
 end
 
 //Switch selectable baud rate
-always @(negedge COM1_CLOCK_X or negedge RESET_N)
+always @(negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1501,42 +1361,47 @@ begin
 	end
 	else
 	begin
-		case (COM1_CLK)
-		3'b000:
+		if (COM1_CLOCK_X == 1'b0 && COM1_CLOCK_X_D == 1'b1)
 		begin
-			COM1_CLOCK <= 1'b1;
-			COM1_CLK <= 3'b001;
-		end
-		3'b001:
-		begin
-			COM1_CLOCK <= 1'b0;
-			if(SWITCH[8:7]==2'b10)				// divide by 2 460800 = 14.814814815 / 2 / 16 = 462962.963 = 0.469393%
+			case (COM1_CLK)
+			3'b000:
+			begin
+				COM1_CLOCK <= 1'b1;
+				COM1_CLK <= 3'b001;
+			end
+			3'b001:
+			begin
+				COM1_CLOCK <= 1'b0;
+				if(SWITCH[8:7]==2'b10)				// divide by 2 460800 = 14.814814815 / 2 / 16 = 462962.963 = 0.469393%
+					COM1_CLK <= 3'b000;
+				else
+					COM1_CLK <= 3'b010;
+			end
+			3'b011:
+			begin
+				COM1_CLOCK <= 1'b0;
+				if(SWITCH[8:7]==2'b01)				// divide by 4 230400
+					COM1_CLK <= 3'b000;
+				else
+					COM1_CLK <= 3'b100;
+			end
+			3'b111:										// divide by 8 115200
+			begin
 				COM1_CLK <= 3'b000;
-			else
-				COM1_CLK <= 3'b010;
+			end
+			default:
+			begin
+				COM1_CLK <= COM1_CLK + 1'b1;
+			end
+			endcase
 		end
-		3'b011:
-		begin
-			COM1_CLOCK <= 1'b0;
-			if(SWITCH[8:7]==2'b01)				// divide by 4 230400
-				COM1_CLK <= 3'b000;
-			else
-				COM1_CLK <= 3'b100;
-		end
-		3'b111:										// divide by 8 115200
-		begin
-			COM1_CLK <= 3'b000;
-		end
-		default:
-		begin
-			COM1_CLK <= COM1_CLK + 1'b1;
-		end
-		endcase
 	end
 end
 
 //Switch selectable WiFi baud rate
-always @(negedge COM1_CLOCK_X or negedge RESET_N)
+// This should go away...
+
+always @(negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1545,45 +1410,57 @@ begin
 	end
 	else
 	begin
-		case (COM3_CLK)
-		3'b000:
-		begin
-			COM3_CLOCK <= 1'b1;
-			COM3_CLK <= 3'b001;
-		end
-		3'b001:
-		begin
-			COM3_CLOCK <= 1'b0;
-			if(WF_BAUD==2'b10)				// divide by 2 460800 = 14.814814815 / 2 / 16 = 462962.963 = 0.469393%
+//		Formally combinational.
+		if (SWITCH[8:7] == 2'b11)
+			UART1_CLK <= COM1_CLOCK_X;
+		else
+			UART1_CLK <= COM1_CLOCK;
+
+		if (WF_BAUD == 2'b11)
+			WF_CLOCK <= COM1_CLOCK_X;
+		else
+			WF_CLOCK <= COM3_CLOCK;
+
+		if (COM1_CLOCK_X == 1'b0 && COM1_CLOCK_X_D == 1'b1)
+			case (COM3_CLK)
+			3'b000:
+			begin
+				COM3_CLOCK <= 1'b1;
+				COM3_CLK <= 3'b001;
+			end
+			3'b001:
+			begin
+				COM3_CLOCK <= 1'b0;
+				if(WF_BAUD==2'b10)				// divide by 2 460800 = 14.814814815 / 2 / 16 = 462962.963 = 0.469393%
+					COM3_CLK <= 3'b000;
+				else
+					COM3_CLK <= 3'b010;
+			end
+			3'b011:
+			begin
+				COM3_CLOCK <= 1'b0;
+				if(WF_BAUD==2'b01)				// divide by 4 230400
+					COM3_CLK <= 3'b000;
+				else
+					COM3_CLK <= 3'b100;
+			end
+			3'b111:									// divide by 8 115200
+			begin
 				COM3_CLK <= 3'b000;
-			else
-				COM3_CLK <= 3'b010;
-		end
-		3'b011:
-		begin
-			COM3_CLOCK <= 1'b0;
-			if(WF_BAUD==2'b01)				// divide by 4 230400
-				COM3_CLK <= 3'b000;
-			else
-				COM3_CLK <= 3'b100;
-		end
-		3'b111:									// divide by 8 115200
-		begin
-			COM3_CLK <= 3'b000;
-		end
-		default:
-		begin
-			COM3_CLK <= COM3_CLK + 1'b1;
-		end
-		endcase
+			end
+			default:
+			begin
+				COM3_CLK <= COM3_CLK + 1'b1;
+			end
+			endcase
 	end
 end
 
 // Combinatorial clocks :(
-assign UART1_CLK = (SWITCH[8:7] == 2'b11)	?	COM1_CLOCK_X:	// 921600
-															COM1_CLOCK;
-assign WF_CLOCK  = (WF_BAUD == 2'b11)		?	COM1_CLOCK_X:	// 921600
-															COM3_CLOCK;
+//assign UART1_CLK = (SWITCH[8:7] == 2'b11)	?	COM1_CLOCK_X:	// 921600
+//															COM1_CLOCK;
+//assign WF_CLOCK  = (WF_BAUD == 2'b11)		?	COM1_CLOCK_X:	// 921600
+//															COM3_CLOCK;
 
 // Clock for RS232 PAK (6551)
 // 24 MHz / 13 = 1.846 MHz
@@ -1600,7 +1477,7 @@ begin
 end
 */
 // 14.814814815 MHz / 8 = 1.851851852 MHz / 16 = 115740.741 = 115200 + 0.469393%
-always @(negedge COM1_CLOCK_X or negedge RESET_N)
+always @(negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1608,7 +1485,8 @@ begin
 	end
 	else
 	begin
-		COM2_STATE <= COM2_STATE + 1'b1;
+		if (COM1_CLOCK_X == 1'b0 && COM1_CLOCK_X_D == 1'b1)
+			COM2_STATE <= COM2_STATE + 1'b1;
 	end
 end
 
@@ -1764,32 +1642,36 @@ assign RESET_P =	!BUTTON_N[3]					// Button
 						| RESET;							// CTRL-ALT-DEL or CTRL-ALT-INS
 
 // Make sure all resets are enabled for a long enough time to allow voltages to settle
-always @ (negedge MCLOCK[9] or posedge RESET_P)		// 50 MHz / 64
+always @ (negedge CLK50MHZ or posedge RESET_P)		// 50 MHz / 64
 begin
 	if(RESET_P)
 	begin
 		RESET_SM <= 14'h0000;
 		CPU_RESET <= 1'b1;
 		RESET_N <= 1'b0;
-		MUGS <= ~RESET_INS;
+//		MUGS <= 1'b0;
+		MUGS <= ~RESET_INS;	   //This is holding a <ctrl><alt><ins> across a reset to activate the Easter Egg
 	end
 	else
-		case (RESET_SM)
-		14'h1FFF:									// time = 1.28 uS * 14336 = 18350.08 uS
-		begin
-			RESET_N <= 1'b1;
-			CPU_RESET <= 1'b1;
-			RESET_SM <= 14'h3800;
-		end
-		14'h3FFF:									// time = 1.28 uS * 16383 = 20970.24 uS
-		begin
-			RESET_N <= 1'b1;
-			CPU_RESET <= 1'b0;
-			RESET_SM <= 14'h3FFF;
-		end
-		default:
-			RESET_SM <= RESET_SM + 1'b1;
-		endcase
+	begin
+		if (MCLOCK[9] == 1'b0 && MCLOCK_DELAY[9] == 1'b1)
+			case (RESET_SM)
+			14'h1FFF:									// time = 1.28 uS * 14336 = 18350.08 uS
+			begin
+				RESET_N <= 1'b1;
+				CPU_RESET <= 1'b1;
+				RESET_SM <= 14'h3800;
+			end
+			14'h3FFF:									// time = 1.28 uS * 16383 = 20970.24 uS
+			begin
+				RESET_N <= 1'b1;
+				CPU_RESET <= 1'b0;
+				RESET_SM <= 14'h3FFF;
+			end
+			default:
+				RESET_SM <= RESET_SM + 1'b1;
+			endcase
+	end
 end
 /*
 always @ (negedge V_SYNC_N or posedge RESET_P)
@@ -1813,7 +1695,8 @@ end
 */
 // CPU section copyrighted by John Kent
 cpu09 GLBCPU09(
-	.clk(PH_2),
+	.clk(CLK50MHZ),
+	.ce(PH_2),
 	.rst(CPU_RESET),
 	.vma(VMA),
 	.addr(ADDRESS),
@@ -1821,7 +1704,7 @@ cpu09 GLBCPU09(
 	.data_in(DATA_IN),
 	.data_out(DATA_OUT),
 	.halt(HALT_BUF2),
-	.hold(1'b0),
+//	.hold(1'b0),
 	.irq(!CPU_IRQ_N),
 	.firq(!CPU_FIRQ_N),
 	.nmi(NMI_09)
