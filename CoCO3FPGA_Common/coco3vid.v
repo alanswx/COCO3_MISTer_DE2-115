@@ -68,6 +68,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 module COCO3VIDEO(
+CLK,
 PIX_CLK,
 RESET_N,
 COLOR,
@@ -98,7 +99,7 @@ SCRN_START_LSB,
 BLINK,
 SWITCH5
 );
-
+input             CLK;
 input					PIX_CLK;
 input					RESET_N;
 output		[9:0]		COLOR;
@@ -246,7 +247,7 @@ parameter PALETTEF = 4'hF;
 // Character generator
 COCO3GEN coco3gen(
 .address(ROM_ADDRESS[10:0]),
-.clock(PIX_CLK),
+.clock(CLK),
 .q(ROM_DATA1)
 );
 
@@ -285,8 +286,13 @@ assign ROW_OFFSET =																			//9 bits of two byte reads = 1024 max byte
 															{4'b0000,  PIXEL_COUNT[9:5]};	//32 characters / line
 
 assign COCO3_VLPR = VLPR + 2'b11;
-always @ (negedge PIX_CLK)
+reg PIX_CLK_r;
+always @ (negedge CLK)
 begin
+      PIX_CLK_r<=PIX_CLK;
+		if (PIX_CLK_r==1'b1 && PIX_CLK==1'b0) 
+		begin
+		
 		case (PIXEL_COUNT[3:0])
 		4'b0000:
 		begin
@@ -385,6 +391,7 @@ begin
 				CHARACTER2 <=	ROM_DATA1;
 		end
 		endcase
+		end
 end
 /*****************************************************************************
 * Read Character ROM
@@ -1604,8 +1611,12 @@ assign PIXEL_ORDER =
 							({COCO,BP,HRES[3:1],CRES} == 7'b0110111)						?	2'b00:				// 1x HR pixels per G pixel
 																											2'b10;				// 4x HR pixels per ? pixel, DEFAULT
 
-always @ (negedge PIX_CLK)
+always @ (negedge CLK)
 begin
+   if (PIX_CLK_r==1'b1 && PIX_CLK==1'b0)
+	begin
+	COLOR <= CCOLOR;
+		
 	if(PIXEL_COUNT[3:0] == 4'b1111)
 	begin
 		case (PIXEL_ORDER)
@@ -1715,6 +1726,7 @@ begin
 		endcase
 	end
 	end
+	end
 end
 
 assign BORDER =
@@ -1725,10 +1737,10 @@ assign BORDER =
 			({COCO,VID_CONT[3],VID_CONT[0],CSS} == 4'b1100)		?	{6'h00,PALETTE0}:
 																					10'h010;					//BDR_PAL
 
-always @ (negedge PIX_CLK)
-begin
-	COLOR <= CCOLOR;
-end
+//always @ (negedge PIX_CLK)
+//begin
+//	COLOR <= CCOLOR;
+//end
 
 assign CCOLOR[9] = ({VBLANKING,HBLANKING} == 2'b00)			?	1'b0:											//normal screen area
 		({(VBORDER&HBORDER),(VBLANKING|HBLANKING)} == 2'b11)	?	BORDER[9]:									// Border
@@ -1777,8 +1789,10 @@ assign CCOLOR[0] = ({VBLANKING,HBLANKING} == 2'b00)			?	COLOR0[PIXEL_COUNT[3:0]]
 HBORDER has to be 1 to display a border
 HBlanking is 0 for main display
 ******************************************************************************/
-always @ (negedge PIX_CLK)
+always @ (negedge CLK)
 begin
+   if (PIX_CLK_r==1'b1 && PIX_CLK==1'b0)
+	begin
 		case(PIXEL_COUNT)
 		10'd013:
 		begin
@@ -1856,7 +1870,7 @@ begin
 			PIXEL_COUNT <= PIXEL_COUNT + 1'b1;
 		end
 		endcase
-//	end
+	end
 end
 
 /*****************************************************************************

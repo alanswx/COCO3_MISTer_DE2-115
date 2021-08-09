@@ -1390,7 +1390,7 @@ assign	GPIO[7] = GPIO_DIR[7]	?	GPIO_OUT[7]:
 
 // Clock for Drivewire UART on the slave processor(6850)
 // 8 cycles in 50 MHz / 27 = 8*50/27 = 14.815 MHz
-always @(negedge CLK50MHZ or negedge RESET_N)
+always @(negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
@@ -1621,7 +1621,7 @@ end
 
 //BANKS
 // CPU clock / SRAM Signals for old SRAM
-always @(negedge CLK50MHZ or negedge RESET_N)
+always @(negedge CLK50MHZ )
 begin
 	if(!RESET_N)
 	begin
@@ -1762,17 +1762,22 @@ begin
 end
 
 // Make sure PH2 is a Global Clock
-PH2_CLK	PH2_CLK_inst (
-	.inclk ( PH_2_RAW ),
-	.outclk ( PH_2 )
-	);
+//PH2_CLK	PH2_CLK_inst (
+//	.inclk ( PH_2_RAW ),
+//	.outclk ( PH_2 )
+//	);
+assign PH_2 = PH_2_RAW;
 
 assign RESET_P =	!BUTTON_N[3]					// Button
 						| RESET;							// CTRL-ALT-DEL or CTRL-ALT-INS
 
+reg mclock_9_r;
 // Make sure all resets are enabled for a long enough time to allow voltages to settle
-always @ (negedge MCLOCK[9] or posedge RESET_P)		// 50 MHz / 64
+always @ (negedge CLK50MHZ)		// 50 MHz / 64
 begin
+
+	mclock_9_r<=MCLOCK[9];
+
 	if(RESET_P)
 	begin
 		RESET_SM <= 14'h0000;
@@ -1780,7 +1785,7 @@ begin
 		RESET_N <= 1'b0;
 		MUGS <= ~RESET_INS;
 	end
-	else
+	else if (mclock_9_r ==1'b1 && MCLOCK[9] == 1'b0)
 		case (RESET_SM)
 		14'h1FFF:									// time = 1.28 uS * 14336 = 18350.08 uS
 		begin
@@ -2087,18 +2092,22 @@ assign CART1_BUF_RESET_N =		  RESET_N
 									&	!(CART_POL_BUF[1] ^ CART_POL_BUF[0]);
 assign CART1_FIRQ_RESET_N =	CART1_BUF_RESET_N & RST_FF22_N;
 assign CART1_CLK_N = CART_INT_N ^ CART1_POL;
-always @ (negedge PH_2)
+always @ (negedge CLK50MHZ)
 begin
+if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	CART_POL_BUF <= {CART_POL_BUF[0],CART1_POL}; 
 end
-always @ (negedge PH_2 or negedge CART1_BUF_RESET_N)
+//always @ (negedge PH_2 or negedge CART1_BUF_RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!CART1_BUF_RESET_N)
 	begin
 		CART1_FIRQ_BUF <= 2'b11;
 		CART1_FIRQ_N <= 1'b1;
 	end
-	else
+			else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		CART1_FIRQ_BUF <= {CART1_FIRQ_BUF[0], CART1_FIRQ_STAT_N};
 		CART1_FIRQ_N <= CART1_FIRQ_BUF[1] | !CART1_FIRQ_INT;
@@ -2484,7 +2493,7 @@ assign OPTTXD =		(!SWITCH[9])	?	UART51_TXD:					// Switch 9 off
 assign TMR_CLK = !TIMER_INS	?	(!H_SYNC_N | !H_FLAG):
 											CLK3_57MHZ;					// 50 MHz / 14 = 3.57 MHz
 assign CLK3_57MHZ = DIV_14;
-always @ (negedge CLK50MHZ or negedge RESET_N)
+always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 		DIV_7 <= 3'b000;
@@ -3973,8 +3982,16 @@ COCOKEY coco_keyboard(
 assign VGA_CLK = MCLOCK[0];
 
 // Video DAC
-always @ (negedge MCLOCK[0])
+reg mclock_0_r;
+//always @ (negedge MCLOCK[0])
+always @(negedge CLK50MHZ)
 begin
+
+	mclock_0_r <= MCLOCK[0];
+	if (mclock_0_r == 1'b1 && MCLOCK[0]==1'b0)
+	begin
+
+
 	COLOR_BUF <= COLOR;						// Delay COLOR by 1 clock cycle to align with 256 Color SRAM
 	H_SYNC <= !H_SYNC_N;					// Delay H_SYNC by 1 clock cycle
 	V_SYNC <= !V_SYNC_N;					// Delay V_SYNC by 1 clock cycle
@@ -4051,20 +4068,22 @@ begin
 			end
 		end
 	end
+	end
 end
 
 VDAC	VDAC_inst (
 	.data ( {4'h0,PALETTE[0][11:0]} ),
 	.rdaddress ( COLOR[7:0] ),
-	.rdclock ( MCLOCK[0] ),
+	.rdclock ( CLK50MHZ/*MCLOCK[0]*/ ),
 	.wraddress ( DATA_OUT ),
-	.wrclock ( PH_2 ),
-	.wren ( VDAC_EN ),
+	.wrclock ( CLK50MHZ ),
+	.wren ( VDAC_EN && PH_2),
 	.q ( VDAC_OUT )
 	);
 
 // Video timing and modes
 COCO3VIDEO COCOVID(
+   .CLK(CLK50MHZ),
 	.PIX_CLK(MCLOCK[0]),		//25 MHz = 40 nS
 	.RESET_N(RESET_N),
 	.COLOR(COLOR),
@@ -4096,6 +4115,8 @@ COCO3VIDEO COCOVID(
 	.SWITCH5(SWITCH[5])
 );
 
+/*
+
 // RS232PAK UART
 glb6551 RS232(
 .RESET_N(RESET_N),
@@ -4117,6 +4138,6 @@ glb6551 RS232(
 .DTR(UART51_DTR),
 .DSR(UART51_DTR)
 );
-
+*/
 
 endmodule

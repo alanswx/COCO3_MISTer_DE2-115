@@ -362,13 +362,13 @@ assign HALT_CODE =			(COMMAND==8'h00)			?	1'b0:		// No halt system if command is
 																		1'b1;
 
 // Delay for some short amount of time to allow BOOT_1773 to write the side select
-always @(negedge PH_2 or negedge RESET_N)
+always @(negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
 		HALT_STATE <= 7'h00;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
 	begin
 		if(HALT_CODE)
 		begin
@@ -393,7 +393,7 @@ assign	IRQ_09	= 	(DENSITY &	IRQ_09_BUF2)						// Send IRQ if Double Density (No 
 						|	(!RDFIFO_RDEMPTY & BI_IRQ_EN)					// BI IRQ
 						|	(!WF_RDFIFO_RDEMPTY & WF_IRQ_EN);			// WiFi IRQ
 
-always @(negedge PH_2 or negedge RESET_N)
+always @(negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
@@ -406,7 +406,8 @@ begin
 		HALT_BUF1 <= 1'b0;
 		HALT_BUF2 <= 1'b0;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 		ADDR_RST_BUFF0_N <= ADDR_RESET_N;						// double buffer Buffer Address Reset
 		ADDR_RST_BUFF1_N <= ADDR_RST_BUFF0_N;
@@ -478,6 +479,7 @@ buffer_dp	buffer_dp_write (
 	.q (DISK_BUF_Q)
 	);
 
+	/*
 FIFO_READ	FIFO_READ_inst (
 	.aclr ( !RESET_N ),
 	.data ( DATA_OUT_02 ),
@@ -514,6 +516,8 @@ FIFO_1024	WF_FIFO_READ_inst (
 	.wrfull ( WF_RDFIFO_WRFULL )
 	);
 
+
+
 FIFO_WRITE	WF_FIFO_WRITE_inst (
 	.aclr ( !RESET_N ),
 	.data ( DATA_OUT ),
@@ -525,7 +529,7 @@ FIFO_WRITE	WF_FIFO_WRITE_inst (
 	.rdempty ( WF_WRFIFO_RDEMPTY ),
 	.wrfull ( WF_WRFIFO_WRFULL )
 	);
-
+*/
 glb6850 COM1(
 .RESET_N(RESET_N),
 .RX_CLK(UART1_CLK),
@@ -590,7 +594,7 @@ glb6850 COM2(
 * Track (Upper 8 bits of track address)
 *
 ******************************************************************************/
-always @(negedge PH_2 or negedge RESET_N)
+always @(negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
@@ -614,7 +618,8 @@ begin
 		CMD_RST_BUF0 <= 1'b0;
 		CMD_RST_BUF1 <= 1'b0;
 	end
-	else
+		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
+
 	begin
 // Double buffer BUSY to reset IRQ out
 		BUSY0 <= IRQ_RESET;

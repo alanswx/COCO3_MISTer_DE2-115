@@ -322,8 +322,8 @@ wire [7:0] b;
 wire easter_egg = ~status[10];
 coco3fpga_dw coco3 (
 .CLK50MHZ(CLK_50M),
-.COCO_RESET_N(~reset),
-//.COCO_RESET_N(1'b1),
+//.COCO_RESET_N(~reset),
+.COCO_RESET_N(1'b1),
 
 // SDRAM
 /*
@@ -360,8 +360,8 @@ coco3fpga_dw coco3 (
 //.BUTTON_N(button_n)
 );
 
-//wire reset = RESET | status[0] | buttons[1];
-wire reset = buttons[1];
+wire reset = RESET | status[0] | buttons[1];
+//wire reset = buttons[1];
 
 
 endmodule
