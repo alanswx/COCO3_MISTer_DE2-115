@@ -2611,7 +2611,7 @@ begin
 //	FF78-FF79
 		GART_CNT <= 17'h00000;
 
-
+*/
 // FF7A
 		ORCH_LEFT <= 8'b10000000;
 // FF7B
@@ -2676,7 +2676,7 @@ begin
 		TMR_ENABLE <= 1'b0;
 // FF95
 		TMR_LSB <= 8'h00;
-*/
+
 
 // FF98
 		GRMODE <= 1'b0;
