@@ -79,6 +79,7 @@ module coco3fpga_dw(
 input				CLK50MHZ,
 
 input 				COCO_RESET_N,
+input 				COCO_RESET_N_2,
 
 // Video
 
@@ -218,7 +219,6 @@ reg		[13:0]	RESET_SM;
 reg		[6:0]	CPU_RESET_SM;
 reg				CPU_RESET;
 wire			RESET_INS;
-reg				MUGS;
 wire			RESET;
 wire			RESET_P;
 wire	[15:0]	ADDRESS;
@@ -1783,7 +1783,6 @@ begin
 		RESET_SM <= 14'h0000;
 		CPU_RESET <= 1'b1;
 		RESET_N <= 1'b0;
-		MUGS <= ~RESET_INS;
 	end
 	else if (mclock_9_r ==1'b1 && MCLOCK[9] == 1'b0)
 		case (RESET_SM)
@@ -2556,6 +2555,7 @@ always @ (negedge CLK50MHZ)
 begin
 	if(!RESET_N)
 	begin
+
 // FF00
 		DD_REG1 <= 8'h00;
 // FF01
@@ -2586,6 +2586,7 @@ begin
 		SBS <= 1'b0;
 		CSS <= 1'b0;
 		VDG_CONTROL <= 4'b0000;
+/*
 // FF23
 		CART1_FIRQ_INT <= 1'b0;
 		CART1_POL <= 1'b0;
@@ -2596,6 +2597,7 @@ begin
 // FF6C
 		WF_IRQ_EN <= 1'b0;
 		WF_BAUD <= 2'b00;
+
 // FF6C=FF6D
 		SLAVE_RESET <= 1'b0;
 		SLAVE_ADD_HI <= 8'h00;
@@ -2608,6 +2610,8 @@ begin
 		GART_INC <= 2'b00;
 //	FF78-FF79
 		GART_CNT <= 17'h00000;
+
+
 // FF7A
 		ORCH_LEFT <= 8'b10000000;
 // FF7B
@@ -2622,6 +2626,7 @@ begin
 		W_PROT <= 2'b11;
 		MPI_SCS <= SWITCH[2:1];
 		MPI_CTS <= SWITCH[2:1];
+
 // FF80
 //		CK_START <= 1'b0;
 // FF81
@@ -2636,6 +2641,10 @@ begin
 //		SDRAM_DIN <= 16'h0000;
 // FF87-FF88
 //		SDRAM_ADDR[21:7] <= 15'h0000;
+
+
+
+
 // FF8E-FF8F
 		GPIO_DIR <= 8'h00;
 		GPIO_OUT <= 8'h00;
@@ -2667,6 +2676,8 @@ begin
 		TMR_ENABLE <= 1'b0;
 // FF95
 		TMR_LSB <= 8'h00;
+*/
+
 // FF98
 		GRMODE <= 1'b0;
 		DESCEN <= 1'b0;
@@ -2779,6 +2790,7 @@ begin
 		RATE <= 1'b0;
 // FFDE / FFDF
 		RAM <= 1'b0;
+		
 	end
 		else if (PH_2_req == 1'b1 && PH_2 ==1'b0)
 
@@ -3950,9 +3962,7 @@ assign KEYBOARD_IN[6] =	 !((!KEY_COLUMN[0] & KEY[48])				// CR
 								 | (!KEY_COLUMN[1] & KEY[49])				// TAB
 								 | (!KEY_COLUMN[2] & KEY[50])				// ESC
 								 | (!KEY_COLUMN[3] & KEY[51])				// ALT
-								 | (!KEY_COLUMN[3] & (!BUTTON_N[0] | MUGS))		// ALT (Easter Egg)
 								 | (!KEY_COLUMN[4] & KEY[52])				// CTRL
-								 | (!KEY_COLUMN[4] & (!BUTTON_N[0] | MUGS))		// CTRL (Easter Egg)
 								 | (!KEY_COLUMN[5] & KEY[53])				// F1
 								 | (!KEY_COLUMN[6] & KEY[54])				// F2
 								 | (!KEY_COLUMN[7] & KEY[55] & !SHIFT_OVERRIDE)	// shift
@@ -3967,7 +3977,7 @@ COCOKEY coco_keyboard(
 		.SLO_CLK(V_SYNC_N),
 		.PS2_CLK(ps2_clk),
 		.PS2_DATA(ps2_data),
-		.PS2_KEY(ps2_key),
+		//.PS2_KEY(ps2_key),
 		.KEY(KEY),
 		.SHIFT(SHIFT),
 		.SHIFT_OVERRIDE(SHIFT_OVERRIDE),

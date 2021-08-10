@@ -246,7 +246,7 @@ wire [21:0] gamma_bus;
 
 assign CLK_VIDEO = clk_sys;
 
-hps_io #(.CONF_STR(CONF_STR)/*,.PS2DIV(100)*/) hps_io
+hps_io #(.CONF_STR(CONF_STR),.PS2DIV(1000)) hps_io
 (
 //        .clk_sys(clk_sys),
 		  .clk_sys(CLK_50M),
@@ -322,8 +322,9 @@ wire [7:0] b;
 wire easter_egg = ~status[10];
 coco3fpga_dw coco3 (
 .CLK50MHZ(CLK_50M),
-//.COCO_RESET_N(~reset),
-.COCO_RESET_N(1'b1),
+.COCO_RESET_N(~reset),
+//.COCO_RESET_N(1'b1),
+.COCO_RESET_N_2(1'b1),
 
 // SDRAM
 /*
@@ -346,7 +347,7 @@ coco3fpga_dw coco3 (
 .GREEN(g),
 .BLUE(b),
 
-.EE(1'b1/*easter_egg*/),
+.EE(easter_egg),
 
 .H_SYNC(hs),
 .V_SYNC(vs),

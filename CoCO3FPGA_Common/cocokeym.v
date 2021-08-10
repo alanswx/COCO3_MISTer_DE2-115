@@ -73,6 +73,7 @@ module COCOKEY(
 		SLO_CLK,
 		PS2_CLK,
 		PS2_DATA,
+		PS2_KEY,
 		KEY,
 		SHIFT,
 		SHIFT_OVERRIDE,
@@ -85,6 +86,7 @@ input 				CLK50MHZ;
 input					SLO_CLK;
 input 				PS2_CLK;
 input 				PS2_DATA;
+input    [10:0]   PS2_KEY;
 output	[72:0]	KEY;
 reg		[72:0]	KEY;
 output				SHIFT;
@@ -99,9 +101,9 @@ reg					RESET_INS;
 reg		[5:0]		SLO_RESET;
 wire					SLO_RESET_N;
 reg		[4:0]		KB_CLK;
-wire		[7:0]		SCAN;
-wire					PRESS;
-wire					EXTENDED;
+reg		[7:0]		SCAN;
+reg					PRESS=1'b0;
+reg					EXTENDED=1'b0;
 reg					SHIFT_ARROW_L;
 reg					SHIFT_ARROW_R;
 
@@ -199,10 +201,18 @@ begin
 	end
 end
 assign SLO_RESET_N = (SLO_RESET == 6'h3F);
+reg  input_strobe = 0;
+reg  [7:0] code;
 
-always @(posedge KB_CLK[4] or negedge SLO_RESET_N)
-begin
-	if(~SLO_RESET_N)
+always @(posedge CLK50MHZ) begin
+//always @(posedge KB_CLK[4] or negedge SLO_RESET_N)
+//begin
+
+	reg old_reset;
+	old_reset <= SLO_RESET_N;
+
+
+	if(old_reset & ~SLO_RESET_N)
 	begin
 		KEY <= 73'h0000000000000000000;
 		SHIFT_OVERRIDE <= 1'b0;
@@ -211,7 +221,7 @@ begin
 		SHIFT_ARROW_L <= 1'b0;
 		SHIFT_ARROW_R <= 1'b0;
 	end
-	else
+	if (input_strobe)
 	begin
 		case(SCAN)
 		8'h00:
@@ -700,6 +710,9 @@ end
 //	KB_CLK[3] = 50/16	= 3.125 MHz
 //	KB_CLK[4] = 50/32	= 1.5625 MHz
 //	KB_CLK[5] = 50/64	= 0.78125 MHz
+
+
+/*
 always @ (posedge CLK50MHZ)				//50 MHz
 	KB_CLK <= KB_CLK + 1'b1;
 
@@ -712,5 +725,18 @@ ps2_keyboard KEYBOARD(
 		.RX_PRESSED(PRESS),
 		.RX_EXTENDED(EXTENDED)
 );
+*/
+always @(posedge CLK50MHZ) begin
+	reg old_state;
+
+	input_strobe <= 0;
+	old_state <= PS2_KEY[10];
+
+	if(old_state != PS2_KEY[10]) begin
+		PRESS <= PS2_KEY[9];
+		SCAN <= PS2_KEY[7:0];
+		input_strobe <= 1;
+	end
+end
 
 endmodule
