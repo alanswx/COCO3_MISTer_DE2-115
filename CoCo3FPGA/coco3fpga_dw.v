@@ -2594,18 +2594,17 @@ begin
 // FF60
 		PDL <= 1'b0;
 
-// -- AJS this didn't work? FF6C
 
 // FF6C
 		WF_IRQ_EN <= 1'b0;
 		WF_BAUD <= 2'b00;
-/*
+
 // -- AJS this didn't work?
 // FF6C=FF6D
-		SLAVE_RESET <= 1'b0;
+//		SLAVE_RESET <= 1'b0;
 		SLAVE_ADD_HI <= 8'h00;
 		SLAVE_ADD_LO <= 8'h00;
-*/
+
 
 // -- AJS STOP
 
