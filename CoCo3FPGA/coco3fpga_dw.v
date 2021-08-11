@@ -2586,22 +2586,32 @@ begin
 		SBS <= 1'b0;
 		CSS <= 1'b0;
 		VDG_CONTROL <= 4'b0000;
-/*
+// -- AJS START
 // FF23
 		CART1_FIRQ_INT <= 1'b0;
 		CART1_POL <= 1'b0;
 		DDR4 <= 1'b0;
 		SOUND_EN <= 1'b0;
+// -- AJS END
+/*
 // FF60
 		PDL <= 1'b0;
+
+// -- AJS this didn't work? FF6C
 // FF6C
 		WF_IRQ_EN <= 1'b0;
 		WF_BAUD <= 2'b00;
 
+// -- AJS this didn't work?
 // FF6C=FF6D
 		SLAVE_RESET <= 1'b0;
 		SLAVE_ADD_HI <= 8'h00;
 		SLAVE_ADD_LO <= 8'h00;
+*/
+
+// -- AJS STOP
+
+
 // FF70-FF72
 		GART_WRITE <= 23'h000000;			// 19' for 512kb
 // FF74-FF76
@@ -2611,7 +2621,9 @@ begin
 //	FF78-FF79
 		GART_CNT <= 17'h00000;
 
-*/
+
+
+
 // FF7A
 		ORCH_LEFT <= 8'b10000000;
 // FF7B
@@ -3296,7 +3308,7 @@ begin
 				end
 			end
 			16'hFF3F:
-			begin
+			begin 
 				CART1_FIRQ_INT <= DATA_OUT[0];
 				CART1_POL <= DATA_OUT[1];
 				DDR4 <= DATA_OUT[2];
