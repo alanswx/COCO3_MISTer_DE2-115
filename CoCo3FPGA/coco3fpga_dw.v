@@ -2586,18 +2586,16 @@ begin
 		SBS <= 1'b0;
 		CSS <= 1'b0;
 		VDG_CONTROL <= 4'b0000;
-// -- AJS START
 // FF23
 		CART1_FIRQ_INT <= 1'b0;
 		CART1_POL <= 1'b0;
 		DDR4 <= 1'b0;
 		SOUND_EN <= 1'b0;
-// -- AJS END
-/*
 // FF60
 		PDL <= 1'b0;
 
 // -- AJS this didn't work? FF6C
+/*
 // FF6C
 		WF_IRQ_EN <= 1'b0;
 		WF_BAUD <= 2'b00;
