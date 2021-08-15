@@ -225,7 +225,7 @@ PADDLE_MCLK                  : AE15      : output : 3.3-V LVTTL       :         
 GPIO[7]                      : AE16      : bidir  : 3.3-V LVTTL       :         : 4         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AE17      :        :                   :         : 4         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AE18      :        :                   :         : 4         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AE19      :        :                   :         : 4         :                
+VBLANK                       : AE19      : output : 3.3-V LVTTL       :         : 4         : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AE20      :        :                   :         : 4         :                
 OPTRXD                       : AE21      : input  : 3.3-V LVTTL       :         : 4         : Y              
 P_SWITCH[2]                  : AE22      : input  : 3.3-V LVTTL       :         : 4         : Y              
@@ -253,7 +253,7 @@ PADDLE_CLK[2]                : AF15      : input  : 3.3-V LVTTL       :         
 PADDLE_CLK[0]                : AF16      : input  : 3.3-V LVTTL       :         : 4         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AF17      :        :                   :         : 4         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AF18      :        :                   :         : 4         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AF19      :        :                   :         : 4         :                
+HBLANK                       : AF19      : output : 3.3-V LVTTL       :         : 4         : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AF20      :        :                   :         : 4         :                
 P_SWITCH[3]                  : AF21      : input  : 3.3-V LVTTL       :         : 4         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AF22      :        :                   :         : 4         :                
@@ -358,7 +358,7 @@ VGA_SYNC_N                   : C10       : output : 3.3-V LVTTL       :         
 BLUE[2]                      : C11       : output : 3.3-V LVTTL       :         : 8         : Y              
 BLUE[5]                      : C12       : output : 3.3-V LVTTL       :         : 8         : Y              
 V_SYNC                       : C13       : output : 3.3-V LVTTL       :         : 8         : Y              
-HBLANK                       : C14       : output : 3.3-V LVTTL       :         : 8         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : C14       :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : C15       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : C16       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : C17       :        :                   :         : 7         :                
@@ -381,11 +381,11 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : D5        :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : D6        :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D7        :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D8        :        :                   :         : 8         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : D9        :        :                   :         : 8         :                
+PROBE[6]                     : D9        : output : 3.3-V LVTTL       :         : 8         : Y              
 RED[2]                       : D10       : output : 3.3-V LVTTL       :         : 8         : Y              
 BLUE[6]                      : D11       : output : 3.3-V LVTTL       :         : 8         : Y              
 BLUE[7]                      : D12       : output : 3.3-V LVTTL       :         : 8         : Y              
-VBLANK                       : D13       : output : 3.3-V LVTTL       :         : 8         : N              
+RESERVED_INPUT_WITH_WEAK_PULLUP : D13       :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D14       :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D15       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D16       :        :                   :         : 7         :                
@@ -410,7 +410,7 @@ VCCIO8                       : E6        : power  :                   : 3.3V    
 RESERVED_INPUT_WITH_WEAK_PULLUP : E7        :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : E8        :        :                   :         : 8         :                
 VCCIO8                       : E9        : power  :                   : 3.3V    : 8         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : E10       :        :                   :         : 8         :                
+PROBE[5]                     : E10       : output : 3.3-V LVTTL       :         : 8         : Y              
 RED[1]                       : E11       : output : 3.3-V LVTTL       :         : 8         : Y              
 RED[0]                       : E12       : output : 3.3-V LVTTL       :         : 8         : Y              
 VCCIO8                       : E13       : power  :                   : 3.3V    : 8         :                
@@ -442,7 +442,7 @@ GREEN[6]                     : F10       : output : 3.3-V LVTTL       :         
 VGA_BLANK_N                  : F11       : output : 3.3-V LVTTL       :         : 8         : Y              
 RED[3]                       : F12       : output : 3.3-V LVTTL       :         : 8         : Y              
 GND                          : F13       : gnd    :                   :         :           :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : F14       :        :                   :         : 8         :                
+PROBE[4]                     : F14       : output : 3.3-V LVTTL       :         : 8         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : F15       :        :                   :         : 7         :                
 GND                          : F16       : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : F17       :        :                   :         : 7         :                
@@ -497,8 +497,8 @@ GNDA3                        : H9        : gnd    :                   :         
 RED[7]                       : H10       : output : 3.3-V LVTTL       :         : 8         : Y              
 VCCIO8                       : H11       : power  :                   : 3.3V    : 8         :                
 GREEN[3]                     : H12       : output : 3.3-V LVTTL       :         : 8         : Y              
-RESERVED_INPUT_WITH_WEAK_PULLUP : H13       :        :                   :         : 8         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : H14       :        :                   :         : 8         :                
+PROBE[2]                     : H13       : output : 3.3-V LVTTL       :         : 8         : Y              
+PROBE[3]                     : H14       : output : 3.3-V LVTTL       :         : 8         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : H15       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : H16       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : H17       :        :                   :         : 7         :                
@@ -522,11 +522,11 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : J6        :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : J7        :        :                   :         : 1         :                
 VCCA3                        : J8        : power  :                   : 2.5V    :           :                
 VCCD_PLL3                    : J9        : power  :                   : 1.2V    :           :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : J10       :        :                   :         : 8         :                
+PROBE[0]                     : J10       : output : 3.3-V LVTTL       :         : 8         : Y              
 GND                          : J11       : gnd    :                   :         :           :                
 RED[5]                       : J12       : output : 3.3-V LVTTL       :         : 8         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : J13       :        :                   :         : 8         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : J14       :        :                   :         : 8         :                
+PROBE[1]                     : J14       : output : 3.3-V LVTTL       :         : 8         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : J15       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : J16       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : J17       :        :                   :         : 7         :                

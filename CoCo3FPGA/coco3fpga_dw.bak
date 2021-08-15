@@ -124,6 +124,7 @@ input	[3:0]		P_SWITCH,
 
 //	GPIO
 input				EE,
+output	[6:0]		PROBE,
 
 inout	[7:0]		GPIO
 );
@@ -359,6 +360,7 @@ reg		[2:0]	DIV_7;
 reg				DIV_14;
 reg		[12:0]	TIMER;
 wire			TMR_CLK;
+reg				TMR_CLK_D;
 wire			SER_IRQ;
 reg		[4:0]	COM1_STATE;
 reg				COM1_CLOCK_X;
@@ -518,9 +520,9 @@ wire			RDFIFO_WRFULL;
 wire			WRFIFO_RDEMPTY;
 wire			WRFIFO_WRFULL;
 reg				BI_IRQ_EN;
-wire			UART1_CLK;
-reg 	[11:0]	MCLOCK;
-reg 	[11:0]	MCLOCK_DELAY;
+reg				UART1_CLK;
+reg 	[19:0]	MCLOCK;
+reg 	[19:0]	MCLOCK_DELAY;
 wire			I2C_SCL_EN;
 wire			I2C_DAT_EN;
 reg		[7:0]	I2C_DEVICE;
@@ -557,7 +559,7 @@ wire			VDAC_EN;
 wire	[15:0]	VDAC_OUT;
 reg				WF_IRQ_EN;
 reg		[5:0]	COM2_CLK;
-wire			WF_CLOCK;
+reg				WF_CLOCK;
 reg		[1:0]	WF_BAUD;
 wire			COM2_EN;
 wire			WF_WRFIFO_RDREQ;
@@ -602,10 +604,15 @@ reg				RST_FF92_N;
 reg				RST_FF93_N;
 reg				TMR_RST_N;
 wire			CART_INT_N;
+reg				CART_INT_N_D;
 wire			VSYNC_INT_N;
+reg				VSYNC_INT_N_D;
 wire			HSYNC_INT_N;
+reg				HSYNC_INT_N_D;
 reg				TIMER_INT_N;
+reg				TIMER_INT_N_D;
 wire			KEY_INT_N;
+reg				KEY_INT_N_D;
 reg				TIMER3_IRQ_N;
 reg				HSYNC3_IRQ_N;
 reg				VSYNC3_IRQ_N;
@@ -628,8 +635,11 @@ reg				VSYNC1_IRQ_N;
 reg				VSYNC1_IRQ_STAT_N;
 reg				VSYNC1_IRQ_INT;
 wire			HSYNC1_CLK_N;
+reg				HSYNC1_CLK_N_D;
 wire			VSYNC1_CLK_N;
+reg				VSYNC1_CLK_N_D;
 wire			CART1_CLK_N;
+reg				CART1_CLK_N_D;
 reg				CART1_POL;
 wire			CART1_BUF_RESET_N;
 wire			CART1_FIRQ_RESET_N;
@@ -675,6 +685,13 @@ reg		[7:0]	SLAVE_ADD_HI;
 reg		[7:0]	SLAVE_ADD_LO;
 wire			SLAVE_WR;
 
+wire			coco3_por;
+
+// Probe's defined
+//assign PROBE[6:0] = {CART1_POL, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_N, CART1_FIRQ_N, RESET_N, PH_2};
+assign PROBE[6:0] = {coco3_por, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_N, CART1_FIRQ_N, RESET_N, PH_2};
+
+
 // SRH MISTer
 //
 //	Assign switches & buttons
@@ -712,9 +729,9 @@ wire			SLAVE_WR;
 											//		On  - 25 MHz
 
 
-assign SWITCH[9:0] = 10'b0000010000; // This is ECB
+assign SWITCH[9:0] = 10'b0000010000; /* synthesis preserve */ // This is ECB
 //assign SWITCH[9:0] = 10'b0000010110; // This is EDB
-//assign SWITCH[9:0] = 10'b0000010000; // This is Orch 80 in ROM
+//assign SWITCH[9:0] = 10'b0000000000; // This is Orch 80 in ROM
 
 assign BUTTON_N[3:0] = {COCO_RESET_N, 2'b1,EE};
 
@@ -1638,8 +1655,15 @@ PH2_CLK	PH2_CLK_inst (
 	.outclk ( PH_2 )
 	);
 
+POR CoCo3por(
+	.CLK(CLK50MHZ),
+	.POR(coco3_por)
+	);
+
+
 assign RESET_P =	!BUTTON_N[3]					// Button
-						| RESET;							// CTRL-ALT-DEL or CTRL-ALT-INS
+					| RESET; 						// CTRL-ALT-DEL or CTRL-ALT-INS
+					| coco3_por;					// 1 time por	   
 
 // Make sure all resets are enabled for a long enough time to allow voltages to settle
 always @ (negedge CLK50MHZ or posedge RESET_P)		// 50 MHz / 64
@@ -1649,8 +1673,7 @@ begin
 		RESET_SM <= 14'h0000;
 		CPU_RESET <= 1'b1;
 		RESET_N <= 1'b0;
-//		MUGS <= 1'b0;
-		MUGS <= ~RESET_INS;	   //This is holding a <ctrl><alt><ins> across a reset to activate the Easter Egg
+		MUGS <= RESET_INS;	   //This is holding a <ctrl><alt><ins> across a reset to activate the Easter Egg
 	end
 	else
 	begin
@@ -1704,7 +1727,7 @@ cpu09 GLBCPU09(
 	.data_in(DATA_IN),
 	.data_out(DATA_OUT),
 	.halt(HALT_BUF2),
-//	.hold(1'b0),
+	.hold(1'b0),
 	.irq(!CPU_IRQ_N),
 	.firq(!CPU_FIRQ_N),
 	.nmi(NMI_09)
@@ -1717,6 +1740,7 @@ cpu09 GLBCPU09(
 // Interrupt Sources
 //***********************************************************************
 // Interrupt source for CART signal
+//always @(negedge CLK50MHZ or negedge RESET_N)
 always @(negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
@@ -1725,18 +1749,19 @@ begin
 	end
 	else
 	begin
-		case (MPI_SCS)
-		2'b00:
-			CART_INT_IN_N <=  (!CART_INT_IN_N | SWITCH[4])
-									&(!IRQ_09 & SER_IRQ);
-		2'b01:
-			CART_INT_IN_N <= (!IRQ_09 & SER_IRQ);
-		2'b10:
-			CART_INT_IN_N <= (!CART_INT_IN_N | SWITCH[4])
-									&(!IRQ_09 & SER_IRQ);
-		2'b11:
-			CART_INT_IN_N <= (!IRQ_09 & SER_IRQ);
-		endcase
+//		if (PH_2)
+			case (MPI_SCS)
+			2'b00:
+				CART_INT_IN_N <=  (!CART_INT_IN_N | SWITCH[4])
+										&(!IRQ_09 & SER_IRQ);
+			2'b01:
+				CART_INT_IN_N <= (!IRQ_09 & SER_IRQ);
+			2'b10:
+				CART_INT_IN_N <= (!CART_INT_IN_N | SWITCH[4])
+										&(!IRQ_09 & SER_IRQ);
+			2'b11:
+				CART_INT_IN_N <= (!IRQ_09 & SER_IRQ);
+			endcase
 	end
 end
 
@@ -1750,6 +1775,7 @@ assign KEY_INT_N = (KEYBOARD_IN == 8'hFF);
 // Interrupt Latch RESETs
 //***********************************************************************
 always @(negedge PH_2 or negedge RESET_N)
+//always @(negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1763,106 +1789,107 @@ begin
 	end
 	else
 	begin
-		case({RW_N,ADDRESS})
-		17'h1FF00:
-			RST_FF00_N <= 1'b0;
-		17'h1FF04:
-			RST_FF00_N <= 1'b0;
-		17'h1FF08:
-			RST_FF00_N <= 1'b0;
-		17'h1FF0C:
-			RST_FF00_N <= 1'b0;
-		17'h1FF10:
-			RST_FF00_N <= 1'b0;
-		17'h1FF14:
-			RST_FF00_N <= 1'b0;
-		17'h1FF18:
-			RST_FF00_N <= 1'b0;
-		17'h1FF1C:
-			RST_FF00_N <= 1'b0;
-		17'h1FF02:
-			RST_FF02_N <= 1'b0;
-		17'h1FF06:
-			RST_FF02_N <= 1'b0;
-		17'h1FF0A:
-			RST_FF02_N <= 1'b0;
-		17'h1FF0E:
-			RST_FF02_N <= 1'b0;
-		17'h1FF12:
-			RST_FF02_N <= 1'b0;
-		17'h1FF16:
-			RST_FF02_N <= 1'b0;
-		17'h1FF1A:
-			RST_FF02_N <= 1'b0;
-		17'h1FF1E:
-			RST_FF02_N <= 1'b0;
-/*		17'h1FF20:
-			RST_FF20_N <= 1'b0;
-		17'h1FF24:
-			RST_FF20_N <= 1'b0;
-		17'h1FF28:
-			RST_FF20_N <= 1'b0;
-		17'h1FF2C:
-			RST_FF20_N <= 1'b0;
-		17'h1FF30:
-			RST_FF20_N <= 1'b0;
-		17'h1FF34:
-			RST_FF20_N <= 1'b0;
-		17'h1FF38:
-			RST_FF20_N <= 1'b0;
-		17'h1FF3C:
-			RST_FF20_N <= 1'b0;	*/
-		17'h1FF22:
-			RST_FF22_N <= 1'b0;
-		17'h1FF26:
-			RST_FF22_N <= 1'b0;
-		17'h1FF2A:
-			RST_FF22_N <= 1'b0;
-		17'h1FF2E:
-			RST_FF22_N <= 1'b0;
-		17'h1FF32:
-			RST_FF22_N <= 1'b0;
-		17'h1FF36:
-			RST_FF22_N <= 1'b0;
-		17'h1FF3A:
-			RST_FF22_N <= 1'b0;
-		17'h1FF3E:
-			RST_FF22_N <= 1'b0;
-		17'h0FF22:
-			RST_FF22_N <= 1'b0;
-		17'h0FF26:
-			RST_FF22_N <= 1'b0;
-		17'h0FF2A:
-			RST_FF22_N <= 1'b0;
-		17'h0FF2E:
-			RST_FF22_N <= 1'b0;
-		17'h0FF32:
-			RST_FF22_N <= 1'b0;
-		17'h0FF36:
-			RST_FF22_N <= 1'b0;
-		17'h0FF3A:
-			RST_FF22_N <= 1'b0;
-		17'h0FF3E:
-			RST_FF22_N <= 1'b0;
-		17'h1FF92:
-			RST_FF92_N <= 1'b0;
-		17'h1FF93:
-			RST_FF93_N <= 1'b0;
-		17'h0FF94:
-			TMR_RST_N <= 1'b0;
-		17'h0FF95:
-			TMR_RST_N <= 1'b0;
-		default:
-		begin
-			RST_FF00_N <= 1'b1;
-			RST_FF02_N <= 1'b1;
-//			RST_FF20_N <= 1'b1;
-			RST_FF22_N <= 1'b1;
-			RST_FF92_N <= 1'b1;
-			RST_FF93_N <= 1'b1;
-			TMR_RST_N <= 1'b1;
-		end
-		endcase
+//		if (PH_2)
+			case({RW_N,ADDRESS})
+			17'h1FF00:
+				RST_FF00_N <= 1'b0;
+			17'h1FF04:
+				RST_FF00_N <= 1'b0;
+			17'h1FF08:
+				RST_FF00_N <= 1'b0;
+			17'h1FF0C:
+				RST_FF00_N <= 1'b0;
+			17'h1FF10:
+				RST_FF00_N <= 1'b0;
+			17'h1FF14:
+				RST_FF00_N <= 1'b0;
+			17'h1FF18:
+				RST_FF00_N <= 1'b0;
+			17'h1FF1C:
+				RST_FF00_N <= 1'b0;
+			17'h1FF02:
+				RST_FF02_N <= 1'b0;
+			17'h1FF06:
+				RST_FF02_N <= 1'b0;
+			17'h1FF0A:
+				RST_FF02_N <= 1'b0;
+			17'h1FF0E:
+				RST_FF02_N <= 1'b0;
+			17'h1FF12:
+				RST_FF02_N <= 1'b0;
+			17'h1FF16:
+				RST_FF02_N <= 1'b0;
+			17'h1FF1A:
+				RST_FF02_N <= 1'b0;
+			17'h1FF1E:
+				RST_FF02_N <= 1'b0;
+/*			17'h1FF20:
+				RST_FF20_N <= 1'b0;
+			17'h1FF24:
+				RST_FF20_N <= 1'b0;
+			17'h1FF28:
+				RST_FF20_N <= 1'b0;
+			17'h1FF2C:
+				RST_FF20_N <= 1'b0;
+			17'h1FF30:
+				RST_FF20_N <= 1'b0;
+			17'h1FF34:
+				RST_FF20_N <= 1'b0;
+			17'h1FF38:
+				RST_FF20_N <= 1'b0;
+			17'h1FF3C:
+				RST_FF20_N <= 1'b0;	*/
+			17'h1FF22:
+				RST_FF22_N <= 1'b0;
+			17'h1FF26:
+				RST_FF22_N <= 1'b0;
+			17'h1FF2A:
+				RST_FF22_N <= 1'b0;
+			17'h1FF2E:
+				RST_FF22_N <= 1'b0;
+			17'h1FF32:
+				RST_FF22_N <= 1'b0;
+			17'h1FF36:
+				RST_FF22_N <= 1'b0;
+			17'h1FF3A:
+				RST_FF22_N <= 1'b0;
+			17'h1FF3E:
+				RST_FF22_N <= 1'b0;
+			17'h0FF22:
+				RST_FF22_N <= 1'b0;
+			17'h0FF26:
+				RST_FF22_N <= 1'b0;
+			17'h0FF2A:
+				RST_FF22_N <= 1'b0;
+			17'h0FF2E:
+				RST_FF22_N <= 1'b0;
+			17'h0FF32:
+				RST_FF22_N <= 1'b0;
+			17'h0FF36:
+				RST_FF22_N <= 1'b0;
+			17'h0FF3A:
+				RST_FF22_N <= 1'b0;
+			17'h0FF3E:
+				RST_FF22_N <= 1'b0;
+			17'h1FF92:
+				RST_FF92_N <= 1'b0;
+			17'h1FF93:
+				RST_FF93_N <= 1'b0;
+			17'h0FF94:
+				TMR_RST_N <= 1'b0;
+			17'h0FF95:
+				TMR_RST_N <= 1'b0;
+			default:
+			begin
+				RST_FF00_N <= 1'b1;
+				RST_FF02_N <= 1'b1;
+//				RST_FF20_N <= 1'b1;
+				RST_FF22_N <= 1'b1;
+				RST_FF92_N <= 1'b1;
+				RST_FF93_N <= 1'b1;
+				TMR_RST_N <= 1'b1;
+			end
+			endcase
 	end
 end
 
@@ -1879,19 +1906,27 @@ end
 // Polarity	HSYNC1_POL
 // Clear		FF00
 assign HSYNC1_CLK_N = HSYNC_INT_N ^ HSYNC1_POL;
+//always @ (negedge CLK50MHZ or negedge RESET_N)
 always @ (negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
 		HSYNC1_IRQ_BUF <= 2'b11;
 		HSYNC1_IRQ_N <= 1'b1;
+		HSYNC1_CLK_N_D <= 1'b1;			// no int
 	end
 	else
 	begin
-		HSYNC1_IRQ_BUF <= {HSYNC1_IRQ_BUF[0], HSYNC1_IRQ_STAT_N};
-		HSYNC1_IRQ_N <= HSYNC1_IRQ_BUF[1] | !HSYNC1_IRQ_INT;
+		HSYNC1_CLK_N_D <= HSYNC1_CLK_N;
+//		if (PH_2)
+		begin
+			HSYNC1_IRQ_BUF <= {HSYNC1_IRQ_BUF[0], HSYNC1_IRQ_STAT_N};
+			HSYNC1_IRQ_N <= HSYNC1_IRQ_BUF[1] | !HSYNC1_IRQ_INT;
+		end
 	end
 end
+
+//always @ (negedge CLK50MHZ or negedge RST_FF00_N)
 always @ (negedge HSYNC1_CLK_N or negedge RST_FF00_N)
 begin
 	if(!RST_FF00_N)
@@ -1900,7 +1935,8 @@ begin
 	end
 	else
 	begin
-		HSYNC1_IRQ_STAT_N <= 1'b0;				// Interrupt
+//		if (HSYNC1_CLK_N_D == 1'b1 && HSYNC1_CLK_N == 1'b0)
+			HSYNC1_IRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -1914,19 +1950,27 @@ end
 // Polarity	VSYNC1_POL
 // Clear		FF02
 assign VSYNC1_CLK_N = VSYNC_INT_N ^ VSYNC1_POL;
+//always @ (negedge CLK50MHZ or negedge RESET_N)
 always @ (negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
 		VSYNC1_IRQ_BUF <= 2'b11;
 		VSYNC1_IRQ_N <= 1'b1;
+		VSYNC1_CLK_N_D <= 1'b1;
 	end
 	else
 	begin
-		VSYNC1_IRQ_BUF <= {VSYNC1_IRQ_BUF[0], VSYNC1_IRQ_STAT_N};
-		VSYNC1_IRQ_N <= VSYNC1_IRQ_BUF[1] | !VSYNC1_IRQ_INT;
+		VSYNC1_CLK_N_D <= VSYNC1_CLK_N;
+//		if (PH_2)
+		begin
+			VSYNC1_IRQ_BUF <= {VSYNC1_IRQ_BUF[0], VSYNC1_IRQ_STAT_N};
+			VSYNC1_IRQ_N <= VSYNC1_IRQ_BUF[1] | !VSYNC1_IRQ_INT;
+		end
 	end
 end
+
+//always @ (negedge CLK50MHZ or negedge RST_FF02_N)
 always @ (negedge VSYNC1_CLK_N or negedge RST_FF02_N)
 begin
 	if(!RST_FF02_N)
@@ -1935,7 +1979,8 @@ begin
 	end
 	else
 	begin
-		VSYNC1_IRQ_STAT_N <= 1'b0;				// Interrupt
+//		if (VSYNC1_CLK_N_D == 1'b1 && VSYNC1_CLK_N == 1'b0)
+			VSYNC1_IRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -1956,24 +2001,36 @@ assign CART1_BUF_RESET_N =		  RESET_N
 									&	!(CART_POL_BUF[1] ^ CART_POL_BUF[0]);
 assign CART1_FIRQ_RESET_N =	CART1_BUF_RESET_N & RST_FF22_N;
 assign CART1_CLK_N = CART_INT_N ^ CART1_POL;
+
+//always @ (negedge CLK50MHZ)
 always @ (negedge PH_2)
 begin
-	CART_POL_BUF <= {CART_POL_BUF[0],CART1_POL}; 
+//	if (PH_2)
+		CART_POL_BUF <= {CART_POL_BUF[0],CART1_POL}; 
 end
+
 always @ (negedge PH_2 or negedge CART1_BUF_RESET_N)
+//always @ (negedge CLK50MHZ or negedge CART1_BUF_RESET_N)
 begin
 	if(!CART1_BUF_RESET_N)
 	begin
 		CART1_FIRQ_BUF <= 2'b11;
 		CART1_FIRQ_N <= 1'b1;
+		CART1_CLK_N_D <= 1'b1;
 	end
 	else
 	begin
-		CART1_FIRQ_BUF <= {CART1_FIRQ_BUF[0], CART1_FIRQ_STAT_N};
-		CART1_FIRQ_N <= CART1_FIRQ_BUF[1] | !CART1_FIRQ_INT;
+		CART1_CLK_N_D <= CART1_CLK_N;
+//		if (PH_2)
+		begin
+			CART1_FIRQ_BUF <= {CART1_FIRQ_BUF[0], CART1_FIRQ_STAT_N};
+			CART1_FIRQ_N <= CART1_FIRQ_BUF[1] | !CART1_FIRQ_INT;
+		end
 	end
 end
+
 always @ (negedge CART1_CLK_N or negedge CART1_FIRQ_RESET_N)
+//always @ (negedge CLK50MHZ or negedge CART1_FIRQ_RESET_N)
 begin
 	if(!CART1_FIRQ_RESET_N)
 	begin
@@ -1981,7 +2038,8 @@ begin
 	end
 	else
 	begin
-		CART1_FIRQ_STAT_N <= 1'b0;				// Interrupt
+//		if (CART1_CLK_N_D == 1'b1 && CART1_CLK_N == 1'b0)
+			CART1_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -1998,20 +2056,31 @@ end
 // Input		HSYNC_INT_N
 // Switch	HSYNC3_FIRQ_INT
 // Clear		FF93
+
+// Canadate 1
+
 always @ (negedge PH_2 or negedge RESET_N)
+//always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
 		HSYNC3_FIRQ_BUF <= 2'b11;
 		HSYNC3_FIRQ_N <= 1'b1;
+		HSYNC_INT_N_D <= 1'b1;
 	end
 	else
 	begin
-		HSYNC3_FIRQ_BUF <= {HSYNC3_FIRQ_BUF[0], HSYNC3_FIRQ_STAT_N};
-		HSYNC3_FIRQ_N <= HSYNC3_FIRQ_BUF[1] | !HSYNC3_FIRQ_INT;
+		HSYNC_INT_N_D <= HSYNC_INT_N;
+//		if (PH_2)
+		begin
+			HSYNC3_FIRQ_BUF <= {HSYNC3_FIRQ_BUF[0], HSYNC3_FIRQ_STAT_N};
+			HSYNC3_FIRQ_N <= HSYNC3_FIRQ_BUF[1] | !HSYNC3_FIRQ_INT;
+		end
 	end
 end
+
 always @ (negedge HSYNC_INT_N or negedge RST_FF93_N)
+//always @ (negedge CLK50MHZ or negedge RST_FF93_N)
 begin
 	if(!RST_FF93_N)
 	begin
@@ -2019,9 +2088,14 @@ begin
 	end
 	else
 	begin
-		HSYNC3_FIRQ_STAT_N <= 1'b0;				// Interrupt
+//		if (HSYNC_INT_N == 1'b0	&& HSYNC_INT_N_D == 1'b1)
+			HSYNC3_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
+
+/* 8/9/21 SRH */
+
+// Stop here////
 
 // V_SYNC int for COCO3
 // Output	VSYNC3_FIRQ_N
@@ -2031,20 +2105,26 @@ end
 // Input		VSYNC_FIRQ_INT_N
 // Switch	VSYNC3_INT
 // Clear		FF93
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
 		VSYNC3_FIRQ_BUF <= 2'b11;
 		VSYNC3_FIRQ_N <= 1'b1;
+		VSYNC_INT_N_D <= 1'b1;
 	end
 	else
 	begin
-		VSYNC3_FIRQ_BUF <= {VSYNC3_FIRQ_BUF[0], VSYNC3_FIRQ_STAT_N};
-		VSYNC3_FIRQ_N <= VSYNC3_FIRQ_BUF[1] | !VSYNC3_FIRQ_INT;
+		VSYNC_INT_N_D <= VSYNC_INT_N;
+		if (PH_2)
+		begin
+			VSYNC3_FIRQ_BUF <= {VSYNC3_FIRQ_BUF[0], VSYNC3_FIRQ_STAT_N};
+			VSYNC3_FIRQ_N <= VSYNC3_FIRQ_BUF[1] | !VSYNC3_FIRQ_INT;
+		end
 	end
 end
-always @ (negedge VSYNC_INT_N or negedge RST_FF93_N)
+
+always @ (negedge CLK50MHZ or negedge RST_FF93_N)
 begin
 	if(!RST_FF93_N)
 	begin
@@ -2052,7 +2132,8 @@ begin
 	end
 	else
 	begin
-		VSYNC3_FIRQ_STAT_N <= 1'b0;				// Interrupt
+		if (VSYNC_INT_N_D == 1'b1 && VSYNC_INT_N == 1'b0)
+			VSYNC3_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -2064,20 +2145,26 @@ end
 // Input		CART_INT_N
 // Switch	CART3_FIRQ_INT
 // Clear		FF93
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
 		CART3_FIRQ_BUF <= 2'b11;
 		CART3_FIRQ_N <= 1'b1;
+		CART_INT_N_D <= 1'b1;
 	end
 	else
 	begin
-		CART3_FIRQ_BUF <= {CART3_FIRQ_BUF[0], CART3_FIRQ_STAT_N};
-		CART3_FIRQ_N <= CART3_FIRQ_BUF[1] | !CART3_FIRQ_INT;
+		CART_INT_N_D <= CART_INT_N;
+		if (PH_2)
+		begin
+			CART3_FIRQ_BUF <= {CART3_FIRQ_BUF[0], CART3_FIRQ_STAT_N};
+			CART3_FIRQ_N <= CART3_FIRQ_BUF[1] | !CART3_FIRQ_INT;
+		end
 	end
 end
-always @ (negedge CART_INT_N or negedge RST_FF93_N)
+
+always @ (negedge CLK50MHZ or negedge RST_FF93_N)
 begin
 	if(!RST_FF93_N)
 	begin
@@ -2085,7 +2172,8 @@ begin
 	end
 	else
 	begin
-		CART3_FIRQ_STAT_N <= 1'b0;				// Interrupt
+		if (CART_INT_N == 1'b0 && CART_INT_N_D == 1'b1)
+			CART3_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -2097,20 +2185,26 @@ end
 // Input		KEY_INT_N
 // Switch	KEY3_FIRQ_INT
 // Clear		FF93
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
 		KEY3_FIRQ_BUF <= 2'b11;
 		KEY3_FIRQ_N <= 1'b1;
+		KEY_INT_N_D <= 1'b1;
 	end
 	else
 	begin
-		KEY3_FIRQ_BUF <= {KEY3_FIRQ_BUF[0], KEY3_FIRQ_STAT_N};
-		KEY3_FIRQ_N <= KEY3_FIRQ_BUF[1] | !KEY3_FIRQ_INT;
+		KEY_INT_N_D <= KEY_INT_N;
+		if (PH_2)
+		begin
+			KEY3_FIRQ_BUF <= {KEY3_FIRQ_BUF[0], KEY3_FIRQ_STAT_N};
+			KEY3_FIRQ_N <= KEY3_FIRQ_BUF[1] | !KEY3_FIRQ_INT;
+		end
 	end
 end
-always @ (negedge KEY_INT_N or negedge RST_FF93_N)
+
+always @ (negedge CLK50MHZ or negedge RST_FF93_N)
 begin
 	if(!RST_FF93_N)
 	begin
@@ -2118,7 +2212,8 @@ begin
 	end
 	else
 	begin
-		KEY3_FIRQ_STAT_N <= 1'b0;				// Interrupt
+		if (KEY_INT_N == 1'b0 && KEY_INT_N_D == 1'b1)
+			KEY3_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -2130,20 +2225,26 @@ end
 // Input		TIMER_INT_N
 // Switch	TIMER3_FIRQ_INT
 // Clear		FF93
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
 		TIMER3_FIRQ_BUF <= 2'b11;
 		TIMER3_FIRQ_N <= 1'b1;
+		TIMER_INT_N_D <= 1'b1;
 	end
 	else
 	begin
-		TIMER3_FIRQ_BUF <= {TIMER3_FIRQ_BUF[0], TIMER3_FIRQ_STAT_N};
-		TIMER3_FIRQ_N <= TIMER3_FIRQ_BUF[1] | !TIMER3_FIRQ_INT;
+		TIMER_INT_N_D <= TIMER_INT_N;
+		if (PH_2)
+		begin
+			TIMER3_FIRQ_BUF <= {TIMER3_FIRQ_BUF[0], TIMER3_FIRQ_STAT_N};
+			TIMER3_FIRQ_N <= TIMER3_FIRQ_BUF[1] | !TIMER3_FIRQ_INT;
+		end
 	end
 end
-always @ (negedge TIMER_INT_N or negedge RST_FF93_N)
+
+always @ (negedge CLK50MHZ or negedge RST_FF93_N)
 begin
 	if(!RST_FF93_N)
 	begin
@@ -2151,7 +2252,8 @@ begin
 	end
 	else
 	begin
-		TIMER3_FIRQ_STAT_N <= 1'b0;				// Interrupt
+		if (TIMER_INT_N == 1'b0 && TIMER_INT_N_D == 1'b1)
+			TIMER3_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -2166,7 +2268,7 @@ end
 // Input		HSYNC_INT_N
 // Switch	HSYNC3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -2175,11 +2277,15 @@ begin
 	end
 	else
 	begin
-		HSYNC3_IRQ_BUF <= {HSYNC3_IRQ_BUF[0], HSYNC3_IRQ_STAT_N};
-		HSYNC3_IRQ_N <= HSYNC3_IRQ_BUF[1] | !HSYNC3_IRQ_INT;
+		if (PH_2)
+		begin
+			HSYNC3_IRQ_BUF <= {HSYNC3_IRQ_BUF[0], HSYNC3_IRQ_STAT_N};
+			HSYNC3_IRQ_N <= HSYNC3_IRQ_BUF[1] | !HSYNC3_IRQ_INT;
+		end
 	end
 end
-always @ (negedge HSYNC_INT_N or negedge RST_FF92_N)
+
+always @ (negedge CLK50MHZ or negedge RST_FF92_N)
 begin
 	if(!RST_FF92_N)
 	begin
@@ -2187,7 +2293,8 @@ begin
 	end
 	else
 	begin
-		HSYNC3_IRQ_STAT_N <= 1'b0;				// Interrupt
+		if (HSYNC_INT_N == 1'b0	&& HSYNC_INT_N_D == 1'b1)
+			HSYNC3_IRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -2199,7 +2306,7 @@ end
 // Input		VSYNC_IRQ_INT_N
 // Switch	VSYNC3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -2208,11 +2315,15 @@ begin
 	end
 	else
 	begin
-		VSYNC3_IRQ_BUF <= {VSYNC3_IRQ_BUF[0], VSYNC3_IRQ_STAT_N};
-		VSYNC3_IRQ_N <= VSYNC3_IRQ_BUF[1] | !VSYNC3_IRQ_INT;
+		if (PH_2)
+		begin
+			VSYNC3_IRQ_BUF <= {VSYNC3_IRQ_BUF[0], VSYNC3_IRQ_STAT_N};
+			VSYNC3_IRQ_N <= VSYNC3_IRQ_BUF[1] | !VSYNC3_IRQ_INT;
+		end
 	end
 end
-always @ (negedge VSYNC_INT_N or negedge RST_FF92_N)
+
+always @ (negedge CLK50MHZ or negedge RST_FF92_N)
 begin
 	if(!RST_FF92_N)
 	begin
@@ -2220,7 +2331,8 @@ begin
 	end
 	else
 	begin
-		VSYNC3_IRQ_STAT_N <= 1'b0;				// Interrupt
+		if (VSYNC_INT_N_D == 1'b1 && VSYNC_INT_N == 1'b0)
+			VSYNC3_IRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -2232,7 +2344,7 @@ end
 // Input		CART_INT_N
 // Switch	CART3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -2241,12 +2353,15 @@ begin
 	end
 	else
 	begin
-		CART3_IRQ_BUF <= {CART3_IRQ_BUF[0], CART3_IRQ_STAT_N};
-		CART3_IRQ_N <= CART3_IRQ_BUF[1] | !CART3_IRQ_INT;
+		if (PH_2)
+		begin
+			CART3_IRQ_BUF <= {CART3_IRQ_BUF[0], CART3_IRQ_STAT_N};
+			CART3_IRQ_N <= CART3_IRQ_BUF[1] | !CART3_IRQ_INT;
+		end
 	end
 end
 
-always @ (negedge CART_INT_N or negedge RST_FF92_N)
+always @ (negedge CLK50MHZ or negedge RST_FF92_N)
 begin
 	if(!RST_FF92_N)
 	begin
@@ -2254,7 +2369,8 @@ begin
 	end
 	else
 	begin
-		CART3_IRQ_STAT_N <= 1'b0;				// Interrupt
+		if (CART_INT_N == 1'b0 && CART_INT_N_D == 1'b1)
+			CART3_IRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -2266,7 +2382,7 @@ end
 // Input		KEY_INT_N
 // Switch	KEY3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -2275,11 +2391,15 @@ begin
 	end
 	else
 	begin
-		KEY3_IRQ_BUF <= {KEY3_IRQ_BUF[0], KEY3_IRQ_STAT_N};
-		KEY3_IRQ_N <= KEY3_IRQ_BUF[1] | !KEY3_IRQ_INT;
+		if (PH_2)
+		begin
+			KEY3_IRQ_BUF <= {KEY3_IRQ_BUF[0], KEY3_IRQ_STAT_N};
+			KEY3_IRQ_N <= KEY3_IRQ_BUF[1] | !KEY3_IRQ_INT;
+		end
 	end
 end
-always @ (negedge KEY_INT_N or negedge RST_FF92_N)
+
+always @ (negedge CLK50MHZ or negedge RST_FF92_N)
 begin
 	if(!RST_FF92_N)
 	begin
@@ -2287,7 +2407,8 @@ begin
 	end
 	else
 	begin
-		KEY3_IRQ_STAT_N <= 1'b0;				// Interrupt
+		if (KEY_INT_N == 1'b0 && KEY_INT_N_D == 1'b1)
+			KEY3_IRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -2299,7 +2420,7 @@ end
 // Input		TIMER_INT_N
 // Switch	TIMER3_IRQ_INT
 // Clear		FF92
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -2308,11 +2429,15 @@ begin
 	end
 	else
 	begin
-		TIMER3_IRQ_BUF <= {TIMER3_IRQ_BUF[0], TIMER3_IRQ_STAT_N};
-		TIMER3_IRQ_N <= TIMER3_IRQ_BUF[1] | !TIMER3_IRQ_INT;
+		if (PH_2)
+		begin
+			TIMER3_IRQ_BUF <= {TIMER3_IRQ_BUF[0], TIMER3_IRQ_STAT_N};
+			TIMER3_IRQ_N <= TIMER3_IRQ_BUF[1] | !TIMER3_IRQ_INT;
+		end
 	end
 end
-always @ (negedge TIMER_INT_N or negedge RST_FF92_N)
+
+always @ (negedge CLK50MHZ or negedge RST_FF92_N)
 begin
 	if(!RST_FF92_N)
 	begin
@@ -2320,7 +2445,8 @@ begin
 	end
 	else
 	begin
-		TIMER3_IRQ_STAT_N <= 1'b0;				// Interrupt
+		if (TIMER_INT_N == 1'b0 && TIMER_INT_N_D == 1'b1)
+			TIMER3_IRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
 
@@ -2346,20 +2472,26 @@ assign CLK3_57MHZ = DIV_14;
 always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
-		DIV_7 <= 3'b000;
-	else
-	case (DIV_7)
-	3'b110:
 	begin
 		DIV_7 <= 3'b000;
-		DIV_14 <= !DIV_14;
+		TMR_CLK_D <= 1'b0;
 	end
-	default:
-		DIV_7 <= DIV_7 + 1'b1;
-	endcase
+	else
+	begin
+		TMR_CLK_D <= TMR_CLK;
+		case (DIV_7)
+		3'b110:
+		begin
+			DIV_7 <= 3'b000;
+			DIV_14 <= !DIV_14;
+		end
+		default:
+			DIV_7 <= DIV_7 + 1'b1;
+		endcase
+	end
 end
 
-always @(negedge TMR_CLK or negedge TMR_RST_N)
+always @(negedge CLK50MHZ or negedge TMR_RST_N)
 begin
 	if(!TMR_RST_N)
 	begin
@@ -2369,40 +2501,43 @@ begin
 	end
 	else
 	begin
-		if(!TMR_ENABLE)
+		if (TMR_CLK == 1'b0 && TMR_CLK_D == 1'b1)
 		begin
-			TIMER_INT_N <= 1'b1;
-			BLINK <= 1'b1;
-			TIMER <= 13'h1FFF;
-		end
-		else
-		begin
-			case (TIMER)
-			13'h0000:
+			if(!TMR_ENABLE)
 			begin
-				TIMER_INT_N <= 1'b0;
-				BLINK <= !BLINK;
+				TIMER_INT_N <= 1'b1;
+				BLINK <= 1'b1;
 				TIMER <= 13'h1FFF;
 			end
-			13'h1FFF: 												//Maybe this should be 1XXX
+			else
 			begin
+				case (TIMER)
+				13'h0000:
+				begin
+					TIMER_INT_N <= 1'b0;
+					BLINK <= !BLINK;
+					TIMER <= 13'h1FFF;
+				end
+				13'h1FFF: 												//Maybe this should be 1XXX
+				begin
 // This turns out being TIMER + 2 as in Sockmaster's GIME Reference 1986 GIME
 // 0 to TIMER-1 (0 to TIMER is really TIMER counts + 1)
 // This timer goes from 0 directly to 1FFF where it loads the timer count and decrements from there
 // So 1FFF to TIMER to 0 is TIMER + 2 counts
-				TIMER_INT_N <= 1'b1;
-				if({TMR_MSB,TMR_LSB} != 12'h000)
-					TIMER <= {1'b0,TMR_MSB,TMR_LSB};
+					TIMER_INT_N <= 1'b1;
+					if({TMR_MSB,TMR_LSB} != 12'h000)
+						TIMER <= {1'b0,TMR_MSB,TMR_LSB};
+				end
+				default:
+					TIMER <= TIMER - 1'b1;
+				endcase
 			end
-			default:
-				TIMER <= TIMER - 1'b1;
-			endcase
 		end
 	end
 end
 
 // Most of the latches for settings
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -2633,1091 +2768,1095 @@ begin
 	else
 	begin
 // Sound Mux
-		case ({SOUND_EN,SEL})
-		3'b100:
-			SOUND_DTOA <= DTOA_CODE;
-		3'b111:
-			SOUND_DTOA <= 6'b000000;
-		endcase
+		if (PH_2)
+		begin
 
-		if(!RW_N)
-		begin
-			case (ADDRESS)
-			16'hFF00:
-			begin
-				if(!DDR1)
-					DD_REG1 <= DATA_OUT;
-			end
-			16'hFF01:
-			begin
-				HSYNC1_IRQ_INT <= DATA_OUT[0];
-				HSYNC1_POL <= DATA_OUT[1];
-				DDR1 <= DATA_OUT[2];
-				SEL[0] <= DATA_OUT[3];
-			end
-			16'hFF02:
-			begin
-				if(!DDR2)
-					DD_REG2 <= DATA_OUT;
-				else
-					KEY_COLUMN <= DATA_OUT;
-			end
-			16'hFF03:
-			begin
-				VSYNC1_IRQ_INT <= DATA_OUT[0];
-				VSYNC1_POL <= DATA_OUT[1];
-				DDR2 <= DATA_OUT[2];
-				SEL[1] <= DATA_OUT[3];
-			end
-			16'hFF04:
-			begin
-				if(!DDR1)
-					DD_REG1 <= DATA_OUT;
-			end
-			16'hFF05:
-			begin
-				HSYNC1_IRQ_INT <= DATA_OUT[0];
-				HSYNC1_POL <= DATA_OUT[1];
-				DDR1 <= DATA_OUT[2];
-				SEL[0] <= DATA_OUT[3];
-			end
-			16'hFF06:
-			begin
-				if(!DDR2)
-					DD_REG2 <= DATA_OUT;
-				else
-					KEY_COLUMN <= DATA_OUT;
-			end
-			16'hFF07:
-			begin
-				VSYNC1_IRQ_INT <= DATA_OUT[0];
-				VSYNC1_POL <= DATA_OUT[1];
-				DDR2 <= DATA_OUT[2];
-				SEL[1] <= DATA_OUT[3];
-			end
-			16'hFF08:
-			begin
-				if(!DDR1)
-					DD_REG1 <= DATA_OUT;
-			end
-			16'hFF09:
-			begin
-				HSYNC1_IRQ_INT <= DATA_OUT[0];
-				HSYNC1_POL <= DATA_OUT[1];
-				DDR1 <= DATA_OUT[2];
-				SEL[0] <= DATA_OUT[3];
-			end
-			16'hFF0A:
-			begin
-				if(!DDR2)
-					DD_REG2 <= DATA_OUT;
-				else
-					KEY_COLUMN <= DATA_OUT;
-			end
-			16'hFF0B:
-			begin
-				VSYNC1_IRQ_INT <= DATA_OUT[0];
-				VSYNC1_POL <= DATA_OUT[1];
-				DDR2 <= DATA_OUT[2];
-				SEL[1] <= DATA_OUT[3];
-			end
-			16'hFF0C:
-			begin
-				if(!DDR1)
-					DD_REG1 <= DATA_OUT;
-			end
-			16'hFF0D:
-			begin
-				HSYNC1_IRQ_INT <= DATA_OUT[0];
-				HSYNC1_POL <= DATA_OUT[1];
-				DDR1 <= DATA_OUT[2];
-				SEL[0] <= DATA_OUT[3];
-			end
-			16'hFF0E:
-			begin
-				if(!DDR2)
-					DD_REG2 <= DATA_OUT;
-				else
-					KEY_COLUMN <= DATA_OUT;
-			end
-			16'hFF0F:
-			begin
-				VSYNC1_IRQ_INT <= DATA_OUT[0];
-				VSYNC1_POL <= DATA_OUT[1];
-				DDR2 <= DATA_OUT[2];
-				SEL[1] <= DATA_OUT[3];
-			end
-			16'hFF10:
-			begin
-				if(!DDR1)
-					DD_REG1 <= DATA_OUT;
-			end
-			16'hFF11:
-			begin
-				HSYNC1_IRQ_INT <= DATA_OUT[0];
-				HSYNC1_POL <= DATA_OUT[1];
-				DDR1 <= DATA_OUT[2];
-				SEL[0] <= DATA_OUT[3];
-			end
-			16'hFF12:
-			begin
-				if(!DDR2)
-					DD_REG2 <= DATA_OUT;
-				else
-					KEY_COLUMN <= DATA_OUT;
-			end
-			16'hFF13:
-			begin
-				VSYNC1_IRQ_INT <= DATA_OUT[0];
-				VSYNC1_POL <= DATA_OUT[1];
-				DDR2 <= DATA_OUT[2];
-				SEL[1] <= DATA_OUT[3];
-			end
-			16'hFF14:
-			begin
-				if(!DDR1)
-					DD_REG1 <= DATA_OUT;
-			end
-			16'hFF15:
-			begin
-				HSYNC1_IRQ_INT <= DATA_OUT[0];
-				HSYNC1_POL <= DATA_OUT[1];
-				DDR1 <= DATA_OUT[2];
-				SEL[0] <= DATA_OUT[3];
-			end
-			16'hFF16:
-			begin
-				if(!DDR2)
-					DD_REG2 <= DATA_OUT;
-				else
-					KEY_COLUMN <= DATA_OUT;
-			end
-			16'hFF17:
-			begin
-				VSYNC1_IRQ_INT <= DATA_OUT[0];
-				VSYNC1_POL <= DATA_OUT[1];
-				DDR2 <= DATA_OUT[2];
-				SEL[1] <= DATA_OUT[3];
-			end
-			16'hFF18:
-			begin
-				if(!DDR1)
-					DD_REG1 <= DATA_OUT;
-			end
-			16'hFF19:
-			begin
-				HSYNC1_IRQ_INT <= DATA_OUT[0];
-				HSYNC1_POL <= DATA_OUT[1];
-				DDR1 <= DATA_OUT[2];
-				SEL[0] <= DATA_OUT[3];
-			end
-			16'hFF1A:
-			begin
-				if(!DDR2)
-					DD_REG2 <= DATA_OUT;
-				else
-					KEY_COLUMN <= DATA_OUT;
-			end
-			16'hFF1B:
-			begin
-				VSYNC1_IRQ_INT <= DATA_OUT[0];
-				VSYNC1_POL <= DATA_OUT[1];
-				DDR2 <= DATA_OUT[2];
-				SEL[1] <= DATA_OUT[3];
-			end
-			16'hFF1C:
-			begin
-				if(!DDR1)
-					DD_REG1 <= DATA_OUT;
-			end
-			16'hFF1D:
-			begin
-				HSYNC1_IRQ_INT <= DATA_OUT[0];
-				HSYNC1_POL <= DATA_OUT[1];
-				DDR1 <= DATA_OUT[2];
-				SEL[0] <= DATA_OUT[3];
-			end
-			16'hFF1E:
-			begin
-				if(!DDR2)
-					DD_REG2 <= DATA_OUT;
-				else
-					KEY_COLUMN <= DATA_OUT;
-			end
-			16'hFF1F:
-			begin
-				VSYNC1_IRQ_INT <= DATA_OUT[0];
-				VSYNC1_POL <= DATA_OUT[1];
-				DDR2 <= DATA_OUT[2];
-				SEL[1] <= DATA_OUT[3];
-			end
-			16'hFF20:
-			begin
-				if(!DDR3)
-					DD_REG3 <= DATA_OUT;
-				else
-				begin
-					DTOA_CODE <= DATA_OUT[7:2];
-//					if({SOUND_EN,SEL} == 3'b100)
-//						SOUND_DTOA <= DATA_OUT[7:2];
-				end
-			end
-			16'hFF21:
-			begin
-//				CD_INT <= DATA_OUT[0];
-//				CD_POL <= DATA_OUT[1];
-				DDR3 <= DATA_OUT[2];
-				CAS_MTR <= DATA_OUT[3];
-			end
-			16'hFF22:
-			begin
-				if(!DDR4)
-					DD_REG4 <= DATA_OUT;
-				else
-				begin
-					SBS <= DATA_OUT[1];
-					CSS <= DATA_OUT[3];
-					VDG_CONTROL <= DATA_OUT[7:4];
-				end
-			end
-			16'hFF23:
-			begin
-				CART1_FIRQ_INT <= DATA_OUT[0];
-				CART1_POL <= DATA_OUT[1];
-				DDR4 <= DATA_OUT[2];
-				SOUND_EN <= DATA_OUT[3];
-			end
-			16'hFF24:
-			begin
-				if(!DDR3)
-					DD_REG3 <= DATA_OUT;
-				else
-				begin
-					DTOA_CODE <= DATA_OUT[7:2];
-//					if({SOUND_EN,SEL} == 3'b100)
-//						SOUND_DTOA <= DATA_OUT[7:2];
-				end
-			end
-			16'hFF25:
-			begin
-//				CD_INT <= DATA_OUT[0];
-//				CD_POL <= DATA_OUT[1];
-				DDR3 <= DATA_OUT[2];
-				CAS_MTR <= DATA_OUT[3];
-			end
-			16'hFF26:
-			begin
-				if(!DDR4)
-					DD_REG4 <= DATA_OUT;
-				else
-				begin
-					SBS <= DATA_OUT[1];
-					CSS <= DATA_OUT[3];
-					VDG_CONTROL <= DATA_OUT[7:4];
-				end
-			end
-			16'hFF27:
-			begin
-				CART1_FIRQ_INT <= DATA_OUT[0];
-				CART1_POL <= DATA_OUT[1];
-				DDR4 <= DATA_OUT[2];
-				SOUND_EN <= DATA_OUT[3];
-			end
-			16'hFF28:
-			begin
-				if(!DDR3)
-					DD_REG3 <= DATA_OUT;
-				else
-				begin
-					DTOA_CODE <= DATA_OUT[7:2];
-//					if({SOUND_EN,SEL} == 3'b100)
-//						SOUND_DTOA <= DATA_OUT[7:2];
-				end
-			end
-			16'hFF29:
-			begin
-//				CD_INT <= DATA_OUT[0];
-//				CD_POL <= DATA_OUT[1];
-				DDR3 <= DATA_OUT[2];
-				CAS_MTR <= DATA_OUT[3];
-			end
-			16'hFF2A:
-			begin
-				if(!DDR4)
-					DD_REG4 <= DATA_OUT;
-				else
-				begin
-					SBS <= DATA_OUT[1];
-					CSS <= DATA_OUT[3];
-					VDG_CONTROL <= DATA_OUT[7:4];
-				end
-			end
-			16'hFF2B:
-			begin
-				CART1_FIRQ_INT <= DATA_OUT[0];
-				CART1_POL <= DATA_OUT[1];
-				DDR4 <= DATA_OUT[2];
-				SOUND_EN <= DATA_OUT[3];
-			end
-			16'hFF2C:
-			begin
-				if(!DDR3)
-					DD_REG3 <= DATA_OUT;
-				else
-				begin
-					DTOA_CODE <= DATA_OUT[7:2];
-//					if({SOUND_EN,SEL} == 3'b100)
-//						SOUND_DTOA <= DATA_OUT[7:2];
-				end
-			end
-			16'hFF2D:
-			begin
-//				CD_INT <= DATA_OUT[0];
-//				CD_POL <= DATA_OUT[1];
-				DDR3 <= DATA_OUT[2];
-				CAS_MTR <= DATA_OUT[3];
-			end
-			16'hFF2E:
-			begin
-				if(!DDR4)
-					DD_REG4 <= DATA_OUT;
-				else
-				begin
-					SBS <= DATA_OUT[1];
-					CSS <= DATA_OUT[3];
-					VDG_CONTROL <= DATA_OUT[7:4];
-				end
-			end
-			16'hFF2F:
-			begin
-				CART1_FIRQ_INT <= DATA_OUT[0];
-				CART1_POL <= DATA_OUT[1];
-				DDR4 <= DATA_OUT[2];
-				SOUND_EN <= DATA_OUT[3];
-			end
-			16'hFF30:
-			begin
-				if(!DDR3)
-					DD_REG3 <= DATA_OUT;
-				else
-				begin
-					DTOA_CODE <= DATA_OUT[7:2];
-//					if({SOUND_EN,SEL} == 3'b100)
-//						SOUND_DTOA <= DATA_OUT[7:2];
-				end
-			end
-			16'hFF31:
-			begin
-//				CD_INT <= DATA_OUT[0];
-//				CD_POL <= DATA_OUT[1];
-				DDR3 <= DATA_OUT[2];
-				CAS_MTR <= DATA_OUT[3];
-			end
-			16'hFF32:
-			begin
-				if(!DDR4)
-					DD_REG4 <= DATA_OUT;
-				else
-				begin
-					SBS <= DATA_OUT[1];
-					CSS <= DATA_OUT[3];
-					VDG_CONTROL <= DATA_OUT[7:4];
-				end
-			end
-			16'hFF33:
-			begin
-				CART1_FIRQ_INT <= DATA_OUT[0];
-				CART1_POL <= DATA_OUT[1];
-				DDR4 <= DATA_OUT[2];
-				SOUND_EN <= DATA_OUT[3];
-			end
-			16'hFF34:
-			begin
-				if(!DDR3)
-					DD_REG3 <= DATA_OUT;
-				else
-				begin
-					DTOA_CODE <= DATA_OUT[7:2];
-//					if({SOUND_EN,SEL} == 3'b100)
-//						SOUND_DTOA <= DATA_OUT[7:2];
-				end
-			end
-			16'hFF35:
-			begin
-//				CD_INT <= DATA_OUT[0];
-//				CD_POL <= DATA_OUT[1];
-				DDR3 <= DATA_OUT[2];
-				CAS_MTR <= DATA_OUT[3];
-			end
-			16'hFF36:
-			begin
-				if(!DDR4)
-					DD_REG4 <= DATA_OUT;
-				else
-				begin
-					SBS <= DATA_OUT[1];
-					CSS <= DATA_OUT[3];
-					VDG_CONTROL <= DATA_OUT[7:4];
-				end
-			end
-			16'hFF37:
-			begin
-				CART1_FIRQ_INT <= DATA_OUT[0];
-				CART1_POL <= DATA_OUT[1];
-				DDR4 <= DATA_OUT[2];
-				SOUND_EN <= DATA_OUT[3];
-			end
-			16'hFF38:
-			begin
-				if(!DDR3)
-					DD_REG3 <= DATA_OUT;
-				else
-				begin
-					DTOA_CODE <= DATA_OUT[7:2];
-//					if({SOUND_EN,SEL} == 3'b100)
-//						SOUND_DTOA <= DATA_OUT[7:2];
-				end
-			end
-			16'hFF39:
-			begin
-//				CD_INT <= DATA_OUT[0];
-//				CD_POL <= DATA_OUT[1];
-				DDR3 <= DATA_OUT[2];
-				CAS_MTR <= DATA_OUT[3];
-			end
-			16'hFF3A:
-			begin
-				if(!DDR4)
-					DD_REG4 <= DATA_OUT;
-				else
-				begin
-					SBS <= DATA_OUT[1];
-					CSS <= DATA_OUT[3];
-					VDG_CONTROL <= DATA_OUT[7:4];
-				end
-			end
-			16'hFF3B:
-			begin
-				CART1_FIRQ_INT <= DATA_OUT[0];
-				CART1_POL <= DATA_OUT[1];
-				DDR4 <= DATA_OUT[2];
-				SOUND_EN <= DATA_OUT[3];
-			end
-			16'hFF3C:
-			begin
-				if(!DDR3)
-					DD_REG3 <= DATA_OUT;
-				else
-				begin
-					DTOA_CODE <= DATA_OUT[7:2];
-//					if({SOUND_EN,SEL} == 3'b100)
-//						SOUND_DTOA <= DATA_OUT[7:2];
-				end
-			end
-			16'hFF3D:
-			begin
-//				CD_INT <= DATA_OUT[0];
-//				CD_POL <= DATA_OUT[1];
-				DDR3 <= DATA_OUT[2];
-				CAS_MTR <= DATA_OUT[3];
-			end
-			16'hFF3E:
-			begin
-				if(!DDR4)
-					DD_REG4 <= DATA_OUT;
-				else
-				begin
-					SBS <= DATA_OUT[1];
-					CSS <= DATA_OUT[3];
-					VDG_CONTROL <= DATA_OUT[7:4];
-				end
-			end
-			16'hFF3F:
-			begin
-				CART1_FIRQ_INT <= DATA_OUT[0];
-				CART1_POL <= DATA_OUT[1];
-				DDR4 <= DATA_OUT[2];
-				SOUND_EN <= DATA_OUT[3];
-			end
-			16'hFF60:
-			begin
-				PDL <= DATA_OUT[0];
-			end
-			16'hFF6C:
-			begin
-				WF_IRQ_EN <= DATA_OUT[7];
-				WF_BAUD <= DATA_OUT[1:0];
-			end
-			16'hFF6D:
-				SLAVE_ADD_HI <= DATA_OUT;
-			16'hFF6E:
-			begin
-				SLAVE_RESET <= 1'b1;
-				SLAVE_ADD_LO <= DATA_OUT;
-			end
-			16'hFF70:
-			begin
-				GART_WRITE[22:16] <= DATA_OUT[6:0];	//2MB    512Kb: GART_WRITE[18:16] <= DATA_OUT[2:0];
-			end
-			16'hFF71:
-			begin
-				GART_WRITE[15:8] <= DATA_OUT;
-			end
-			16'hFF72:
-			begin
-				GART_WRITE[7:0] <= DATA_OUT;
-			end
-			16'hFF73:
-			begin
-				if(GART_INC[0])
-					GART_WRITE <= GART_WRITE + 1'b1;
-			end
-			16'hFF74:
-			begin
-				GART_READ[22:16] <= DATA_OUT[6:0];	//2MB     512:GART_READ[18:16] <= DATA_OUT[2:0];
-			end
-			16'hFF75:
-			begin
-				GART_READ[15:8] <= DATA_OUT;
-			end
-			16'hFF76:
-			begin
-				GART_READ[7:0] <= DATA_OUT;
-			end
-			16'hFF77:
-			begin
-				GART_INC <= DATA_OUT[1:0];
-			end
-			16'hFF78:
-			begin
-				GART_CNT[16:9] <= DATA_OUT;
-			end
-			16'hFF79:
-			begin
-				GART_CNT[8:0] <= {DATA_OUT,1'b0};
-			end
-			16'hFF7A:
-			begin
-				ORCH_LEFT <= DATA_OUT;
-				ORCH_LEFT_EXT <= ORCH_LEFT_EXT_BUF;
-			end
-			16'hFF7B:
-			begin
-				ORCH_RIGHT <= DATA_OUT;
-				ORCH_RIGHT_EXT <= ORCH_RIGHT_EXT_BUF;
-			end
-			16'hFF7C:
-				ORCH_LEFT_EXT_BUF <= DATA_OUT;
-			16'hFF7D:
-				ORCH_RIGHT_EXT_BUF <= DATA_OUT;
-			16'hFF7F:
-			begin
-				W_PROT[0] <=  DATA_OUT[2] | !DATA_OUT[3];
-				W_PROT[1] <= !DATA_OUT[2] |  DATA_OUT[3] | W_PROT[0];
-				MPI_SCS <= DATA_OUT[1:0];
-				MPI_CTS <= DATA_OUT[5:4];
-			end
-//			16'hFF80:
-//			begin
-//				CK_START <= DATA_OUT[0];
-//			end
-//			16'hFF81:
-//			begin
-//				CK_DATA_OUT <= DATA_OUT;
-//			end
-//			16'hFF82:
-//			begin
-//				CK_DEVICE <= DATA_OUT;
-//			end
-//			16'hFF83:
-//			begin
-//				CK_REG <= DATA_OUT;
-//			end
-//SRH Removal
-//			16'hFF84:
-//			begin
-//				SDRAM_READ <= DATA_OUT[0];
-//			end
-//			16'hFF85:
-//			begin
-//				SDRAM_DIN[7:0] <= DATA_OUT;
-//			end
-//			16'hFF86:
-//			begin
-//				SDRAM_DIN[15:8] <= DATA_OUT;
-//			end
-//			16'hFF87:
-//			begin
-//				SDRAM_ADDR[21:15] <= DATA_OUT[6:0];
-//			end
-//			16'hFF88:
-//			begin
-//				SDRAM_ADDR[14:7] <= DATA_OUT;
-//			end
-			16'hFF8E:
-				GPIO_DIR <= DATA_OUT;
-			16'hFF8F:
-				GPIO_OUT <= DATA_OUT;
-			16'hFF90:
-			begin
-				ROM <= DATA_OUT[1:0];
-				ST_SCS <= DATA_OUT[2];
-				VEC_PAG_RAM <= DATA_OUT[3];
-				GIME_FIRQ <= DATA_OUT[4];
-				GIME_IRQ <= DATA_OUT[5];
-				MMU_EN <= DATA_OUT[6];
-				COCO1 <= DATA_OUT[7];
-			end
-			16'hFF91:
-			begin
-				TIMER_INS <= DATA_OUT[5];
-				MMU_TR <= DATA_OUT[0];
-			end
-			16'hFF92:
-			begin
-				TIMER3_IRQ_INT <= DATA_OUT[5];
-				HSYNC3_IRQ_INT <= DATA_OUT[4];
-				VSYNC3_IRQ_INT <= DATA_OUT[3];
-				KEY3_IRQ_INT <= DATA_OUT[1];
-				CART3_IRQ_INT <= DATA_OUT[0];
-			end
-			16'hFF93:
-			begin
-				TIMER3_FIRQ_INT <= DATA_OUT[5];
-				HSYNC3_FIRQ_INT <= DATA_OUT[4];
-				VSYNC3_FIRQ_INT <= DATA_OUT[3];
-				KEY3_FIRQ_INT <= DATA_OUT[1];
-				CART3_FIRQ_INT <= DATA_OUT[0];
-			end
-			16'hFF94:
-			begin
-				TMR_MSB <= DATA_OUT[3:0];
-				TMR_ENABLE <= 1'b1;
-			end
-			16'hFF95:
-			begin
-				TMR_LSB <= DATA_OUT;
-			end
-			16'hFF98:
-			begin
-				GRMODE <= DATA_OUT[7];
-				HRES[3] <= DATA_OUT[6];	// Extended resolutions
-				DESCEN <= DATA_OUT[5];
-				MONO <= DATA_OUT[4];
-				LPR <= DATA_OUT[2:0];
-			end
-			16'hFF99:
-			begin
-				HLPR <= DATA_OUT[7];
-				LPF <= DATA_OUT[6:5];
-				HRES[2:0] <= DATA_OUT[4:2];
-				CRES <= DATA_OUT[1:0];
-			end
-			16'hFF9A:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[16][5:0] <= DATA_OUT[5:0];
-					PALETTE[16][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[16][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFF9B:
-			begin
-				SCRN_START_HSB <= DATA_OUT[3:0];	// extra 4 bits for 8MB screen start
-				SAM_EXT <= DATA_OUT[5:4];
-			end
-			16'hFF9C:
-			begin
-				VERT_FIN_SCRL <= DATA_OUT[3:0];
-			end
-			16'hFF9D:
-			begin
-				SCRN_START_MSB <= DATA_OUT;
-			end
-			16'hFF9E:
-			begin
-				SCRN_START_LSB <= DATA_OUT;
-			end
-			16'hFF9F:
-			begin
-				HVEN <= DATA_OUT[7];
-				HOR_OFFSET <= DATA_OUT[6:0];
-			end
-			16'hFFA0:
-			begin
-				SAM00 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFA1:
-			begin
-				SAM01 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFA2:
-			begin
-				SAM02 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFA3:
-			begin
-				SAM03 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFA4:
-			begin
-				SAM04 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFA5:
-			begin
-				SAM05 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFA6:
-			begin
-				SAM06 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFA7:
-			begin
-				SAM07 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFA8:
-			begin
-				SAM10 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFA9:
-			begin
-				SAM11 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFAA:
-			begin
-				SAM12 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFAB:
-			begin
-				SAM13 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFAC:
-			begin
-				SAM14 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFAD:
-			begin
-				SAM15 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFAE:
-			begin
-				SAM16 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFAF:
-			begin
-				SAM17 <= {SAM_EXT,DATA_OUT[7:0]};
-			end
-			16'hFFB0:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[0][5:0] <= DATA_OUT[5:0];
-					PALETTE[0][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[0][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFB1:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[1][5:0] <= DATA_OUT[5:0];
-					PALETTE[1][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[1][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFB2:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[2][5:0] <= DATA_OUT[5:0];
-					PALETTE[2][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[2][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFB3:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[3][5:0] <= DATA_OUT[5:0];
-					PALETTE[3][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[3][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFB4:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[4][5:0] <= DATA_OUT[5:0];
-					PALETTE[4][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[4][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFB5:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[5][5:0] <= DATA_OUT[5:0];
-					PALETTE[5][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[5][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFB6:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[6][5:0] <= DATA_OUT[5:0];
-					PALETTE[6][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[6][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFB7:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[7][5:0] <= DATA_OUT[5:0];
-					PALETTE[7][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[7][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFB8:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[8][5:0] <= DATA_OUT[5:0];
-					PALETTE[8][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[8][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFB9:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[9][5:0] <= DATA_OUT[5:0];
-					PALETTE[9][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[9][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFBA:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[10][5:0] <= DATA_OUT[5:0];
-					PALETTE[10][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[10][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFBB:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[11][5:0] <= DATA_OUT[5:0];
-					PALETTE[11][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[11][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFBC:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[12][5:0] <= DATA_OUT[5:0];
-					PALETTE[12][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[12][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFBD:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[13][5:0] <= DATA_OUT[5:0];
-					PALETTE[13][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[13][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFBE:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[14][5:0] <= DATA_OUT[5:0];
-					PALETTE[14][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[14][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFBF:
-			begin
-				if(!DATA_OUT[7])
-				begin
-					PALETTE[15][5:0] <= DATA_OUT[5:0];
-					PALETTE[15][11:6] <= DATA_OUT[5:0];
-				end
-				else
-				begin
-					PALETTE[15][5:0] <= DATA_OUT[5:0];
-				end
-			end
-			16'hFFC0:
-			begin
-				V[0] <= 1'b0;
-			end
-			16'hFFC1:
-			begin
-				V[0] <= 1'b1;
-			end
-			16'hFFC2:
-			begin
-				V[1] <= 1'b0;
-			end
-			16'hFFC3:
-			begin
-				V[1] <= 1'b1;
-			end
-			16'hFFC4:
-			begin
-				V[2] <= 1'b0;
-			end
-			16'hFFC5:
-			begin
-				V[2] <= 1'b1;
-			end
-			16'hFFC6:
-			begin
-				VERT[0] <= 1'b0;
-			end
-			16'hFFC7:
-			begin
-				VERT[0] <= 1'b1;
-			end
-			16'hFFC8:
-			begin
-				VERT[1] <= 1'b0;
-			end
-			16'hFFC9:
-			begin
-				VERT[1] <= 1'b1;
-			end
-			16'hFFCA:
-			begin
-				VERT[2] <= 1'b0;
-			end
-			16'hFFCB:
-			begin
-				VERT[2] <= 1'b1;
-			end
-			16'hFFCC:
-			begin
-				VERT[3] <= 1'b0;
-			end
-			16'hFFCD:
-			begin
-				VERT[3] <= 1'b1;
-			end
-			16'hFFCE:
-			begin
-				VERT[4] <= 1'b0;
-			end
-			16'hFFCF:
-			begin
-				VERT[4] <= 1'b1;
-			end
-			16'hFFD0:
-			begin
-				VERT[5] <= 1'b0;
-			end
-			16'hFFD1:
-			begin
-				VERT[5] <= 1'b1;
-			end
-			16'hFFD2:
-			begin
-				VERT[6] <= 1'b0;
-			end
-			16'hFFD3:
-			begin
-				VERT[6] <= 1'b1;
-			end
-			16'hFFD8:
-			begin
-				RATE <= 1'b0;
-			end
-			16'hFFD9:
-			begin
-				RATE <= 1'b1;
-			end
-			16'hFFDE:
-			begin
-				RAM <= 1'b0;
-			end
-			16'hFFDF:
-			begin
-				RAM <= 1'b1;
-			end
+			case ({SOUND_EN,SEL})
+			3'b100:
+				SOUND_DTOA <= DTOA_CODE;
+			3'b111:
+				SOUND_DTOA <= 6'b000000;
 			endcase
-		end
-		else
-		begin
-			if(ADDRESS == 16'hFF73)
+
+			if(!RW_N)
 			begin
-				if(GART_INC[1])
-					GART_READ <= GART_READ + 1'b1;
+				case (ADDRESS)
+				16'hFF00:
+				begin
+					if(!DDR1)
+						DD_REG1 <= DATA_OUT;
+				end
+				16'hFF01:
+				begin
+					HSYNC1_IRQ_INT <= DATA_OUT[0];
+					HSYNC1_POL <= DATA_OUT[1];
+					DDR1 <= DATA_OUT[2];
+					SEL[0] <= DATA_OUT[3];
+				end
+				16'hFF02:
+				begin
+					if(!DDR2)
+						DD_REG2 <= DATA_OUT;
+					else
+						KEY_COLUMN <= DATA_OUT;
+				end
+				16'hFF03:
+				begin
+					VSYNC1_IRQ_INT <= DATA_OUT[0];
+					VSYNC1_POL <= DATA_OUT[1];
+					DDR2 <= DATA_OUT[2];
+					SEL[1] <= DATA_OUT[3];
+				end
+				16'hFF04:
+				begin
+					if(!DDR1)
+						DD_REG1 <= DATA_OUT;
+				end
+				16'hFF05:
+				begin
+					HSYNC1_IRQ_INT <= DATA_OUT[0];
+					HSYNC1_POL <= DATA_OUT[1];
+					DDR1 <= DATA_OUT[2];
+					SEL[0] <= DATA_OUT[3];
+				end
+				16'hFF06:
+				begin
+					if(!DDR2)
+						DD_REG2 <= DATA_OUT;
+					else
+						KEY_COLUMN <= DATA_OUT;
+				end
+				16'hFF07:
+				begin
+					VSYNC1_IRQ_INT <= DATA_OUT[0];
+					VSYNC1_POL <= DATA_OUT[1];
+					DDR2 <= DATA_OUT[2];
+					SEL[1] <= DATA_OUT[3];
+				end
+				16'hFF08:
+				begin
+					if(!DDR1)
+						DD_REG1 <= DATA_OUT;
+				end
+				16'hFF09:
+				begin
+					HSYNC1_IRQ_INT <= DATA_OUT[0];
+					HSYNC1_POL <= DATA_OUT[1];
+					DDR1 <= DATA_OUT[2];
+					SEL[0] <= DATA_OUT[3];
+				end
+				16'hFF0A:
+				begin
+					if(!DDR2)
+						DD_REG2 <= DATA_OUT;
+					else
+						KEY_COLUMN <= DATA_OUT;
+				end
+				16'hFF0B:
+				begin
+					VSYNC1_IRQ_INT <= DATA_OUT[0];
+					VSYNC1_POL <= DATA_OUT[1];
+					DDR2 <= DATA_OUT[2];
+					SEL[1] <= DATA_OUT[3];
+				end
+				16'hFF0C:
+				begin
+					if(!DDR1)
+						DD_REG1 <= DATA_OUT;
+				end
+				16'hFF0D:
+				begin
+					HSYNC1_IRQ_INT <= DATA_OUT[0];
+					HSYNC1_POL <= DATA_OUT[1];
+					DDR1 <= DATA_OUT[2];
+					SEL[0] <= DATA_OUT[3];
+				end
+				16'hFF0E:
+				begin
+					if(!DDR2)
+						DD_REG2 <= DATA_OUT;
+					else
+						KEY_COLUMN <= DATA_OUT;
+				end
+				16'hFF0F:
+				begin
+					VSYNC1_IRQ_INT <= DATA_OUT[0];
+					VSYNC1_POL <= DATA_OUT[1];
+					DDR2 <= DATA_OUT[2];
+					SEL[1] <= DATA_OUT[3];
+				end
+				16'hFF10:
+				begin
+					if(!DDR1)
+						DD_REG1 <= DATA_OUT;
+				end
+				16'hFF11:
+				begin
+					HSYNC1_IRQ_INT <= DATA_OUT[0];
+					HSYNC1_POL <= DATA_OUT[1];
+					DDR1 <= DATA_OUT[2];
+					SEL[0] <= DATA_OUT[3];
+				end
+				16'hFF12:
+				begin
+					if(!DDR2)
+						DD_REG2 <= DATA_OUT;
+					else
+						KEY_COLUMN <= DATA_OUT;
+				end
+				16'hFF13:
+				begin
+					VSYNC1_IRQ_INT <= DATA_OUT[0];
+					VSYNC1_POL <= DATA_OUT[1];
+					DDR2 <= DATA_OUT[2];
+					SEL[1] <= DATA_OUT[3];
+				end
+				16'hFF14:
+				begin
+					if(!DDR1)
+						DD_REG1 <= DATA_OUT;
+				end
+				16'hFF15:
+				begin
+					HSYNC1_IRQ_INT <= DATA_OUT[0];
+					HSYNC1_POL <= DATA_OUT[1];
+					DDR1 <= DATA_OUT[2];
+					SEL[0] <= DATA_OUT[3];
+				end
+				16'hFF16:
+				begin
+					if(!DDR2)
+						DD_REG2 <= DATA_OUT;
+					else
+						KEY_COLUMN <= DATA_OUT;
+				end
+				16'hFF17:
+				begin
+					VSYNC1_IRQ_INT <= DATA_OUT[0];
+					VSYNC1_POL <= DATA_OUT[1];
+					DDR2 <= DATA_OUT[2];
+					SEL[1] <= DATA_OUT[3];
+				end
+				16'hFF18:
+				begin
+					if(!DDR1)
+						DD_REG1 <= DATA_OUT;
+				end
+				16'hFF19:
+				begin
+					HSYNC1_IRQ_INT <= DATA_OUT[0];
+					HSYNC1_POL <= DATA_OUT[1];
+					DDR1 <= DATA_OUT[2];
+					SEL[0] <= DATA_OUT[3];
+				end
+				16'hFF1A:
+				begin
+					if(!DDR2)
+						DD_REG2 <= DATA_OUT;
+					else
+						KEY_COLUMN <= DATA_OUT;
+				end
+				16'hFF1B:
+				begin
+					VSYNC1_IRQ_INT <= DATA_OUT[0];
+					VSYNC1_POL <= DATA_OUT[1];
+					DDR2 <= DATA_OUT[2];
+					SEL[1] <= DATA_OUT[3];
+				end
+				16'hFF1C:
+				begin
+					if(!DDR1)
+						DD_REG1 <= DATA_OUT;
+				end
+				16'hFF1D:
+				begin
+					HSYNC1_IRQ_INT <= DATA_OUT[0];
+					HSYNC1_POL <= DATA_OUT[1];
+					DDR1 <= DATA_OUT[2];
+					SEL[0] <= DATA_OUT[3];
+				end
+				16'hFF1E:
+				begin
+					if(!DDR2)
+						DD_REG2 <= DATA_OUT;
+					else
+						KEY_COLUMN <= DATA_OUT;
+				end
+				16'hFF1F:
+				begin
+					VSYNC1_IRQ_INT <= DATA_OUT[0];
+					VSYNC1_POL <= DATA_OUT[1];
+					DDR2 <= DATA_OUT[2];
+					SEL[1] <= DATA_OUT[3];
+				end
+				16'hFF20:
+				begin
+					if(!DDR3)
+						DD_REG3 <= DATA_OUT;
+					else
+					begin
+						DTOA_CODE <= DATA_OUT[7:2];
+//						if({SOUND_EN,SEL} == 3'b100)
+//							SOUND_DTOA <= DATA_OUT[7:2];
+					end
+				end
+				16'hFF21:
+				begin
+//					CD_INT <= DATA_OUT[0];
+//					CD_POL <= DATA_OUT[1];
+					DDR3 <= DATA_OUT[2];
+					CAS_MTR <= DATA_OUT[3];
+				end
+				16'hFF22:
+				begin
+					if(!DDR4)
+						DD_REG4 <= DATA_OUT;
+					else
+					begin
+						SBS <= DATA_OUT[1];
+						CSS <= DATA_OUT[3];
+						VDG_CONTROL <= DATA_OUT[7:4];
+					end
+				end
+				16'hFF23:
+				begin
+					CART1_FIRQ_INT <= DATA_OUT[0];
+					CART1_POL <= DATA_OUT[1];
+					DDR4 <= DATA_OUT[2];
+					SOUND_EN <= DATA_OUT[3];
+				end
+				16'hFF24:
+				begin
+					if(!DDR3)
+						DD_REG3 <= DATA_OUT;
+					else
+					begin
+						DTOA_CODE <= DATA_OUT[7:2];
+//						if({SOUND_EN,SEL} == 3'b100)
+//							SOUND_DTOA <= DATA_OUT[7:2];
+					end
+				end
+				16'hFF25:
+				begin
+//					CD_INT <= DATA_OUT[0];
+//					CD_POL <= DATA_OUT[1];
+					DDR3 <= DATA_OUT[2];
+					CAS_MTR <= DATA_OUT[3];
+				end
+				16'hFF26:
+				begin
+					if(!DDR4)
+						DD_REG4 <= DATA_OUT;
+					else
+					begin
+						SBS <= DATA_OUT[1];
+						CSS <= DATA_OUT[3];
+						VDG_CONTROL <= DATA_OUT[7:4];
+					end
+				end
+				16'hFF27:
+				begin
+					CART1_FIRQ_INT <= DATA_OUT[0];
+					CART1_POL <= DATA_OUT[1];
+					DDR4 <= DATA_OUT[2];
+					SOUND_EN <= DATA_OUT[3];
+				end
+				16'hFF28:
+				begin
+					if(!DDR3)
+						DD_REG3 <= DATA_OUT;
+					else
+					begin
+						DTOA_CODE <= DATA_OUT[7:2];
+//						if({SOUND_EN,SEL} == 3'b100)
+//							SOUND_DTOA <= DATA_OUT[7:2];
+					end
+				end
+				16'hFF29:
+				begin
+//					CD_INT <= DATA_OUT[0];
+//					CD_POL <= DATA_OUT[1];
+					DDR3 <= DATA_OUT[2];
+					CAS_MTR <= DATA_OUT[3];
+				end
+				16'hFF2A:
+				begin
+					if(!DDR4)
+						DD_REG4 <= DATA_OUT;
+					else
+					begin
+						SBS <= DATA_OUT[1];
+						CSS <= DATA_OUT[3];
+						VDG_CONTROL <= DATA_OUT[7:4];
+					end
+				end
+				16'hFF2B:
+				begin
+					CART1_FIRQ_INT <= DATA_OUT[0];
+					CART1_POL <= DATA_OUT[1];
+					DDR4 <= DATA_OUT[2];
+					SOUND_EN <= DATA_OUT[3];
+				end
+				16'hFF2C:
+				begin
+					if(!DDR3)
+						DD_REG3 <= DATA_OUT;
+					else
+					begin
+						DTOA_CODE <= DATA_OUT[7:2];
+//						if({SOUND_EN,SEL} == 3'b100)
+//							SOUND_DTOA <= DATA_OUT[7:2];
+					end
+				end
+				16'hFF2D:
+				begin
+//					CD_INT <= DATA_OUT[0];
+//					CD_POL <= DATA_OUT[1];
+					DDR3 <= DATA_OUT[2];
+					CAS_MTR <= DATA_OUT[3];
+				end
+				16'hFF2E:
+				begin
+					if(!DDR4)
+						DD_REG4 <= DATA_OUT;
+					else
+					begin
+						SBS <= DATA_OUT[1];
+						CSS <= DATA_OUT[3];
+						VDG_CONTROL <= DATA_OUT[7:4];
+					end
+				end
+				16'hFF2F:
+				begin
+					CART1_FIRQ_INT <= DATA_OUT[0];
+					CART1_POL <= DATA_OUT[1];
+					DDR4 <= DATA_OUT[2];
+					SOUND_EN <= DATA_OUT[3];
+				end
+				16'hFF30:
+				begin
+					if(!DDR3)
+						DD_REG3 <= DATA_OUT;
+					else
+					begin
+						DTOA_CODE <= DATA_OUT[7:2];
+//						if({SOUND_EN,SEL} == 3'b100)
+//							SOUND_DTOA <= DATA_OUT[7:2];
+					end
+				end
+				16'hFF31:
+				begin
+//					CD_INT <= DATA_OUT[0];
+//					CD_POL <= DATA_OUT[1];
+					DDR3 <= DATA_OUT[2];
+					CAS_MTR <= DATA_OUT[3];
+				end
+				16'hFF32:
+				begin
+					if(!DDR4)
+						DD_REG4 <= DATA_OUT;
+					else
+					begin
+						SBS <= DATA_OUT[1];
+						CSS <= DATA_OUT[3];
+						VDG_CONTROL <= DATA_OUT[7:4];
+					end
+				end
+				16'hFF33:
+				begin
+					CART1_FIRQ_INT <= DATA_OUT[0];
+					CART1_POL <= DATA_OUT[1];
+					DDR4 <= DATA_OUT[2];
+					SOUND_EN <= DATA_OUT[3];
+				end
+				16'hFF34:
+				begin
+					if(!DDR3)
+						DD_REG3 <= DATA_OUT;
+					else
+					begin
+						DTOA_CODE <= DATA_OUT[7:2];
+//						if({SOUND_EN,SEL} == 3'b100)
+//							SOUND_DTOA <= DATA_OUT[7:2];
+					end
+				end
+				16'hFF35:
+				begin
+//					CD_INT <= DATA_OUT[0];
+//					CD_POL <= DATA_OUT[1];
+					DDR3 <= DATA_OUT[2];
+					CAS_MTR <= DATA_OUT[3];
+				end
+				16'hFF36:
+				begin
+					if(!DDR4)
+						DD_REG4 <= DATA_OUT;
+					else
+					begin
+						SBS <= DATA_OUT[1];
+						CSS <= DATA_OUT[3];
+						VDG_CONTROL <= DATA_OUT[7:4];
+					end
+				end
+				16'hFF37:
+				begin
+					CART1_FIRQ_INT <= DATA_OUT[0];
+					CART1_POL <= DATA_OUT[1];
+					DDR4 <= DATA_OUT[2];
+					SOUND_EN <= DATA_OUT[3];
+				end
+				16'hFF38:
+				begin
+					if(!DDR3)
+						DD_REG3 <= DATA_OUT;
+					else
+					begin
+						DTOA_CODE <= DATA_OUT[7:2];
+//						if({SOUND_EN,SEL} == 3'b100)
+//							SOUND_DTOA <= DATA_OUT[7:2];
+					end
+				end
+				16'hFF39:
+				begin
+//					CD_INT <= DATA_OUT[0];
+//					CD_POL <= DATA_OUT[1];
+					DDR3 <= DATA_OUT[2];
+					CAS_MTR <= DATA_OUT[3];
+				end
+				16'hFF3A:
+				begin
+					if(!DDR4)
+						DD_REG4 <= DATA_OUT;
+					else
+					begin
+						SBS <= DATA_OUT[1];
+						CSS <= DATA_OUT[3];
+						VDG_CONTROL <= DATA_OUT[7:4];
+					end
+				end
+				16'hFF3B:
+				begin
+					CART1_FIRQ_INT <= DATA_OUT[0];
+					CART1_POL <= DATA_OUT[1];
+					DDR4 <= DATA_OUT[2];
+					SOUND_EN <= DATA_OUT[3];
+				end
+				16'hFF3C:
+				begin
+					if(!DDR3)
+						DD_REG3 <= DATA_OUT;
+					else
+					begin
+						DTOA_CODE <= DATA_OUT[7:2];
+//						if({SOUND_EN,SEL} == 3'b100)
+//							SOUND_DTOA <= DATA_OUT[7:2];
+					end
+				end
+				16'hFF3D:
+				begin
+//					CD_INT <= DATA_OUT[0];
+//					CD_POL <= DATA_OUT[1];
+					DDR3 <= DATA_OUT[2];
+					CAS_MTR <= DATA_OUT[3];
+				end
+				16'hFF3E:
+				begin
+					if(!DDR4)
+						DD_REG4 <= DATA_OUT;
+					else
+					begin
+						SBS <= DATA_OUT[1];
+						CSS <= DATA_OUT[3];
+						VDG_CONTROL <= DATA_OUT[7:4];
+					end
+				end
+				16'hFF3F:
+				begin
+					CART1_FIRQ_INT <= DATA_OUT[0];
+					CART1_POL <= DATA_OUT[1];
+					DDR4 <= DATA_OUT[2];
+					SOUND_EN <= DATA_OUT[3];
+				end
+				16'hFF60:
+				begin
+					PDL <= DATA_OUT[0];
+				end
+				16'hFF6C:
+				begin
+					WF_IRQ_EN <= DATA_OUT[7];
+					WF_BAUD <= DATA_OUT[1:0];
+				end
+				16'hFF6D:
+					SLAVE_ADD_HI <= DATA_OUT;
+				16'hFF6E:
+				begin
+					SLAVE_RESET <= 1'b1;
+					SLAVE_ADD_LO <= DATA_OUT;
+				end
+				16'hFF70:
+				begin
+					GART_WRITE[22:16] <= DATA_OUT[6:0];	//2MB    512Kb: GART_WRITE[18:16] <= DATA_OUT[2:0];
+				end
+				16'hFF71:
+				begin
+					GART_WRITE[15:8] <= DATA_OUT;
+				end
+				16'hFF72:
+				begin
+					GART_WRITE[7:0] <= DATA_OUT;
+				end
+				16'hFF73:
+				begin
+					if(GART_INC[0])
+						GART_WRITE <= GART_WRITE + 1'b1;
+				end
+				16'hFF74:
+				begin
+					GART_READ[22:16] <= DATA_OUT[6:0];	//2MB     512:GART_READ[18:16] <= DATA_OUT[2:0];
+				end
+				16'hFF75:
+				begin
+					GART_READ[15:8] <= DATA_OUT;
+				end
+				16'hFF76:
+				begin
+					GART_READ[7:0] <= DATA_OUT;
+				end
+				16'hFF77:
+				begin
+					GART_INC <= DATA_OUT[1:0];
+				end
+				16'hFF78:
+				begin
+					GART_CNT[16:9] <= DATA_OUT;
+				end
+				16'hFF79:
+				begin
+					GART_CNT[8:0] <= {DATA_OUT,1'b0};
+				end
+				16'hFF7A:
+				begin
+					ORCH_LEFT <= DATA_OUT;
+					ORCH_LEFT_EXT <= ORCH_LEFT_EXT_BUF;
+				end
+				16'hFF7B:
+				begin
+					ORCH_RIGHT <= DATA_OUT;
+					ORCH_RIGHT_EXT <= ORCH_RIGHT_EXT_BUF;
+				end
+				16'hFF7C:
+					ORCH_LEFT_EXT_BUF <= DATA_OUT;
+				16'hFF7D:
+					ORCH_RIGHT_EXT_BUF <= DATA_OUT;
+				16'hFF7F:
+				begin
+					W_PROT[0] <=  DATA_OUT[2] | !DATA_OUT[3];
+					W_PROT[1] <= !DATA_OUT[2] |  DATA_OUT[3] | W_PROT[0];
+					MPI_SCS <= DATA_OUT[1:0];
+					MPI_CTS <= DATA_OUT[5:4];
+				end
+//				16'hFF80:
+//				begin
+//					CK_START <= DATA_OUT[0];
+//				end
+//				16'hFF81:
+//				begin
+//					CK_DATA_OUT <= DATA_OUT;
+//				end
+//				16'hFF82:
+//				begin
+//					CK_DEVICE <= DATA_OUT;
+//				end
+//				16'hFF83:
+//				begin
+//					CK_REG <= DATA_OUT;
+//				end
+//SRH Removal
+//				16'hFF84:
+//				begin
+//					SDRAM_READ <= DATA_OUT[0];
+//				end
+//				16'hFF85:
+//				begin
+//					SDRAM_DIN[7:0] <= DATA_OUT;
+//				end
+//				16'hFF86:
+//				begin
+//					SDRAM_DIN[15:8] <= DATA_OUT;
+//				end
+//				16'hFF87:
+//				begin
+//					SDRAM_ADDR[21:15] <= DATA_OUT[6:0];
+//				end
+//				16'hFF88:
+//				begin
+//					SDRAM_ADDR[14:7] <= DATA_OUT;
+//				end
+				16'hFF8E:
+					GPIO_DIR <= DATA_OUT;
+				16'hFF8F:
+					GPIO_OUT <= DATA_OUT;
+				16'hFF90:
+				begin
+					ROM <= DATA_OUT[1:0];
+					ST_SCS <= DATA_OUT[2];
+					VEC_PAG_RAM <= DATA_OUT[3];
+					GIME_FIRQ <= DATA_OUT[4];
+					GIME_IRQ <= DATA_OUT[5];
+					MMU_EN <= DATA_OUT[6];
+					COCO1 <= DATA_OUT[7];
+				end
+				16'hFF91:
+				begin
+					TIMER_INS <= DATA_OUT[5];
+					MMU_TR <= DATA_OUT[0];
+				end
+				16'hFF92:
+				begin
+					TIMER3_IRQ_INT <= DATA_OUT[5];
+					HSYNC3_IRQ_INT <= DATA_OUT[4];
+					VSYNC3_IRQ_INT <= DATA_OUT[3];
+					KEY3_IRQ_INT <= DATA_OUT[1];
+					CART3_IRQ_INT <= DATA_OUT[0];
+				end
+				16'hFF93:
+				begin
+					TIMER3_FIRQ_INT <= DATA_OUT[5];
+					HSYNC3_FIRQ_INT <= DATA_OUT[4];
+					VSYNC3_FIRQ_INT <= DATA_OUT[3];
+					KEY3_FIRQ_INT <= DATA_OUT[1];
+					CART3_FIRQ_INT <= DATA_OUT[0];
+				end
+				16'hFF94:
+				begin
+					TMR_MSB <= DATA_OUT[3:0];
+					TMR_ENABLE <= 1'b1;
+				end
+				16'hFF95:
+				begin
+					TMR_LSB <= DATA_OUT;
+				end
+				16'hFF98:
+				begin
+					GRMODE <= DATA_OUT[7];
+					HRES[3] <= DATA_OUT[6];	// Extended resolutions
+					DESCEN <= DATA_OUT[5];
+					MONO <= DATA_OUT[4];
+					LPR <= DATA_OUT[2:0];
+				end
+				16'hFF99:
+				begin
+					HLPR <= DATA_OUT[7];
+					LPF <= DATA_OUT[6:5];
+					HRES[2:0] <= DATA_OUT[4:2];
+					CRES <= DATA_OUT[1:0];
+				end
+				16'hFF9A:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[16][5:0] <= DATA_OUT[5:0];
+						PALETTE[16][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[16][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFF9B:
+				begin
+					SCRN_START_HSB <= DATA_OUT[3:0];	// extra 4 bits for 8MB screen start
+					SAM_EXT <= DATA_OUT[5:4];
+				end
+				16'hFF9C:
+				begin
+					VERT_FIN_SCRL <= DATA_OUT[3:0];
+				end
+				16'hFF9D:
+				begin
+					SCRN_START_MSB <= DATA_OUT;
+				end
+				16'hFF9E:
+				begin
+					SCRN_START_LSB <= DATA_OUT;
+				end
+				16'hFF9F:
+				begin
+					HVEN <= DATA_OUT[7];
+					HOR_OFFSET <= DATA_OUT[6:0];
+				end
+				16'hFFA0:
+				begin
+					SAM00 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFA1:
+				begin
+					SAM01 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFA2:
+				begin
+					SAM02 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFA3:
+				begin
+					SAM03 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFA4:
+				begin
+					SAM04 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFA5:
+				begin
+					SAM05 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFA6:
+				begin
+					SAM06 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFA7:
+				begin
+					SAM07 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFA8:
+				begin
+					SAM10 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFA9:
+				begin
+					SAM11 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFAA:
+				begin
+					SAM12 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFAB:
+				begin
+					SAM13 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFAC:
+				begin
+					SAM14 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFAD:
+				begin
+					SAM15 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFAE:
+				begin
+					SAM16 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFAF:
+				begin
+					SAM17 <= {SAM_EXT,DATA_OUT[7:0]};
+				end
+				16'hFFB0:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[0][5:0] <= DATA_OUT[5:0];
+						PALETTE[0][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[0][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFB1:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[1][5:0] <= DATA_OUT[5:0];
+						PALETTE[1][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[1][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFB2:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[2][5:0] <= DATA_OUT[5:0];
+						PALETTE[2][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[2][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFB3:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[3][5:0] <= DATA_OUT[5:0];
+						PALETTE[3][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[3][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFB4:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[4][5:0] <= DATA_OUT[5:0];
+						PALETTE[4][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[4][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFB5:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[5][5:0] <= DATA_OUT[5:0];
+						PALETTE[5][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[5][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFB6:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[6][5:0] <= DATA_OUT[5:0];
+						PALETTE[6][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[6][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFB7:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[7][5:0] <= DATA_OUT[5:0];
+						PALETTE[7][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[7][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFB8:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[8][5:0] <= DATA_OUT[5:0];
+						PALETTE[8][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[8][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFB9:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[9][5:0] <= DATA_OUT[5:0];
+						PALETTE[9][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[9][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFBA:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[10][5:0] <= DATA_OUT[5:0];
+						PALETTE[10][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[10][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFBB:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[11][5:0] <= DATA_OUT[5:0];
+						PALETTE[11][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[11][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFBC:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[12][5:0] <= DATA_OUT[5:0];
+						PALETTE[12][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[12][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFBD:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[13][5:0] <= DATA_OUT[5:0];
+						PALETTE[13][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[13][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFBE:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[14][5:0] <= DATA_OUT[5:0];
+						PALETTE[14][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[14][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFBF:
+				begin
+					if(!DATA_OUT[7])
+					begin
+						PALETTE[15][5:0] <= DATA_OUT[5:0];
+						PALETTE[15][11:6] <= DATA_OUT[5:0];
+					end
+					else
+					begin
+						PALETTE[15][5:0] <= DATA_OUT[5:0];
+					end
+				end
+				16'hFFC0:
+				begin
+					V[0] <= 1'b0;
+				end
+				16'hFFC1:
+				begin
+					V[0] <= 1'b1;
+				end
+				16'hFFC2:
+				begin
+					V[1] <= 1'b0;
+				end
+				16'hFFC3:
+				begin
+					V[1] <= 1'b1;
+				end
+				16'hFFC4:
+				begin
+					V[2] <= 1'b0;
+				end
+				16'hFFC5:
+				begin
+					V[2] <= 1'b1;
+				end
+				16'hFFC6:
+				begin
+					VERT[0] <= 1'b0;
+				end
+				16'hFFC7:
+				begin
+					VERT[0] <= 1'b1;
+				end
+				16'hFFC8:
+				begin
+					VERT[1] <= 1'b0;
+				end
+				16'hFFC9:
+				begin
+					VERT[1] <= 1'b1;
+				end
+				16'hFFCA:
+				begin
+					VERT[2] <= 1'b0;
+				end
+				16'hFFCB:
+				begin
+					VERT[2] <= 1'b1;
+				end
+				16'hFFCC:
+				begin
+					VERT[3] <= 1'b0;
+				end
+				16'hFFCD:
+				begin
+					VERT[3] <= 1'b1;
+				end
+				16'hFFCE:
+				begin
+					VERT[4] <= 1'b0;
+				end
+				16'hFFCF:
+				begin
+					VERT[4] <= 1'b1;
+				end
+				16'hFFD0:
+				begin
+					VERT[5] <= 1'b0;
+				end
+				16'hFFD1:
+				begin
+					VERT[5] <= 1'b1;
+				end
+				16'hFFD2:
+				begin
+					VERT[6] <= 1'b0;
+				end
+				16'hFFD3:
+				begin
+					VERT[6] <= 1'b1;
+				end
+				16'hFFD8:
+				begin
+					RATE <= 1'b0;
+				end
+				16'hFFD9:
+				begin
+					RATE <= 1'b1;
+				end
+				16'hFFDE:
+				begin
+					RAM <= 1'b0;
+				end
+				16'hFFDF:
+				begin
+					RAM <= 1'b1;
+				end
+				endcase
 			end
 			else
 			begin
-				if(!VMA & (GART_CNT != 17'h00000))
+				if(ADDRESS == 16'hFF73)
 				begin
-					GART_CNT <= GART_CNT - 1'b1;
-					if(GART_CNT[0] & GART_INC[0])
-						GART_WRITE <= GART_WRITE + 1'b1;
-					else
-						if(!GART_CNT[0] & GART_INC[1])
-							GART_READ <= GART_READ + 1'b1;
+					if(GART_INC[1])
+						GART_READ <= GART_READ + 1'b1;
+				end
+				else
+				begin
+					if(!VMA & (GART_CNT != 17'h00000))
+					begin
+						GART_CNT <= GART_CNT - 1'b1;
+						if(GART_CNT[0] & GART_INC[0])
+							GART_WRITE <= GART_WRITE + 1'b1;
+						else
+							if(!GART_CNT[0] & GART_INC[1])
+								GART_READ <= GART_READ + 1'b1;
+					end
 				end
 			end
 		end
@@ -3813,7 +3952,8 @@ assign KEYBOARD_IN[7] =	 JSTICK;											// Joystick input
 COCOKEY coco_keyboard(
 		.RESET_N(RESET_N),
 		.CLK50MHZ(CLK50MHZ),
-		.SLO_CLK(V_SYNC_N),
+//		.SLO_CLK(V_SYNC_N),
+		.SLO_CLK(MCLOCK[19]),
 		.PS2_CLK(ps2_clk),
 		.PS2_DATA(ps2_data),
 		.KEY(KEY),
@@ -3830,81 +3970,84 @@ COCOKEY coco_keyboard(
 assign VGA_CLK = MCLOCK[0];
 
 // Video DAC
-always @ (negedge MCLOCK[0])
+always @ (negedge CLK50MHZ)
 begin
-	COLOR_BUF <= COLOR;						// Delay COLOR by 1 clock cycle to align with 256 Color SRAM
-	H_SYNC <= !H_SYNC_N;					// Delay H_SYNC by 1 clock cycle
-	V_SYNC <= !V_SYNC_N;					// Delay V_SYNC by 1 clock cycle
-	RED[7:0] <= 8'B00000000;
-	GREEN[7:0] <= 8'B00000000;
-	BLUE[7:0] <= 8'B00000000;
-	VGA_BLANK_N <= 1'b1;
-	VGA_SYNC_N <= 1'b1;
+	if (MCLOCK[0])
+	begin
+		COLOR_BUF <= COLOR;						// Delay COLOR by 1 clock cycle to align with 256 Color SRAM
+		H_SYNC <= !H_SYNC_N;					// Delay H_SYNC by 1 clock cycle
+		V_SYNC <= !V_SYNC_N;					// Delay V_SYNC by 1 clock cycle
+		RED[7:0] <= 8'B00000000;
+		GREEN[7:0] <= 8'B00000000;
+		BLUE[7:0] <= 8'B00000000;
+		VGA_BLANK_N <= 1'b1;
+		VGA_SYNC_N <= 1'b1;
 
-//  Retrace Black
-	if(COLOR_BUF[9])
-	begin
-		RED[7:4] <=	4'B0000;
-		GREEN[7:4] <= 4'B0000;
-		BLUE[7:4] <= 4'B0000;
-	end
-	else
-// Request for every other line to be black
-// Looks more like the original video
-	begin
-		if((H_FLAG&SWITCH[3]))				// Odd lines
+//  	Retrace Black
+		if(COLOR_BUF[9])
 		begin
-			if(COLOR_BUF[8])
-			begin
-				RED[7] <= 1'b0;
-				RED[6] <= VDAC_OUT[11];
-				RED[5] <= VDAC_OUT[8];
-				RED[4] <= VDAC_OUT[5];
-				GREEN[7] <= 1'b0;
-				GREEN[6] <= VDAC_OUT[10];
-				GREEN[5] <= VDAC_OUT[7];
-				GREEN[4] <= VDAC_OUT[4];
-				BLUE[7] <=	1'b0;
-				BLUE[6] <=	VDAC_OUT[9];
-				BLUE[5] <=	VDAC_OUT[6];
-				BLUE[4] <=	VDAC_OUT[3];
-			end
-			else
-			begin
-				RED[7] <= 1'b0;
-				RED[6] <= PALETTE[COLOR_BUF[4:0]][11];
-				RED[5] <= PALETTE[COLOR_BUF[4:0]][8];
-				RED[4] <= PALETTE[COLOR_BUF[4:0]][5];
-				GREEN[7] <= 1'b0;
-				GREEN[6] <= PALETTE[COLOR_BUF[4:0]][10];
-				GREEN[5] <= PALETTE[COLOR_BUF[4:0]][7];
-				GREEN[4] <= PALETTE[COLOR_BUF[4:0]][4];
-				BLUE[7] <=	1'b0;
-				BLUE[6] <=	PALETTE[COLOR_BUF[4:0]][9];
-				BLUE[5] <=	PALETTE[COLOR_BUF[4:0]][6];
-				BLUE[4] <=	PALETTE[COLOR_BUF[4:0]][3];
-			end
+			RED[7:4] <=	4'B0000;
+			GREEN[7:4] <= 4'B0000;
+			BLUE[7:4] <= 4'B0000;
 		end
 		else
+// 		Request for every other line to be black
+// 		Looks more like the original video
 		begin
-			if(COLOR_BUF[8])
+			if((H_FLAG&SWITCH[3]))				// Odd lines
 			begin
-				{RED[7], GREEN[7], BLUE[7], RED[6], GREEN[6], BLUE[6], RED[5], GREEN[5], BLUE[5], RED[4], GREEN[4], BLUE[4]} <= VDAC_OUT[11:0];
+				if(COLOR_BUF[8])
+				begin
+					RED[7] <= 1'b0;
+					RED[6] <= VDAC_OUT[11];
+					RED[5] <= VDAC_OUT[8];
+					RED[4] <= VDAC_OUT[5];
+					GREEN[7] <= 1'b0;
+					GREEN[6] <= VDAC_OUT[10];
+					GREEN[5] <= VDAC_OUT[7];
+					GREEN[4] <= VDAC_OUT[4];
+					BLUE[7] <=	1'b0;
+					BLUE[6] <=	VDAC_OUT[9];
+					BLUE[5] <=	VDAC_OUT[6];
+					BLUE[4] <=	VDAC_OUT[3];
+				end
+				else
+				begin
+					RED[7] <= 1'b0;
+					RED[6] <= PALETTE[COLOR_BUF[4:0]][11];
+					RED[5] <= PALETTE[COLOR_BUF[4:0]][8];
+					RED[4] <= PALETTE[COLOR_BUF[4:0]][5];
+					GREEN[7] <= 1'b0;
+					GREEN[6] <= PALETTE[COLOR_BUF[4:0]][10];
+					GREEN[5] <= PALETTE[COLOR_BUF[4:0]][7];
+					GREEN[4] <= PALETTE[COLOR_BUF[4:0]][4];
+					BLUE[7] <=	1'b0;
+					BLUE[6] <=	PALETTE[COLOR_BUF[4:0]][9];
+					BLUE[5] <=	PALETTE[COLOR_BUF[4:0]][6];
+					BLUE[4] <=	PALETTE[COLOR_BUF[4:0]][3];
+				end
 			end
 			else
 			begin
-				RED[7] <= PALETTE[COLOR_BUF[4:0]][11];
-				RED[6] <= PALETTE[COLOR_BUF[4:0]][8];
-				RED[5] <= PALETTE[COLOR_BUF[4:0]][5];
-				RED[4] <= PALETTE[COLOR_BUF[4:0]][2];
-				GREEN[7] <= PALETTE[COLOR_BUF[4:0]][10];
-				GREEN[6] <= PALETTE[COLOR_BUF[4:0]][7];
-				GREEN[5] <= PALETTE[COLOR_BUF[4:0]][4];
-				GREEN[4] <= PALETTE[COLOR_BUF[4:0]][1];
-				BLUE[7] <=	PALETTE[COLOR_BUF[4:0]][9];
-				BLUE[6] <=	PALETTE[COLOR_BUF[4:0]][6];
-				BLUE[5] <=	PALETTE[COLOR_BUF[4:0]][3];
-				BLUE[4] <=	PALETTE[COLOR_BUF[4:0]][0];
+				if(COLOR_BUF[8])
+				begin
+					{RED[7], GREEN[7], BLUE[7], RED[6], GREEN[6], BLUE[6], RED[5], GREEN[5], BLUE[5], RED[4], GREEN[4], BLUE[4]} <= VDAC_OUT[11:0];
+				end
+				else
+				begin
+					RED[7] <= PALETTE[COLOR_BUF[4:0]][11];
+					RED[6] <= PALETTE[COLOR_BUF[4:0]][8];
+					RED[5] <= PALETTE[COLOR_BUF[4:0]][5];
+					RED[4] <= PALETTE[COLOR_BUF[4:0]][2];
+					GREEN[7] <= PALETTE[COLOR_BUF[4:0]][10];
+					GREEN[6] <= PALETTE[COLOR_BUF[4:0]][7];
+					GREEN[5] <= PALETTE[COLOR_BUF[4:0]][4];
+					GREEN[4] <= PALETTE[COLOR_BUF[4:0]][1];
+					BLUE[7] <=	PALETTE[COLOR_BUF[4:0]][9];
+					BLUE[6] <=	PALETTE[COLOR_BUF[4:0]][6];
+					BLUE[5] <=	PALETTE[COLOR_BUF[4:0]][3];
+					BLUE[4] <=	PALETTE[COLOR_BUF[4:0]][0];
+				end
 			end
 		end
 	end

@@ -4,46 +4,48 @@ ConfigSetExtMode=2
 ProjSetConfigFlags=0x04110940
 
 [State]
-SysSetCwd='X:\COCO3_Mister\CoCO3FPGA_Common\sram'
+SysSetCwd='X:\COCO3_Mister\CoCO3FPGA_Common\CPU09'
 SrchSetFlags=0x0410680a
 SrchSetAgainFlags=0x00006002,0
 SrchSetAgainFlags=0x06100003,1
 FileSortMode=0x0
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v',376,49,1400,524,0,724,277,1,266,1,7,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\CoCo3IO.v',182,182,1295,524,-1,-1,541,141,521,1,5,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v',156,66,2036,524,-1,-1,170,25,170,1,3,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v',182,182,1295,524,-1,-1,64,81,64,1,9,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v',182,182,1295,524,199,724,5,1,5,1,10,'',0x0010006c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\sram\coco_ram.vhd',883,190,1295,524,398,724,109,4,81,1,6,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\rom\coco_rom.vhd',156,156,1295,524,-1,-1,75,43,73,1,8,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v',102,128,1295,520,-1,-1,964,7,964,1,1,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v',208,208,2036,524,-1,-1,1,1,1,1,2,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v',156,156,2036,524,-1,-1,4436,159,4421,1,4,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\PH2_CLK.v',52,52,2036,524,597,724,1,1,1,1,11,'',0x0010006c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v',376,49,1400,524,0,724,277,1,266,1,6,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\CoCo3IO.v',182,182,1295,524,995,724,546,1,546,1,11,'',0x0010006c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v',156,66,2036,524,-1,-1,170,25,170,1,4,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v',182,182,1295,524,-1,-1,64,81,64,1,8,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v',182,182,1295,524,199,724,5,1,5,1,9,'',0x0010006c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\sram\coco_ram.vhd',883,190,1295,524,398,724,109,4,81,1,5,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\rom\coco_rom.vhd',156,156,1295,524,-1,-1,75,43,73,1,7,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v',32,31,1393,521,-1,-1,668,17,668,1,1,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v',1448,32,850,524,-1,-1,2674,1,2667,1,2,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128a.vhd',0,170,1104,524,796,724,822,1,822,1,12,'',0x0010006c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v',208,208,2036,524,-1,-1,2035,58,2013,1,3,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCO3FPGA_Common\PH2_CLK.v',52,52,2036,524,597,724,1,1,1,1,10,'',0x0010006c,0,80,0,0,''
 _StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\coco3fpga_top.v',0x04001c8e,277,1,25,'5 9','',0x0,'',1,72,0,0
-_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\CoCo3IO.v',0x0c001c8e,541,141,25,'5 9','',0x0,'',1,72,0,0
+_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\CoCo3IO.v',0x04001c8e,546,1,25,'5 9','',0x0,'',1,72,0,0
 _StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v',0x04001c8e,170,25,25,'5 9','',0x0,'',1,72,0,0
 _StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v',0x0c001c8e,64,81,25,'5 9','',0x0,'',1,72,0,0
 _StateBuffer='X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v',0x04001c8e,5,1,25,'5 9','',0x0,'',1,72,0,0
 _StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\sram\coco_ram.vhd',0x0400048e,109,4,25,'5 9','',0x0,'',1,72,0,0
 _StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\rom\coco_rom.vhd',0x0400048e,75,43,25,'5 9','',0x0,'',1,72,0,0
-_StateBuffer='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v',0x04001c8e,964,7,25,'5 9','',0x0,'',1,72,0,0
-_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v',0x04001c8e,1,1,25,'5 9','',0x0,'',1,72,0,0
-_StateBuffer='X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v',0x0c001c8e,4436,159,25,'5 9','',0x0,'',1,72,0,0
-_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\PH2_CLK.v',0x04001c8e,1,1,25,'5 9','',0x0,'',1,72,0,0
-_StateHistory=FILELIST,'P:\Altera\CoCo\orig_4.1\CoCO3FPGA_Common\coco3fpga_top.v','X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.qsf','X:\COCO3_Mister\CoCO3FPGA_Common\sound.v','X:\COCO3_Mister\CoCO3FPGA_Common\PH2_CLK.v','X:\COCO3_DE2-115\CoCO3FPGA_Common\CPU09\cpu09new_B15.vhd','X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v','X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','X:\COCO3_Mister\CoCO3FPGA_Common\COCO3GEN.v','X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v'
-_StateHistory=SEARCH,'MUGS','SHIFT','RESET_INS','COCO_KE','COCO_RESET_N','RESET','BUTTONS_N','BUTTON_N','EE','RESET_N'
+_StateBuffer='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v',0x04001c8e,668,17,25,'5 9','',0x0,'',1,72,0,0
+_StateBuffer='X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v',0x04001c8e,2674,1,25,'5 9','',0x0,'',1,72,0,0
+_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128a.vhd',0x0400048e,822,1,25,'5 9','',0x0,'',1,72,0,0
+_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v',0x0c001c8e,2035,58,25,'5 9','',0x0,'',1,72,0,0
+_StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\PH2_CLK.v',0x00001c8e,1,1,25,'5 9','',0x0,'',1,72,0,0
+_StateHistory=FILELIST,'X:\COCO3_DE2-115\CoCO3FPGA_Common\CPU09\cpu09new_B15.vhd','X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v','X:\COCO3_Mister\CoCO3FPGA_Common\COCO3GEN.v','X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v','X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09new_B15.vhd','X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128a.vhd','X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128.vhd','X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.qsf','X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v'
+_StateHistory=SEARCH,'SWITCHES[4]','SWITCH[4]','GIME_FIRQ','CART1_FIRQ_STAT_N','CART1_BUF_RESET_N','CART_INT_IN_N','CART1_FIRQ_N','CART1_CLK_N','CART_INT_N','CART1_POL'
 _StateHistory=EDITFILE,'X:\COCO3_Mister\COCO3_MISTer','X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK_bb.v','X:\COCO3_Mister\CoCO3FPGA_Common\sram\coco_ram.vhd'
-_StateHistory=DOCUMENTVISIT,'201         1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','232         10          X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v','765         13          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','5           25          X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v','1777        1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','170         25          X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v','1774        21          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','25          1           X:\COCO3_Mister\CoCO3FPGA_Common\COCO3GEN.v','1774        21          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','1           1           X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v'
+_StateHistory=DOCUMENTVISIT,'2022        1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2618        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2067        1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2643        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2069        1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2655        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2070        87          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2656        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2092        3           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2674        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v'
 _StateDocumentVisit=10
 
 [Editor]
+_RestoreSysFlags=0x43097fc8, 0xfffffffc, 0
 FilterProjDeleteList 
 FilterProjAdd='Source Files','*.c;*.cs;*.cpp;*.cxx;*.hxx;*.prg;*.pas;*.asm;*.bas;*.sc;*.jav*;*.htm*;*.shtm*',-1
 FilterProjAdd='Header Files','*.h;*.hpp;*.inc',-1
 FilterProjAdd='Resources','*.rc;*.bmp;*.ico;*.cur;*.dlg',-1
 FilterProjAdd='Other Files','*.*',-1
-_RestoreSysFlags=0x43097fc8, 0xfffffffc, 0
 VCSProject=''
 VCSProjectPath=''
 VCSProjectLocalPath=''
@@ -148,4 +150,5 @@ EditSetPath=''
 .\CoCO3FPGA_Common\PS2_Key\ps2_keyboard.v
 .\CoCO3FPGA_Common\rom\coco_rom.vhd
 .\CoCO3FPGA_Common\sram\coco_ram.vhd
+.\CoCO3FPGA_Common\por.v
 
