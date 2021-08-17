@@ -1,5 +1,5 @@
 Flow report for coco3fpga_dw
-Sun Aug 15 13:00:00 2021
+Tue Aug 17 09:52:08 2021
 Quartus Prime Version 17.0.2 Build 602 07/19/2017 SJ Lite Edition
 
 
@@ -41,18 +41,18 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Sun Aug 15 12:59:22 2021       ;
+; Flow Status                        ; Successful - Tue Aug 17 09:51:30 2021       ;
 ; Quartus Prime Version              ; 17.0.2 Build 602 07/19/2017 SJ Lite Edition ;
 ; Revision Name                      ; coco3fpga_dw                                ;
-; Top-level Entity Name              ; coco3fpga_dw                                ;
+; Top-level Entity Name              ; DE2_115_top                                 ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE115F29C7                               ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 46,009 / 114,480 ( 40 % )                   ;
-;     Total combinational functions  ; 45,277 / 114,480 ( 40 % )                   ;
-;     Dedicated logic registers      ; 3,231 / 114,480 ( 3 % )                     ;
-; Total registers                    ; 3231                                        ;
-; Total pins                         ; 72 / 529 ( 14 % )                           ;
+; Total logic elements               ; 46,353 / 114,480 ( 40 % )                   ;
+;     Total combinational functions  ; 45,646 / 114,480 ( 40 % )                   ;
+;     Dedicated logic registers      ; 3,273 / 114,480 ( 3 % )                     ;
+; Total registers                    ; 3273                                        ;
+; Total pins                         ; 159 / 529 ( 30 % )                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 1,166,390 / 3,981,312 ( 29 % )              ;
 ; Embedded Multiplier 9-bit elements ; 0 / 532 ( 0 % )                             ;
@@ -65,54 +65,54 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 08/15/2021 12:22:26 ;
+; Start date & time ; 08/17/2021 09:13:16 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; coco3fpga_dw        ;
 +-------------------+---------------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                                     ;
-+-------------------------------------+------------------------------------------------------------+--------------------+-------------+----------------+
-; Assignment Name                     ; Value                                                      ; Default Value      ; Entity Name ; Section Id     ;
-+-------------------------------------+------------------------------------------------------------+--------------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID               ; 91754754141.162905534604832                                ; --                 ; --          ; --             ;
-; CYCLONEII_OPTIMIZATION_TECHNIQUE    ; Speed                                                      ; Balanced           ; --          ; --             ;
-; EDA_OUTPUT_DATA_FORMAT              ; None                                                       ; --                 ; --          ; eda_simulation ;
-; EDA_TIME_SCALE                      ; 1 ps                                                       ; --                 ; --          ; eda_simulation ;
-; ENABLE_SIGNALTAP                    ; Off                                                        ; --                 ; --          ; --             ;
-; FITTER_EFFORT                       ; Standard Fit                                               ; Auto Fit           ; --          ; --             ;
-; HDL_MESSAGE_LEVEL                   ; Level3                                                     ; Level2             ; --          ; --             ;
-; MAX_CORE_JUNCTION_TEMP              ; 85                                                         ; --                 ; --          ; --             ;
-; MIN_CORE_JUNCTION_TEMP              ; 0                                                          ; --                 ; --          ; --             ;
-; MISC_FILE                           ; C:/Projects/Coco/V4.1.0_DE2_115/CoCo3FPGA/coco3fpga_dw.dpf ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCO3FPGA_Common/UART_CLK_inst.v                        ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCO3FPGA_Common/UART_CLK_bb.v                          ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCO3FPGA_Common/UART_CLK.ppf                           ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCO3FPGA_Common/disk02_inst.v                          ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCO3FPGA_Common/disk02_bb.v                            ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCo3FPGA_Common/disk02_02_inst.v                       ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCo3FPGA_Common/disk02_02_bb.v                         ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCO3FPGA_Common/PH2_CLK_inst.v                         ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCO3FPGA_Common/PH2_CLK_bb.v                           ; --                 ; --          ; --             ;
-; MISC_FILE                           ; ../CoCO3FPGA_Common/PH2_CLK_syn.v                          ; --                 ; --          ; --             ;
-; NUM_PARALLEL_PROCESSORS             ; 8                                                          ; --                 ; --          ; --             ;
-; OPTIMIZE_HOLD_TIMING                ; IO Paths and Minimum TPD Paths                             ; All Paths          ; --          ; --             ;
-; OPTIMIZE_POWER_DURING_SYNTHESIS     ; Off                                                        ; Normal compilation ; --          ; --             ;
-; PARTITION_COLOR                     ; -- (Not supported for targeted family)                     ; --                 ; --          ; Top            ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family)                     ; --                 ; --          ; Top            ;
-; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family)                     ; --                 ; --          ; Top            ;
-; PHYSICAL_SYNTHESIS_EFFORT           ; Extra                                                      ; Normal             ; --          ; --             ;
-; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                                        ; --                 ; --          ; --             ;
-; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                      ; --                 ; --          ; --             ;
-; SAVE_DISK_SPACE                     ; Off                                                        ; On                 ; --          ; --             ;
-; SEARCH_PATH                         ; PS2_Key/                                                   ; --                 ; --          ; --             ;
-; SEARCH_PATH                         ; SDCard/                                                    ; --                 ; --          ; --             ;
-; SEARCH_PATH                         ; UART_6551/                                                 ; --                 ; --          ; --             ;
-; SEARCH_PATH                         ; UART_6850/                                                 ; --                 ; --          ; --             ;
-; USE_GENERATED_PHYSICAL_CONSTRAINTS  ; Off                                                        ; --                 ; --          ; eda_blast_fpga ;
-; USE_SIGNALTAP_FILE                  ; MISTer.stp                                                 ; --                 ; --          ; --             ;
-+-------------------------------------+------------------------------------------------------------+--------------------+-------------+----------------+
++----------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                 ;
++-------------------------------------+----------------------------------------+--------------------+-------------+----------------+
+; Assignment Name                     ; Value                                  ; Default Value      ; Entity Name ; Section Id     ;
++-------------------------------------+----------------------------------------+--------------------+-------------+----------------+
+; COMPILER_SIGNATURE_ID               ; 91754754141.162921679602336            ; --                 ; --          ; --             ;
+; CYCLONEII_OPTIMIZATION_TECHNIQUE    ; Speed                                  ; Balanced           ; --          ; --             ;
+; EDA_OUTPUT_DATA_FORMAT              ; None                                   ; --                 ; --          ; eda_simulation ;
+; EDA_TIME_SCALE                      ; 1 ps                                   ; --                 ; --          ; eda_simulation ;
+; ENABLE_SIGNALTAP                    ; Off                                    ; --                 ; --          ; --             ;
+; FITTER_EFFORT                       ; Standard Fit                           ; Auto Fit           ; --          ; --             ;
+; HDL_MESSAGE_LEVEL                   ; Level3                                 ; Level2             ; --          ; --             ;
+; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --                 ; --          ; --             ;
+; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCO3FPGA_Common/UART_CLK_inst.v    ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCO3FPGA_Common/UART_CLK_bb.v      ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCO3FPGA_Common/UART_CLK.ppf       ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCO3FPGA_Common/disk02_inst.v      ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCO3FPGA_Common/disk02_bb.v        ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCo3FPGA_Common/disk02_02_inst.v   ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCo3FPGA_Common/disk02_02_bb.v     ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCO3FPGA_Common/PH2_CLK_inst.v     ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCO3FPGA_Common/PH2_CLK_bb.v       ; --                 ; --          ; --             ;
+; MISC_FILE                           ; ../CoCO3FPGA_Common/PH2_CLK_syn.v      ; --                 ; --          ; --             ;
+; NUM_PARALLEL_PROCESSORS             ; 8                                      ; --                 ; --          ; --             ;
+; OPTIMIZE_HOLD_TIMING                ; IO Paths and Minimum TPD Paths         ; All Paths          ; --          ; --             ;
+; OPTIMIZE_POWER_DURING_SYNTHESIS     ; Off                                    ; Normal compilation ; --          ; --             ;
+; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --                 ; DE2_115_top ; Top            ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family) ; --                 ; DE2_115_top ; Top            ;
+; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family) ; --                 ; DE2_115_top ; Top            ;
+; PHYSICAL_SYNTHESIS_EFFORT           ; Extra                                  ; Normal             ; --          ; --             ;
+; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                    ; --                 ; --          ; --             ;
+; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --                 ; --          ; --             ;
+; SAVE_DISK_SPACE                     ; Off                                    ; On                 ; --          ; --             ;
+; SEARCH_PATH                         ; PS2_Key/                               ; --                 ; --          ; --             ;
+; SEARCH_PATH                         ; SDCard/                                ; --                 ; --          ; --             ;
+; SEARCH_PATH                         ; UART_6551/                             ; --                 ; --          ; --             ;
+; SEARCH_PATH                         ; UART_6850/                             ; --                 ; --          ; --             ;
+; TOP_LEVEL_ENTITY                    ; DE2_115_top                            ; coco3fpga_dw       ; --          ; --             ;
+; USE_GENERATED_PHYSICAL_CONSTRAINTS  ; Off                                    ; --                 ; --          ; eda_blast_fpga ;
+; USE_SIGNALTAP_FILE                  ; MISTer.stp                             ; --                 ; --          ; --             ;
++-------------------------------------+----------------------------------------+--------------------+-------------+----------------+
 
 
 +-------------------------------------------------------------------------------------------------------------------------------+
@@ -120,11 +120,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:14:28     ; 1.0                     ; 5164 MB             ; 00:14:30                           ;
-; Fitter                    ; 00:21:26     ; 1.1                     ; 6927 MB             ; 00:29:27                           ;
-; Assembler                 ; 00:00:09     ; 1.0                     ; 4812 MB             ; 00:00:05                           ;
-; TimeQuest Timing Analyzer ; 00:00:35     ; 1.5                     ; 5497 MB             ; 00:00:33                           ;
-; Total                     ; 00:36:38     ; --                      ; --                  ; 00:44:35                           ;
+; Analysis & Synthesis      ; 00:15:51     ; 1.0                     ; 5168 MB             ; 00:15:52                           ;
+; Fitter                    ; 00:21:17     ; 1.1                     ; 6945 MB             ; 00:30:25                           ;
+; Assembler                 ; 00:00:10     ; 1.0                     ; 4810 MB             ; 00:00:05                           ;
+; TimeQuest Timing Analyzer ; 00:00:35     ; 1.3                     ; 5467 MB             ; 00:00:27                           ;
+; Total                     ; 00:37:53     ; --                      ; --                  ; 00:46:49                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

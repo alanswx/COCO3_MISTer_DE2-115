@@ -1,15 +1,15 @@
-Fitter Status : Successful - Sun Aug 15 12:58:39 2021
+Fitter Status : Successful - Tue Aug 17 09:50:45 2021
 Quartus Prime Version : 17.0.2 Build 602 07/19/2017 SJ Lite Edition
 Revision Name : coco3fpga_dw
-Top-level Entity Name : coco3fpga_dw
+Top-level Entity Name : DE2_115_top
 Family : Cyclone IV E
 Device : EP4CE115F29C7
 Timing Models : Final
-Total logic elements : 46,009 / 114,480 ( 40 % )
-    Total combinational functions : 45,277 / 114,480 ( 40 % )
-    Dedicated logic registers : 3,231 / 114,480 ( 3 % )
-Total registers : 3231
-Total pins : 72 / 529 ( 14 % )
+Total logic elements : 46,353 / 114,480 ( 40 % )
+    Total combinational functions : 45,646 / 114,480 ( 40 % )
+    Dedicated logic registers : 3,273 / 114,480 ( 3 % )
+Total registers : 3273
+Total pins : 159 / 529 ( 30 % )
 Total virtual pins : 0
 Total memory bits : 1,166,390 / 3,981,312 ( 29 % )
 Embedded Multiplier 9-bit elements : 0 / 532 ( 0 % )

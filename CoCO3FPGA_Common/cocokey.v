@@ -203,7 +203,7 @@ begin
 	SLO_RESET_N <= (SLO_RESET == 6'h3F);
 
 	SLO_CLK_D <= SLO_CLK;
-	if (SLO_CLK == 1'b1 && SLO_CLK_D == 1'b0)
+	if (SLO_CLK == 1'b0 && SLO_CLK_D == 1'b1)
 		if(SLO_RESET != 6'h3F)
 			SLO_RESET <= SLO_RESET + 1'b1;
 //	end

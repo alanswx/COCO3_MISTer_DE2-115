@@ -16,7 +16,7 @@ _StateView='X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK.v',182,182,1295,524,-1,-1,
 _StateView='X:\COCO3_DE2-115\CoCO3FPGA_Common\UART_CLK.v',182,182,1295,524,199,724,5,1,5,1,9,'',0x0010006c,0,80,0,0,''
 _StateView='X:\COCO3_Mister\CoCO3FPGA_Common\sram\coco_ram.vhd',883,190,1295,524,398,724,109,4,81,1,5,'',0x0010004c,0,80,0,0,''
 _StateView='X:\COCO3_Mister\CoCO3FPGA_Common\rom\coco_rom.vhd',156,156,1295,524,-1,-1,75,43,73,1,7,'',0x0010004c,0,80,0,0,''
-_StateView='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v',32,31,1393,521,-1,-1,668,17,668,1,1,'',0x0010004c,0,80,0,0,''
+_StateView='X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v',12,19,1386,521,-1,-1,668,17,668,1,1,'',0x0010004c,0,80,0,0,''
 _StateView='X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v',1448,32,850,524,-1,-1,2674,1,2667,1,2,'',0x0010004c,0,80,0,0,''
 _StateView='X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128a.vhd',0,170,1104,524,796,724,822,1,822,1,12,'',0x0010006c,0,80,0,0,''
 _StateView='X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v',208,208,2036,524,-1,-1,2035,58,2013,1,3,'',0x0010004c,0,80,0,0,''
@@ -33,10 +33,10 @@ _StateBuffer='X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v',0x04001c8e,2674
 _StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128a.vhd',0x0400048e,822,1,25,'5 9','',0x0,'',1,72,0,0
 _StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v',0x0c001c8e,2035,58,25,'5 9','',0x0,'',1,72,0,0
 _StateBuffer='X:\COCO3_Mister\CoCO3FPGA_Common\PH2_CLK.v',0x00001c8e,1,1,25,'5 9','',0x0,'',1,72,0,0
-_StateHistory=FILELIST,'X:\COCO3_DE2-115\CoCO3FPGA_Common\CPU09\cpu09new_B15.vhd','X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v','X:\COCO3_Mister\CoCO3FPGA_Common\COCO3GEN.v','X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v','X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09new_B15.vhd','X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128a.vhd','X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128.vhd','X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.qsf','X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v'
+_StateHistory=FILELIST,'X:\COCO3_Mister\CoCO3FPGA_Common\cocokey.v','X:\COCO3_Mister\CoCO3FPGA_Common\COCO3GEN.v','X:\COCO3_Mister\CoCO3FPGA_Common\coco3vid.v','X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09new_B15.vhd','X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128a.vhd','X:\COCO3_Mister\CoCO3FPGA_Common\CPU09\cpu09l_128.vhd','X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.qsf','X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','C:\Users\Stan\Desktop\Quartus 17.1.exe'
 _StateHistory=SEARCH,'SWITCHES[4]','SWITCH[4]','GIME_FIRQ','CART1_FIRQ_STAT_N','CART1_BUF_RESET_N','CART_INT_IN_N','CART1_FIRQ_N','CART1_CLK_N','CART_INT_N','CART1_POL'
 _StateHistory=EDITFILE,'X:\COCO3_Mister\COCO3_MISTer','X:\COCO3_Mister\CoCO3FPGA_Common\UART_CLK_bb.v','X:\COCO3_Mister\CoCO3FPGA_Common\sram\coco_ram.vhd'
-_StateHistory=DOCUMENTVISIT,'2022        1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2618        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2067        1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2643        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2069        1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2655        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2070        87          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2656        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2092        3           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2674        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v'
+_StateHistory=DOCUMENTVISIT,'2067        1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2643        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2069        1           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2655        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2070        87          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2656        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','2092        3           X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','2674        1           X:\COCO3_DE2-115\CoCO3FPGA_Common\coco3fpga_top.v','668         17          X:\COCO3_Mister\CoCo3FPGA\coco3fpga_dw.v','289         1623        C:\Users\Stan\Desktop\Quartus 17.1.exe'
 _StateDocumentVisit=10
 
 [Editor]
@@ -151,4 +151,5 @@ EditSetPath=''
 .\CoCO3FPGA_Common\rom\coco_rom.vhd
 .\CoCO3FPGA_Common\sram\coco_ram.vhd
 .\CoCO3FPGA_Common\por.v
+.\CoCo3FPGA\DE2_115_top.v
 

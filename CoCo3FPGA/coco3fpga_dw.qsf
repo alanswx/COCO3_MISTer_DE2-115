@@ -38,15 +38,11 @@
 
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE115F29C7
-set_global_assignment -name TOP_LEVEL_ENTITY coco3fpga_dw
+set_global_assignment -name TOP_LEVEL_ENTITY DE2_115_top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "9.1 SP2"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:24:31  APRIL 14, 2010"
 set_global_assignment -name LAST_QUARTUS_VERSION "17.0.2 Lite Edition"
 set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_blast_fpga
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name STRATIX_CONFIGURATION_DEVICE EPCS4
@@ -60,7 +56,6 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE SPEED
 set_global_assignment -name OPTIMIZE_POWER_DURING_SYNTHESIS OFF
 set_global_assignment -name HDL_MESSAGE_LEVEL LEVEL3
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
 set_global_assignment -name PHYSICAL_SYNTHESIS_EFFORT EXTRA
 set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS ON
@@ -70,14 +65,9 @@ set_global_assignment -name SEARCH_PATH PS2_Key/ -tag from_archive
 set_global_assignment -name SEARCH_PATH SDCard/ -tag from_archive
 set_global_assignment -name SEARCH_PATH UART_6551/ -tag from_archive
 set_global_assignment -name SEARCH_PATH UART_6850/ -tag from_archive
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to P_SWITCH[0]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to P_SWITCH[1]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to P_SWITCH[2]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to P_SWITCH[3]
 set_global_assignment -name OPTIMIZE_HOLD_TIMING "IO PATHS AND MINIMUM TPD PATHS"
 set_global_assignment -name OPTIMIZE_MULTI_CORNER_TIMING ON
 set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to RST
 set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 780
 set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 7
@@ -91,10 +81,11 @@ set_location_assignment PIN_B10 -to BLUE[0]
 set_location_assignment PIN_A10 -to BLUE[1]
 set_location_assignment PIN_C11 -to BLUE[2]
 set_location_assignment PIN_B11 -to BLUE[3]
-set_location_assignment PIN_R24 -to COCO_RESET_N
-#set_location_assignment PIN_R24 -to BUTTON_N[3]
-set_location_assignment PIN_N21 -to BUTTON_N[2]
-set_location_assignment PIN_M21 -to BUTTON_N[1]
+#set_location_assignment PIN_R24 -to COCO_RESET_N
+set_location_assignment PIN_R24 -to DE2_BUTTONS_N[3]
+set_location_assignment PIN_N21 -to DE2_BUTTONS_N[2]
+set_location_assignment PIN_M21 -to DE2_BUTTONS_N[1]
+set_location_assignment PIN_M23 -to DE2_BUTTONS_N[0]
 set_location_assignment PIN_AD15 -to CK_CLK
 set_location_assignment PIN_AG25 -to CK_DAT
 set_location_assignment PIN_B14 -to CLK27MHZ
@@ -300,16 +291,16 @@ set_location_assignment PIN_U21 -to SEGMENT3_N[1]
 set_location_assignment PIN_V21 -to SEGMENT3_N[0]
 set_location_assignment PIN_AE13 -to SPI_CLK
 set_location_assignment PIN_AC14 -to SPI_SS_N
-set_location_assignment PIN_AB25 -to SWITCH[9]
-set_location_assignment PIN_AC25 -to SWITCH[8]
-set_location_assignment PIN_AB26 -to SWITCH[7]
-set_location_assignment PIN_AD26 -to SWITCH[6]
-set_location_assignment PIN_AC26 -to SWITCH[5]
-set_location_assignment PIN_AB27 -to SWITCH[4]
-set_location_assignment PIN_AD27 -to SWITCH[3]
-set_location_assignment PIN_AC27 -to SWITCH[2]
-set_location_assignment PIN_AC28 -to SWITCH[1]
-set_location_assignment PIN_AB28 -to SWITCH[0]
+set_location_assignment PIN_AB25 -to DE2_SWITCHES[9]
+set_location_assignment PIN_AC25 -to DE2_SWITCHES[8]
+set_location_assignment PIN_AB26 -to DE2_SWITCHES[7]
+set_location_assignment PIN_AD26 -to DE2_SWITCHES[6]
+set_location_assignment PIN_AC26 -to DE2_SWITCHES[5]
+set_location_assignment PIN_AB27 -to DE2_SWITCHES[4]
+set_location_assignment PIN_AD27 -to DE2_SWITCHES[3]
+set_location_assignment PIN_AC27 -to DE2_SWITCHES[2]
+set_location_assignment PIN_AC28 -to DE2_SWITCHES[1]
+set_location_assignment PIN_AB28 -to DE2_SWITCHES[0]
 set_location_assignment PIN_C13 -to V_SYNC
 set_location_assignment PIN_AD25 -to WF_RXD
 set_location_assignment PIN_AD22 -to WF_TXD
@@ -391,16 +382,16 @@ set_location_assignment PIN_D12 -to BLUE[7]
 set_location_assignment PIN_C10 -to VGA_SYNC_N
 set_location_assignment PIN_F11 -to VGA_BLANK_N
 set_location_assignment PIN_A12 -to VGA_CLK
-set_global_assignment -name MISC_FILE "C:/Projects/Coco/V4.1.0_DE2_115/CoCo3FPGA/coco3fpga_dw.dpf"
 set_location_assignment PIN_AF14 -to SD_WP_N
 set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS ON
 set_global_assignment -name NUM_PARALLEL_PROCESSORS 8
 set_global_assignment -name SMART_RECOMPILE OFF
-set_location_assignment PIN_M23 -to EE
 set_global_assignment -name OPTIMIZATION_MODE BALANCED
 set_global_assignment -name SAVE_DISK_SPACE OFF
 set_global_assignment -name ENABLE_SIGNALTAP OFF
 set_global_assignment -name USE_SIGNALTAP_FILE MISTer.stp
+set_global_assignment -name VERILOG_FILE DE2_115_top.v
+set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/Counter_Display.vhd
 set_global_assignment -name VERILOG_FILE ../CoCO3FPGA_Common/por.v
 set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/CPU09/cpu09l_128a.vhd
 set_global_assignment -name VHDL_FILE ../CoCO3FPGA_Common/sram/coco_ram.vhd
@@ -435,4 +426,15 @@ set_global_assignment -name QIP_FILE ../CoCO3FPGA_Common/disk02.qip
 set_global_assignment -name QIP_FILE ../CoCo3FPGA_Common/disk02_02.qip
 set_global_assignment -name QIP_FILE ../CoCO3FPGA_Common/PH2_CLK.qip
 set_global_assignment -name MIF_FILE ../CoCO3FPGA_Common/disk02_02.mif
+set_global_assignment -name SIGNALTAP_FILE MISTer.stp
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to P_SWITCH[0]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to P_SWITCH[1]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to P_SWITCH[2]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to P_SWITCH[3]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to RST
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

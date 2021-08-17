@@ -122,11 +122,16 @@ output				PADDLE_MCLK,
 input	[3:0]		PADDLE_CLK,
 input	[3:0]		P_SWITCH,
 
-//	GPIO
-input				EE,
-output	[6:0]		PROBE,
+//	Config Static switches
+input	[9:0]  		SWITCH,			
 
-inout	[7:0]		GPIO
+//	GPIO
+inout	[7:0]		GPIO,
+
+input				EE_N,
+output	[31:0]		PROBE
+
+
 );
 
 
@@ -191,10 +196,6 @@ wire	[8:0]	LEDG;
 wire	[17:0]	LEDR;
 
 // Extra Buttons and Switches
-
-//	SRH	MISTer
-//	Static switches
-wire	[9:0]  	SWITCH;			
 
 //	SRH	MISTer
 //	Static Buttons
@@ -685,11 +686,13 @@ reg		[7:0]	SLAVE_ADD_HI;
 reg		[7:0]	SLAVE_ADD_LO;
 wire			SLAVE_WR;
 
-wire			coco3_por;
 
 // Probe's defined
 //assign PROBE[6:0] = {CART1_POL, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_N, CART1_FIRQ_N, RESET_N, PH_2};
-assign PROBE[6:0] = {coco3_por, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_N, CART1_FIRQ_N, RESET_N, PH_2};
+assign PROBE[7:0] = {1'b0, RESET_P, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_N, H_SYNC, RESET_N, PH_2};
+assign PROBE[15:8] = LEDR[7:0];
+assign PROBE[23:16] = LEDG[7:0];
+assign PROBE[31:24] = KEY_COLUMN[7:0];
 
 
 // SRH MISTer
@@ -729,11 +732,11 @@ assign PROBE[6:0] = {coco3_por, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_
 											//		On  - 25 MHz
 
 
-assign SWITCH[9:0] = 10'b0000010000; /* synthesis preserve */ // This is ECB
+//assign SWITCH[9:0] = 10'b0000010000; /* synthesis preserve */ // This is ECB
 //assign SWITCH[9:0] = 10'b0000010110; // This is EDB
 //assign SWITCH[9:0] = 10'b0000000000; // This is Orch 80 in ROM
 
-assign BUTTON_N[3:0] = {COCO_RESET_N, 2'b1,EE};
+assign BUTTON_N[3:0] = {COCO_RESET_N, 2'b1,EE_N};
 
 
 //assign LEDG = TRACE;														// Floppy Trace
@@ -1655,15 +1658,9 @@ PH2_CLK	PH2_CLK_inst (
 	.outclk ( PH_2 )
 	);
 
-POR CoCo3por(
-	.CLK(CLK50MHZ),
-	.POR(coco3_por)
-	);
-
 
 assign RESET_P =	!BUTTON_N[3]					// Button
-					| RESET 						// CTRL-ALT-DEL or CTRL-ALT-INS
-					| coco3_por;					// 1 time por	   
+					| RESET; 						// CTRL-ALT-DEL or CTRL-ALT-INS
 
 // Make sure all resets are enabled for a long enough time to allow voltages to settle
 always @ (negedge CLK50MHZ or posedge RESET_P)		// 50 MHz / 64
@@ -3952,8 +3949,8 @@ assign KEYBOARD_IN[7] =	 JSTICK;											// Joystick input
 COCOKEY coco_keyboard(
 		.RESET_N(RESET_N),
 		.CLK50MHZ(CLK50MHZ),
-//		.SLO_CLK(V_SYNC_N),
-		.SLO_CLK(MCLOCK[19]),
+		.SLO_CLK(V_SYNC_N),
+//		.SLO_CLK(MCLOCK[19]),
 		.PS2_CLK(ps2_clk),
 		.PS2_DATA(ps2_data),
 		.KEY(KEY),
