@@ -74,6 +74,9 @@ assign SOUND		=	{1'b0, SBS, SOUND_DTOA};
 assign DAC_LEFT	=	{2'b00, ORCH_LEFT,  ORCH_LEFT_EXT, 1'b0}	+ {1'b0, SOUND, 10'h000};
 assign DAC_RIGHT	=	{2'b00, ORCH_RIGHT, ORCH_RIGHT_EXT, 1'b0}	+ {1'b0, SOUND, 10'h000};
 
+assign SOUND_LEFT = DAC_LEFT[15:0];
+assign SOUND_RIGHT = DAC_RIGHT[15:0];
+
 assign AUD_XCK = MCLOCK[0];  // 25Mhz
 
 //Delay LRCLK half cycle

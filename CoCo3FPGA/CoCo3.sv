@@ -206,8 +206,8 @@ localparam  CONF_STR = {
 		  "OG,Cart Interrupt Disabled,OFF,ON;",
         "-;",
         "R0,Reset;",
-        "J1,Button;",
-        "jn,A;",
+        "J1,Button1,Button2;",
+        "jn,A,B;",
         "V,v",`BUILD_DATE
 };
 
@@ -338,8 +338,8 @@ video_mixer #(.GAMMA(1)) video_mixer
 );
 //
 //
-assign AUDIO_L = {2'b0,/*6*/cocosound, 8'd0};
-assign AUDIO_R = AUDIO_L;
+//assign AUDIO_L = {2'b0,/*6*/cocosound, 8'd0};
+//assign AUDIO_R = AUDIO_L;
 assign AUDIO_S = 0;
 
 wire [7:0] r;
@@ -371,15 +371,16 @@ coco3fpga_dw coco3 (
 //  .joy1(coco_joy1),
 //  .joy2(coco_joy2),
 
-//  .joya1(coco_ajoy1),
-//  .joya2(coco_ajoy2),
+  .joya1(coco_ajoy1),
+  .joya2(coco_ajoy2),
 
 // R1, L2, R2, L1
 .P_SWITCH(~{coco_joy2[4],coco_joy1[5],coco_joy2[5],coco_joy1[4]}),
 .SWITCH(switch),
 .SOUND_OUT(cocosound),
-
-  .ioctl_addr(ioctl_addr),
+.SOUND_LEFT(AUDIO_L),
+.SOUND_RIGHT(AUDIO_R),
+  .ioctl_addr(ioctl_addr+'hA000),
   .ioctl_data(ioctl_data),
   .ioctl_download(ioctl_download),
   .ioctl_index(ioctl_index),

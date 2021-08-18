@@ -117,6 +117,8 @@ input				AUD_ADCDAT,
 input				AUD_ADCLRCK,
 
 output [5:0] SOUND_OUT,
+output [15:0] SOUND_LEFT,
+output [15:0] SOUND_RIGHT,
 
 // CoCo Joystick
 // Needs removal.... ???
@@ -440,7 +442,7 @@ reg				JOY_TRIGGER0;
 reg				JOY_TRIGGER1;
 reg				JOY_TRIGGER2;
 reg				JOY_TRIGGER3;
-wire			JSTICK;
+reg			JSTICK;
 wire			JOY1;
 wire			JOY2;
 wire			JOY3;
