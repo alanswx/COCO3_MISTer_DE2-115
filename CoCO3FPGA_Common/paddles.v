@@ -430,6 +430,33 @@ begin
 	end
 end
 
+/*
+always @(posedge CLK50MHZ) begin
+  case (SEL)
+  2'b00:
+		if (joya2[15:10] > dac)
+			JSTICK<=1;
+		else
+			JSTICK<=0;
+  2'b01:
+  		if (joya2[7:2] > dac)
+			JSTICK<=1;
+		else
+			JSTICK<=0;
+2'b10:
+		if (joya1[15:10] > dac)
+			JSTICK<=1;
+		else
+			JSTICK<=0;
+  2'b11:
+  		if (joya1[7:2] > dac)
+			JSTICK<=1;
+		else
+			JSTICK<=0;
+	endcase
+end
+*/
+
 assign JSTICK =	(SEL == 2'b11)		?	JOY4:			// Left Y
 						(SEL == 2'b10)		?	JOY3:			// Left X
 						(SEL == 2'b01)		?	JOY2:			// Right Y

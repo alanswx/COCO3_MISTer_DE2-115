@@ -116,11 +116,15 @@ input				AUD_DACLRCK,
 input				AUD_ADCDAT,
 input				AUD_ADCLRCK,
 
+output [5:0] SOUND_OUT,
+
 // CoCo Joystick
 // Needs removal.... ???
 output				PADDLE_MCLK,
 input	[3:0]		PADDLE_CLK,
 input	[3:0]		P_SWITCH,
+input [15:0] joya1,
+input [15:0] joya2,
 
 //	Config Static switches
 input	[9:0]  		SWITCH,			
@@ -338,6 +342,9 @@ reg		[7:0]	DD_REG4;
 wire			ROM_SEL;
 reg		[5:0]	DTOA_CODE;
 reg		[5:0]	SOUND_DTOA;
+
+assign SOUND_OUT = SOUND_DTOA; // AJS - hook up sound directly
+
 wire	[7:0]	SOUND;
 wire	[18:0]	DAC_LEFT;
 wire	[18:0]	DAC_RIGHT;
@@ -1696,7 +1703,7 @@ cpu09 GLBCPU09(
 	.rw(RW_N),
 	.data_in(DATA_IN),
 	.data_out(DATA_OUT),
-	.halt(HALT_BUF2),
+	.halt(1'b0/*HALT_BUF2*/),
 	.hold(1'b0),
 	.irq(!CPU_IRQ_N),
 	.firq(!CPU_FIRQ_N),
