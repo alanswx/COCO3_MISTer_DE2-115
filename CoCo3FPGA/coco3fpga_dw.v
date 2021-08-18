@@ -696,7 +696,7 @@ wire			SLAVE_WR;
 
 // Probe's defined
 //assign PROBE[6:0] = {CART1_POL, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_N, CART1_FIRQ_N, RESET_N, PH_2};
-assign PROBE[7:0] = {1'b0, CART1_POL, CART1_FIRQ_N, CART1_FIRQ_BUF[0], CART1_FIRQ_BUF[1], CART1_BUF_RESET_N, CART1_CLK_N, PH_2};
+assign PROBE[7:0] = {1'b0, CART1_POL, CART1_FIRQ_N, CART1_FIRQ_BUF[0], CART1_CLK_N_D, CART1_FIRQ_RESET_N, CART1_CLK_N, PH_2};
 assign PROBE[15:8] = LEDR[7:0];
 assign PROBE[23:16] = LEDG[7:0];
 assign PROBE[31:24] = KEY_COLUMN[7:0];
@@ -1711,7 +1711,6 @@ cpu09 GLBCPU09(
 //***********************************************************************
 // Interrupt source for CART signal
 always @(negedge CLK50MHZ or negedge RESET_N)
-//always @(negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1744,7 +1743,6 @@ assign KEY_INT_N = (KEYBOARD_IN == 8'hFF);
 //***********************************************************************
 // Interrupt Latch RESETs
 //***********************************************************************
-//always @(negedge PH_2 or negedge RESET_N)
 always @(negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
@@ -1877,7 +1875,6 @@ end
 // Clear		FF00
 assign HSYNC1_CLK_N = HSYNC_INT_N ^ HSYNC1_POL;
 always @ (negedge CLK50MHZ or negedge RESET_N)
-//always @ (negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1897,7 +1894,6 @@ begin
 end
 
 always @ (negedge CLK50MHZ or negedge RST_FF00_N)
-//always @ (negedge HSYNC1_CLK_N or negedge RST_FF00_N)
 begin
 	if(!RST_FF00_N)
 	begin
@@ -1921,7 +1917,6 @@ end
 // Clear		FF02
 assign VSYNC1_CLK_N = VSYNC_INT_N ^ VSYNC1_POL;
 always @ (negedge CLK50MHZ or negedge RESET_N)
-//always @ (negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1941,7 +1936,6 @@ begin
 end
 
 always @ (negedge CLK50MHZ or negedge RST_FF02_N)
-//always @ (negedge VSYNC1_CLK_N or negedge RST_FF02_N)
 begin
 	if(!RST_FF02_N)
 	begin
@@ -1973,24 +1967,21 @@ assign CART1_FIRQ_RESET_N =	CART1_BUF_RESET_N & RST_FF22_N;
 assign CART1_CLK_N = CART_INT_N ^ CART1_POL;
 
 always @ (negedge CLK50MHZ)
-//always @ (negedge PH_2)
 begin
 	if (PH_2)
 		CART_POL_BUF <= {CART_POL_BUF[0],CART1_POL}; 
 end
 
-//always @ (negedge PH_2 or negedge CART1_BUF_RESET_N)
 always @ (negedge CLK50MHZ or negedge CART1_BUF_RESET_N)
 begin
 	if(!CART1_BUF_RESET_N)
 	begin
 		CART1_FIRQ_BUF <= 2'b11;
 		CART1_FIRQ_N <= 1'b1;
-		CART1_CLK_N_D <= 1'b1;
+//		CART1_CLK_N_D <= 1'b1;
 	end
 	else
 	begin
-		CART1_CLK_N_D <= CART1_CLK_N;
 		if (PH_2)
 		begin
 			CART1_FIRQ_BUF <= {CART1_FIRQ_BUF[0], CART1_FIRQ_STAT_N};
@@ -1999,8 +1990,11 @@ begin
 	end
 end
 
-always @ (negedge CART1_CLK_N or negedge CART1_FIRQ_RESET_N)
-//always @ (negedge CLK50MHZ or negedge CART1_FIRQ_RESET_N)
+always @ (negedge CLK50MHZ)
+	CART1_CLK_N_D <= CART1_CLK_N;
+
+
+always @ (negedge CLK50MHZ or negedge CART1_FIRQ_RESET_N)
 begin
 	if(!CART1_FIRQ_RESET_N)
 	begin
@@ -2008,7 +2002,7 @@ begin
 	end
 	else
 	begin
-//		if (CART1_CLK_N_D == 1'b1 && CART1_CLK_N == 1'b0)
+		if (CART1_CLK_N_D == 1'b1 && CART1_CLK_N == 1'b0)
 			CART1_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
@@ -2027,9 +2021,7 @@ end
 // Switch	HSYNC3_FIRQ_INT
 // Clear		FF93
 
-// Canadate 1
 
-//always @ (negedge PH_2 or negedge RESET_N)
 always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
@@ -2049,7 +2041,6 @@ begin
 	end
 end
 
-//always @ (negedge HSYNC_INT_N or negedge RST_FF93_N)
 always @ (negedge CLK50MHZ or negedge RST_FF93_N)
 begin
 	if(!RST_FF93_N)
@@ -2062,10 +2053,6 @@ begin
 			HSYNC3_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
-
-/* 8/9/21 SRH */
-
-// Stop here////
 
 // V_SYNC int for COCO3
 // Output	VSYNC3_FIRQ_N

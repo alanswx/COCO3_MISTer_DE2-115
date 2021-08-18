@@ -696,7 +696,7 @@ wire			SLAVE_WR;
 
 // Probe's defined
 //assign PROBE[6:0] = {CART1_POL, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_N, CART1_FIRQ_N, RESET_N, PH_2};
-assign PROBE[7:0] = {1'b0, CART1_POL, CART1_FIRQ_N, CART1_FIRQ_BUF[0], CART1_FIRQ_BUF[1], CART1_BUF_RESET_N, CART1_CLK_N, PH_2};
+assign PROBE[7:0] = {1'b0, CART1_POL, CART1_FIRQ_N, CART1_FIRQ_BUF[0], CART1_CLK_N_D, CART1_FIRQ_RESET_N, CART1_CLK_N, PH_2};
 assign PROBE[15:8] = LEDR[7:0];
 assign PROBE[23:16] = LEDG[7:0];
 assign PROBE[31:24] = KEY_COLUMN[7:0];
@@ -1710,8 +1710,8 @@ cpu09 GLBCPU09(
 // Interrupt Sources
 //***********************************************************************
 // Interrupt source for CART signal
-//always @(negedge CLK50MHZ or negedge RESET_N)
-always @(negedge PH_2 or negedge RESET_N)
+always @(negedge CLK50MHZ or negedge RESET_N)
+//always @(negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1719,7 +1719,7 @@ begin
 	end
 	else
 	begin
-//		if (PH_2)
+		if (PH_2)
 			case (MPI_SCS)
 			2'b00:
 				CART_INT_IN_N <=  (!CART_INT_IN_N | SWITCH[4])
@@ -1986,11 +1986,10 @@ begin
 	begin
 		CART1_FIRQ_BUF <= 2'b11;
 		CART1_FIRQ_N <= 1'b1;
-		CART1_CLK_N_D <= 1'b1;
+//		CART1_CLK_N_D <= 1'b1;
 	end
 	else
 	begin
-		CART1_CLK_N_D <= CART1_CLK_N;
 		if (PH_2)
 		begin
 			CART1_FIRQ_BUF <= {CART1_FIRQ_BUF[0], CART1_FIRQ_STAT_N};
@@ -1999,8 +1998,12 @@ begin
 	end
 end
 
-always @ (negedge CART1_CLK_N or negedge CART1_FIRQ_RESET_N)
-//always @ (negedge CLK50MHZ or negedge CART1_FIRQ_RESET_N)
+always @ (negedge CLK50MHZ)
+	CART1_CLK_N_D <= CART1_CLK_N;
+
+
+//always @ (negedge CART1_CLK_N or negedge CART1_FIRQ_RESET_N)
+always @ (negedge CLK50MHZ or negedge CART1_FIRQ_RESET_N)
 begin
 	if(!CART1_FIRQ_RESET_N)
 	begin
@@ -2008,7 +2011,7 @@ begin
 	end
 	else
 	begin
-//		if (CART1_CLK_N_D == 1'b1 && CART1_CLK_N == 1'b0)
+		if (CART1_CLK_N_D == 1'b1 && CART1_CLK_N == 1'b0)
 			CART1_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end

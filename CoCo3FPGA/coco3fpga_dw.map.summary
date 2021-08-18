@@ -1,13 +1,13 @@
-Analysis & Synthesis Status : Successful - Wed Aug 18 07:47:56 2021
+Analysis & Synthesis Status : Successful - Wed Aug 18 13:36:05 2021
 Quartus Prime Version : 17.0.2 Build 602 07/19/2017 SJ Lite Edition
 Revision Name : coco3fpga_dw
 Top-level Entity Name : DE2_115_top
 Family : Cyclone IV E
-Total logic elements : 11,434
-    Total combinational functions : 9,879
-    Dedicated logic registers : 3,277
-Total registers : 3277
-Total pins : 159
+Total logic elements : 11,478
+    Total combinational functions : 9,918
+    Dedicated logic registers : 3,279
+Total registers : 3279
+Total pins : 157
 Total virtual pins : 0
 Total memory bits : 1,690,678
 Embedded Multiplier 9-bit elements : 0

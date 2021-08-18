@@ -84,8 +84,8 @@ output				V_SYNC,
 output				VGA_SYNC_N,
 output				VGA_BLANK_N,
 output				VGA_CLK,
-output				HBLANK,
-output				VBLANK,
+//output				HBLANK,
+//output				VBLANK,
 
 // PS/2
 input				ps2_clk,
@@ -195,8 +195,8 @@ coco3fpga_dw COCO3(
 	.VGA_SYNC_N(VGA_SYNC_N),
 	.VGA_BLANK_N(VGA_BLANK_N),
 	.VGA_CLK(VGA_CLK),
-	.HBLANK(HBLANK),
-	.VBLANK(VBLANK),
+//	.HBLANK(HBLANK),
+//	.VBLANK(VBLANK),
 
 // PS/2
 	.ps2_clk(ps2_clk),

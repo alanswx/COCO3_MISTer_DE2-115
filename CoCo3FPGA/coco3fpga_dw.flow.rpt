@@ -1,5 +1,5 @@
 Flow report for coco3fpga_dw
-Wed Aug 18 07:51:43 2021
+Wed Aug 18 13:39:58 2021
 Quartus Prime Version 17.0.2 Build 602 07/19/2017 SJ Lite Edition
 
 
@@ -41,18 +41,18 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Wed Aug 18 07:51:24 2021       ;
+; Flow Status                        ; Successful - Wed Aug 18 13:39:40 2021       ;
 ; Quartus Prime Version              ; 17.0.2 Build 602 07/19/2017 SJ Lite Edition ;
 ; Revision Name                      ; coco3fpga_dw                                ;
 ; Top-level Entity Name              ; DE2_115_top                                 ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE115F29C7                               ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 10,625 / 114,480 ( 9 % )                    ;
-;     Total combinational functions  ; 9,895 / 114,480 ( 9 % )                     ;
-;     Dedicated logic registers      ; 3,277 / 114,480 ( 3 % )                     ;
-; Total registers                    ; 3277                                        ;
-; Total pins                         ; 159 / 529 ( 30 % )                          ;
+; Total logic elements               ; 10,650 / 114,480 ( 9 % )                    ;
+;     Total combinational functions  ; 9,933 / 114,480 ( 9 % )                     ;
+;     Dedicated logic registers      ; 3,279 / 114,480 ( 3 % )                     ;
+; Total registers                    ; 3279                                        ;
+; Total pins                         ; 157 / 529 ( 30 % )                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 1,690,678 / 3,981,312 ( 42 % )              ;
 ; Embedded Multiplier 9-bit elements ; 0 / 532 ( 0 % )                             ;
@@ -65,7 +65,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 08/18/2021 07:43:51 ;
+; Start date & time ; 08/18/2021 13:32:11 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; coco3fpga_dw        ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ agreement for further details.
 +--------------------------------------+----------------------------------------+--------------------+-------------+----------------+
 ; Assignment Name                      ; Value                                  ; Default Value      ; Entity Name ; Section Id     ;
 +--------------------------------------+----------------------------------------+--------------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID                ; 91754754141.162929783106640            ; --                 ; --          ; --             ;
+; COMPILER_SIGNATURE_ID                ; 91754754141.162931873103968            ; --                 ; --          ; --             ;
 ; CYCLONEII_OPTIMIZATION_TECHNIQUE     ; Speed                                  ; Balanced           ; --          ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT               ; None                                   ; --                 ; --          ; eda_simulation ;
 ; EDA_TIME_SCALE                       ; 1 ps                                   ; --                 ; --          ; eda_simulation ;
@@ -125,11 +125,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:03:59     ; 1.0                     ; 5105 MB             ; 00:03:57                           ;
-; Fitter                    ; 00:02:26     ; 1.1                     ; 6263 MB             ; 00:05:18                           ;
-; Assembler                 ; 00:00:08     ; 1.0                     ; 4747 MB             ; 00:00:04                           ;
-; TimeQuest Timing Analyzer ; 00:00:17     ; 1.2                     ; 5034 MB             ; 00:00:10                           ;
-; Total                     ; 00:06:50     ; --                      ; --                  ; 00:09:29                           ;
+; Analysis & Synthesis      ; 00:03:48     ; 1.0                     ; 5105 MB             ; 00:03:49                           ;
+; Fitter                    ; 00:02:31     ; 1.1                     ; 6270 MB             ; 00:05:42                           ;
+; Assembler                 ; 00:00:09     ; 1.0                     ; 4747 MB             ; 00:00:04                           ;
+; TimeQuest Timing Analyzer ; 00:00:15     ; 1.2                     ; 5033 MB             ; 00:00:09                           ;
+; Total                     ; 00:06:43     ; --                      ; --                  ; 00:09:44                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
