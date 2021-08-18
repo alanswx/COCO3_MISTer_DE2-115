@@ -84,7 +84,11 @@ library ieee;
 entity COCO_ROM is
   port (
     ADDR        : in    std_logic_vector(15 downto 0);
-    DATA        : out   std_logic_vector(7 downto 0)
+    DATA        : out   std_logic_vector(7 downto 0);
+	 CLK : in std_logic;
+	 WR_ADDR : in std_logic_vector(15 downto 0);
+	 WR_DATA : in std_logic_vector(7 downto 0);
+	 WR : in std_logic
     );
 end;
 
@@ -92,7 +96,7 @@ architecture RTL of COCO_ROM is
 
 
   type ROM_ARRAY is array(0 to 65535) of std_logic_vector(7 downto 0);
-  constant ROM : ROM_ARRAY := (
+  signal ROM : ROM_ARRAY := (
     x"45",x"58",x"8E",x"80",x"DE",x"CE",x"01",x"2A", -- 0x0000
     x"C6",x"0A",x"BD",x"A5",x"9A",x"8E",x"B2",x"77", -- 0x0008
     x"AF",x"43",x"AF",x"48",x"8E",x"89",x"4C",x"BF", -- 0x0010
@@ -8288,9 +8292,18 @@ architecture RTL of COCO_ROM is
   );
 
 begin
-
-  p_rom : process(ADDR)
+dp_rom_p1: process(ADDR)
   begin
      DATA <= ROM(to_integer(unsigned(ADDR)));
   end process;
+
+  dp_rom_p2: process(CLK)
+  begin
+    if CLK'event and CLK='1' then
+        if WR = '1' then
+            ROM(to_integer(unsigned(WR_ADDR))) <= WR_DATA;
+        end if;
+    end if;
+  end process;
+  
 end RTL;

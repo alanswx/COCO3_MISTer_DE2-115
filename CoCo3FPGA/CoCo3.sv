@@ -194,6 +194,12 @@ localparam  CONF_STR = {
         "H0O2,Orientation,Vert,Horz;",
         "O35,Scandoubler Fx,None,HQ2x,CRT 25%,CRT 50%,CRT 75%;",
 		  "OA,Easter Egg,Off,On;",
+		  "-;",
+		  "OB,Turbo,Off,On;",
+		  "OCD,MPI,Slot 1, Slot 2, Slot 3, Slot 4;",
+			"OE,Video Odd Line Black,Off,On;",
+"OF,SG4/6,SG4,SG6;",
+"OG,Cart Interrupt Disabled,OFF,ON;",
         "-;",
         "R0,Reset;",
         "J1,Button;",
@@ -233,7 +239,7 @@ wire        ioctl_download;
 wire  [7:0] ioctl_index;
 wire        ioctl_wr;
 wire [24:0] ioctl_addr;
-wire  [7:0] ioctl_dout;
+wire  [7:0] ioctl_data;
 
 wire [10:0] ps2_key;
 
@@ -263,7 +269,7 @@ hps_io #(.CONF_STR(CONF_STR),.PS2DIV(1000)) hps_io
         .ioctl_download(ioctl_download),
         .ioctl_wr(ioctl_wr),
         .ioctl_addr(ioctl_addr),
-        .ioctl_dout(ioctl_dout),
+        .ioctl_dout(ioctl_data),
         .ioctl_index(ioctl_index),
 
         .joystick_0(joy1a),
@@ -310,8 +316,7 @@ video_mixer #(.GAMMA(1)) video_mixer
 );
 //
 //
-wire [9:0] audio;
-assign AUDIO_L = {audio, 6'd0};
+assign AUDIO_L = {2'b0,/*6*/cocosound, 8'd0};
 assign AUDIO_R = AUDIO_L;
 assign AUDIO_S = 0;
 
@@ -359,7 +364,30 @@ coco3fpga_dw coco3 (
 .ps2_data(ps2_kbd_data),
 .ps2_key(ps2_key),
 //.BUTTON_N(button_n)
+.P_SWITCH(4'b1111),
+.SWITCH(switch),
+.SOUND_OUT(cocosound),
+
+  .ioctl_addr(ioctl_addr),
+  .ioctl_data(ioctl_data),
+  .ioctl_download(ioctl_download),
+  .ioctl_index(ioctl_index),
+  .ioctl_wr(ioctl_wr)
+
 );
+
+wire [5:0] cocosound;
+
+
+wire cpu_speed = status[11];
+wire [1:0] mpi = status[13:12];		
+wire video=status[14];
+wire cartint=status[16];
+wire sg4v6 = status[15];
+
+
+wire [9:0] switch = { 10'b0000,sg4v6,cartint,video,mpi,cpu_speed} ;
+
 
 wire reset = RESET | status[0] | buttons[1];
 //wire reset = buttons[1];

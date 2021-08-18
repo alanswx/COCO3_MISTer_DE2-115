@@ -108,6 +108,8 @@ input				OPTRXD,
 output				I2C_SCL,
 inout				I2C_DAT,
 
+output [5:0] SOUND_OUT,
+
 //Codec - Audio
 output				AUD_XCK,
 input				AUD_BCLK,
@@ -125,7 +127,17 @@ input	[3:0]		P_SWITCH,
 //	GPIO
 input				EE,
 
-inout	[7:0]		GPIO
+inout	[7:0]		GPIO,
+
+input [9:0] SWITCH,
+
+  input [7:0] ioctl_data,
+  input [15:0] ioctl_addr,
+  input ioctl_download,
+  input ioctl_wr,
+  input ioctl_index
+
+
 );
 
 
@@ -193,7 +205,7 @@ wire	[17:0]	LEDR;
 
 //	SRH	MISTer
 //	Static switches
-wire	[9:0]  	SWITCH;			
+//wire	[9:0]  	SWITCH;			
 
 //	SRH	MISTer
 //	Static Buttons
@@ -709,10 +721,10 @@ wire			SLAVE_WR;
 											//		On  - 25 MHz
 
 
-assign SWITCH[9:0] = 10'b0000010000; // This is ECB
+//assign SWITCH[9:0] = 10'b0000010000; // This is ECB
 //assign SWITCH[9:0] = 10'b0000010110; // This is EDB
 //assign SWITCH[9:0] = 10'b0000010000; // This is Orch 80 in ROM
-
+assign SOUND_OUT=SOUND_DTOA;
 assign BUTTON_N[3:0] = {COCO_RESET_N, 2'b1,EE};
 
 
@@ -907,7 +919,11 @@ assign FLASH_CE_S =	({RAM, ROM[1], ADDRESS[15:14]} ==  4'b0010)				?	1'b1:		// I
 
 COCO_ROM CC3_ROM(
 .ADDR(FLASH_ADDRESS[15:0]),
-.DATA(FLASH_DATA)
+.DATA(FLASH_DATA),
+.CLK(CLK50MHZ),
+.WR_ADDR(ioctl_addr[15:0]),
+.WR_DATA(ioctl_data[7:0]),
+.WR(ioctl_download & ioctl_wr)
 );
 
 
