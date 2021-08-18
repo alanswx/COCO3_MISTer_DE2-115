@@ -125,6 +125,13 @@ input	[3:0]		P_SWITCH,
 //	Config Static switches
 input	[9:0]  		SWITCH,			
 
+// roms, cartridges, etc
+input	[7:0]		ioctl_data,
+input	[15:0]		ioctl_addr,
+input				ioctl_download,
+input				ioctl_wr,
+input 				ioctl_index,
+
 //	GPIO
 inout	[7:0]		GPIO,
 
@@ -689,7 +696,7 @@ wire			SLAVE_WR;
 
 // Probe's defined
 //assign PROBE[6:0] = {CART1_POL, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_N, CART1_FIRQ_N, RESET_N, PH_2};
-assign PROBE[7:0] = {1'b0, RESET_P, CART1_BUF_RESET_N, CART1_FIRQ_STAT_N, CART1_CLK_N, H_SYNC, RESET_N, PH_2};
+assign PROBE[7:0] = {1'b0, CART1_POL, CART1_FIRQ_N, CART1_FIRQ_BUF[0], CART1_FIRQ_BUF[1], CART1_BUF_RESET_N, CART1_CLK_N, PH_2};
 assign PROBE[15:8] = LEDR[7:0];
 assign PROBE[23:16] = LEDG[7:0];
 assign PROBE[31:24] = KEY_COLUMN[7:0];
@@ -929,12 +936,15 @@ assign FLASH_CE_S =	({RAM, ROM[1], ADDRESS[15:14]} ==  4'b0010)				?	1'b1:		// I
 							ENA_ORCC																?	1'b1:
 																										1'b0;
 
-// SRH MISTer
-// ROM and 128KB sram
+
 
 COCO_ROM CC3_ROM(
 .ADDR(FLASH_ADDRESS[15:0]),
-.DATA(FLASH_DATA)
+.DATA(FLASH_DATA),
+.CLK(~CLK50MHZ),
+.WR_ADDR(ioctl_addr[15:0]),
+.WR_DATA(ioctl_data[7:0]),
+.WRITE(ioctl_index & ioctl_wr)
 );
 
 
@@ -1520,8 +1530,6 @@ begin
 		SWITCH_L <= 2'b00;
 		PH_2_RAW <= 1'b0;
 		RAM0_RW_N <= 1'b1;
-// SRH MISTer
-
 		RAM0_BE0_N <=  1'b1;
 		RAM0_BE1_N <= 1'b1;
 	end
@@ -1533,9 +1541,7 @@ begin
 			SWITCH_L <= {SWITCH[0], RATE};					// Normal speed
 			PH_2_RAW <= 1'b1;
 // Grab video one more time
-// SRH MISTer
-
-				VIDEO_BUFFER <= RAM0_DATA_O;
+			VIDEO_BUFFER <= RAM0_DATA_O;
 			CLK <= 6'h01;
 			RAM0_BE0_N <=  !RAM0_BE0;
 			RAM0_BE1_N <=  !RAM0_BE1;
@@ -1555,8 +1561,6 @@ begin
 				end
 				if (!RW_N)
 				begin
-// SRH MISTer
-
 					RAM0_DATA_I[15:0] <= {DATA_OUT, DATA_OUT};
 				end
 			end
@@ -1568,8 +1572,6 @@ begin
 					begin
 						RAM0_RW_N <= 1'b0;
 						RAM0_ADDRESS <= GART_WRITE[20:1];
-// SRH MISTer
-
 						RAM0_DATA_I[15:0] <= {GART_BUF, GART_BUF};
 					end
 					else
@@ -1584,8 +1586,6 @@ begin
 					RAM0_ADDRESS <= {BLOCK_ADDRESS[7:0], ADDRESS[12:1]};
 					if (!RW_N)
 					begin
-// SRH MISTer
-
 						RAM0_DATA_I[15:0] <= {DATA_OUT, DATA_OUT};
 					end
 				end
@@ -1601,9 +1601,6 @@ begin
 			RAM0_ADDRESS <= VIDEO_ADDRESS[19:0];
 			RAM0_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
 			RAM0_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-
-// SRH MISTer
-
 			RAM0_RW_N <= 1'b1;
 			if({SWITCH_L} == 2'b11)		//50/2 = 25 
 				CLK <= 6'h00;
@@ -1617,8 +1614,6 @@ begin
 
 			RAM0_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
 			RAM0_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-// SRH MISTer
-
 			VIDEO_BUFFER <= RAM0_DATA_O;
 			if(SWITCH_L[0])				//Rate = 1?
 				CLK <= 6'h00;
@@ -1630,8 +1625,6 @@ begin
 			RAM0_ADDRESS <= VIDEO_ADDRESS[19:0];
 			RAM0_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
 			RAM0_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-// SRH MISTer
-
 			VIDEO_BUFFER <= RAM0_DATA_O;
 			CLK <= 6'h00;
 		end
@@ -1645,7 +1638,6 @@ begin
 			RAM0_ADDRESS <= VIDEO_ADDRESS[19:0];
 			RAM0_BE0_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
 			RAM0_BE1_N <= !(!VIDEO_ADDRESS[21] & !VIDEO_ADDRESS[20]);
-// SRH MISTer
 			VIDEO_BUFFER <= RAM0_DATA_O;
 		end
 		endcase
@@ -1693,26 +1685,7 @@ begin
 			endcase
 	end
 end
-/*
-always @ (negedge V_SYNC_N or posedge RESET_P)
-begin
-	if(RESET_P)
-	begin
-		CPU_RESET_SM <= 7'h00;
-		CPU_RESET <= 1'b1;
-	end
-	else
-		case (CPU_RESET_SM)
-		7'h7F:
-		begin
-			CPU_RESET <= 1'b0;
-			CPU_RESET_SM <= 7'h7F;
-		end
-		default:
-			CPU_RESET_SM <= CPU_RESET_SM + 1'b1;
-		endcase
-end
-*/
+
 // CPU section copyrighted by John Kent
 cpu09 GLBCPU09(
 	.clk(CLK50MHZ),
@@ -1737,8 +1710,8 @@ cpu09 GLBCPU09(
 // Interrupt Sources
 //***********************************************************************
 // Interrupt source for CART signal
-//always @(negedge CLK50MHZ or negedge RESET_N)
-always @(negedge PH_2 or negedge RESET_N)
+always @(negedge CLK50MHZ or negedge RESET_N)
+//always @(negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1746,7 +1719,7 @@ begin
 	end
 	else
 	begin
-//		if (PH_2)
+		if (PH_2)
 			case (MPI_SCS)
 			2'b00:
 				CART_INT_IN_N <=  (!CART_INT_IN_N | SWITCH[4])
@@ -1771,8 +1744,8 @@ assign KEY_INT_N = (KEYBOARD_IN == 8'hFF);
 //***********************************************************************
 // Interrupt Latch RESETs
 //***********************************************************************
-always @(negedge PH_2 or negedge RESET_N)
-//always @(negedge CLK50MHZ or negedge RESET_N)
+//always @(negedge PH_2 or negedge RESET_N)
+always @(negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1786,7 +1759,7 @@ begin
 	end
 	else
 	begin
-//		if (PH_2)
+		if (PH_2)
 			case({RW_N,ADDRESS})
 			17'h1FF00:
 				RST_FF00_N <= 1'b0;
@@ -1903,8 +1876,8 @@ end
 // Polarity	HSYNC1_POL
 // Clear		FF00
 assign HSYNC1_CLK_N = HSYNC_INT_N ^ HSYNC1_POL;
-//always @ (negedge CLK50MHZ or negedge RESET_N)
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
+//always @ (negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1915,7 +1888,7 @@ begin
 	else
 	begin
 		HSYNC1_CLK_N_D <= HSYNC1_CLK_N;
-//		if (PH_2)
+		if (PH_2)
 		begin
 			HSYNC1_IRQ_BUF <= {HSYNC1_IRQ_BUF[0], HSYNC1_IRQ_STAT_N};
 			HSYNC1_IRQ_N <= HSYNC1_IRQ_BUF[1] | !HSYNC1_IRQ_INT;
@@ -1923,8 +1896,8 @@ begin
 	end
 end
 
-//always @ (negedge CLK50MHZ or negedge RST_FF00_N)
-always @ (negedge HSYNC1_CLK_N or negedge RST_FF00_N)
+always @ (negedge CLK50MHZ or negedge RST_FF00_N)
+//always @ (negedge HSYNC1_CLK_N or negedge RST_FF00_N)
 begin
 	if(!RST_FF00_N)
 	begin
@@ -1932,7 +1905,7 @@ begin
 	end
 	else
 	begin
-//		if (HSYNC1_CLK_N_D == 1'b1 && HSYNC1_CLK_N == 1'b0)
+		if (HSYNC1_CLK_N_D == 1'b1 && HSYNC1_CLK_N == 1'b0)
 			HSYNC1_IRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
@@ -1947,8 +1920,8 @@ end
 // Polarity	VSYNC1_POL
 // Clear		FF02
 assign VSYNC1_CLK_N = VSYNC_INT_N ^ VSYNC1_POL;
-//always @ (negedge CLK50MHZ or negedge RESET_N)
-always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
+//always @ (negedge PH_2 or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -1959,7 +1932,7 @@ begin
 	else
 	begin
 		VSYNC1_CLK_N_D <= VSYNC1_CLK_N;
-//		if (PH_2)
+		if (PH_2)
 		begin
 			VSYNC1_IRQ_BUF <= {VSYNC1_IRQ_BUF[0], VSYNC1_IRQ_STAT_N};
 			VSYNC1_IRQ_N <= VSYNC1_IRQ_BUF[1] | !VSYNC1_IRQ_INT;
@@ -1967,8 +1940,8 @@ begin
 	end
 end
 
-//always @ (negedge CLK50MHZ or negedge RST_FF02_N)
-always @ (negedge VSYNC1_CLK_N or negedge RST_FF02_N)
+always @ (negedge CLK50MHZ or negedge RST_FF02_N)
+//always @ (negedge VSYNC1_CLK_N or negedge RST_FF02_N)
 begin
 	if(!RST_FF02_N)
 	begin
@@ -1976,7 +1949,7 @@ begin
 	end
 	else
 	begin
-//		if (VSYNC1_CLK_N_D == 1'b1 && VSYNC1_CLK_N == 1'b0)
+		if (VSYNC1_CLK_N_D == 1'b1 && VSYNC1_CLK_N == 1'b0)
 			VSYNC1_IRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end
@@ -1999,15 +1972,15 @@ assign CART1_BUF_RESET_N =		  RESET_N
 assign CART1_FIRQ_RESET_N =	CART1_BUF_RESET_N & RST_FF22_N;
 assign CART1_CLK_N = CART_INT_N ^ CART1_POL;
 
-//always @ (negedge CLK50MHZ)
-always @ (negedge PH_2)
+always @ (negedge CLK50MHZ)
+//always @ (negedge PH_2)
 begin
-//	if (PH_2)
+	if (PH_2)
 		CART_POL_BUF <= {CART_POL_BUF[0],CART1_POL}; 
 end
 
-always @ (negedge PH_2 or negedge CART1_BUF_RESET_N)
-//always @ (negedge CLK50MHZ or negedge CART1_BUF_RESET_N)
+//always @ (negedge PH_2 or negedge CART1_BUF_RESET_N)
+always @ (negedge CLK50MHZ or negedge CART1_BUF_RESET_N)
 begin
 	if(!CART1_BUF_RESET_N)
 	begin
@@ -2018,7 +1991,7 @@ begin
 	else
 	begin
 		CART1_CLK_N_D <= CART1_CLK_N;
-//		if (PH_2)
+		if (PH_2)
 		begin
 			CART1_FIRQ_BUF <= {CART1_FIRQ_BUF[0], CART1_FIRQ_STAT_N};
 			CART1_FIRQ_N <= CART1_FIRQ_BUF[1] | !CART1_FIRQ_INT;
@@ -2056,8 +2029,8 @@ end
 
 // Canadate 1
 
-always @ (negedge PH_2 or negedge RESET_N)
-//always @ (negedge CLK50MHZ or negedge RESET_N)
+//always @ (negedge PH_2 or negedge RESET_N)
+always @ (negedge CLK50MHZ or negedge RESET_N)
 begin
 	if(!RESET_N)
 	begin
@@ -2068,7 +2041,7 @@ begin
 	else
 	begin
 		HSYNC_INT_N_D <= HSYNC_INT_N;
-//		if (PH_2)
+		if (PH_2)
 		begin
 			HSYNC3_FIRQ_BUF <= {HSYNC3_FIRQ_BUF[0], HSYNC3_FIRQ_STAT_N};
 			HSYNC3_FIRQ_N <= HSYNC3_FIRQ_BUF[1] | !HSYNC3_FIRQ_INT;
@@ -2076,8 +2049,8 @@ begin
 	end
 end
 
-always @ (negedge HSYNC_INT_N or negedge RST_FF93_N)
-//always @ (negedge CLK50MHZ or negedge RST_FF93_N)
+//always @ (negedge HSYNC_INT_N or negedge RST_FF93_N)
+always @ (negedge CLK50MHZ or negedge RST_FF93_N)
 begin
 	if(!RST_FF93_N)
 	begin
@@ -2085,7 +2058,7 @@ begin
 	end
 	else
 	begin
-//		if (HSYNC_INT_N == 1'b0	&& HSYNC_INT_N_D == 1'b1)
+		if (HSYNC_INT_N == 1'b0	&& HSYNC_INT_N_D == 1'b1)
 			HSYNC3_FIRQ_STAT_N <= 1'b0;				// Interrupt
 	end
 end

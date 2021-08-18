@@ -117,7 +117,6 @@ input	[3:0]		P_SWITCH,
 //inout				GPIO,
 output	[6:0]		PROBE,
 
-
 // De2-115 specifics
 
 input	[9:0]		DE2_SWITCHES,
@@ -228,6 +227,14 @@ coco3fpga_dw COCO3(
 
 //	Config Static switches
 	.SWITCH(DE2_SWITCHES),			
+
+// roms, cartridges, etc
+	.ioctl_data(8'b00000000),
+	.ioctl_addr(16'b0000000000000000),
+	.ioctl_download(1'b0),
+	.ioctl_wr(DE2_SWITCHES[7]),
+	.ioctl_index(DE2_SWITCHES[8]),
+
 
 //	GPIO
 //	.GPIO(GPIO),
